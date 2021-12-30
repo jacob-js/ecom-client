@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import Routes from './Routes';
+import './global.scss';
+import axios from 'axios';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+axios.defaults.baseURL = 'http://localhost:5000/api/v1';
+axios.defaults.headers.common['bweteta_token'] = localStorage.getItem('bweteta_token');
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <QueryClientProvider client={queryClient}>
+    <Routes />
+  </QueryClientProvider>,
   document.getElementById('root')
 );
 

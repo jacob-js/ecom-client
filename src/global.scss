@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn{
+    background-color: #dd4900;
+    color: white;
+    border: none;
+    outline: 0;
+    border-radius: 20px;
+    height: 40px;
+
+    &:hover, &:focus {
+        background-color: #dd4900 !important;
+        color: white;
+    }
+}
+.alert{
+    margin-bottom: 20px;
+}
+
+$color_default : #dd4900;
+
+@import './assets/styles/auth.scss';
+@import 'antd/dist/antd.css';
+@import 'aos/dist/aos.css';

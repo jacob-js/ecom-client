@@ -1,0 +1,93 @@
+.auth-page{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .card{
+        width: 800px;
+        min-height: 400px;
+        display: flex;
+        border-radius: 20px;
+        box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        background-color: white;
+
+        .intro{
+            width: 50%;
+            background-color: $color_default;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 20px 0 0 20px;
+        }
+        form{
+            width: 50%;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+
+            .fields{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+
+                input.error{
+                    border: 1px solid red;
+                }
+
+                .input-pass{
+                    display: flex;
+                    justify-content: space-between;
+
+                    .eye{
+                        position: absolute;
+                        margin-left: 32%;
+                        margin-top: 15px;
+                    }
+                }
+            }
+            h1{
+                color: gray;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .btn.login{
+                width: 200px;
+            }
+            .register-link{
+                text-align: center;
+                font-size: 12px;
+                margin-top: 20px;
+            }
+        }
+    }
+    .card.confirm-account{
+        width: 400px;
+
+        form{
+            width: 100%;
+
+            .input-pass{
+                display: flex;
+                justify-content: space-between;
+
+                .eye{
+                    position: absolute;
+                    margin-left: 63%;
+                    margin-top: 15px;
+                }
+            }
+        }
+        p{
+            text-align: center;
+        }
+    }
+}
