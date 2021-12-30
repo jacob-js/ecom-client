@@ -1,8 +1,15 @@
 import ConfirmAccount from "../Components/ConfirmAccount";
+import Home from "../Components/Home";
 import Login from "../Components/Login";
 import Signup from "../Components/Signup";
 
 const routes = [
+    {
+        path: "/",
+        component: Home,
+        protected: false,
+        nav: true
+    },
     {
         name: 'Login',
         path: '/login',
