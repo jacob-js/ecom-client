@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { getFieldError, provinces } from '../Utils/helpers';
 import { Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const schema = yup.object({
     fullname: yup.string().required("Le nom complet est requis"),
@@ -32,13 +32,13 @@ function Signup() {
     const [visibleConfirm, setvisibleConfirm] = useState(false);
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState([]);
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const mutation = useMutation(signupApi, {
         onSuccess: (res) =>{
             setloading(false);
             localStorage.setItem('user_phone', res.data.data.user.phone);
-            navigate('/confirm-account');
+            history.push('/confirm-account');
         },
         onError: (error) =>{
             const res = error.response;
@@ -140,7 +140,7 @@ function Signup() {
                             getFieldError(error, 'confirmPassword') ? <FieldError>{getFieldError(error, 'confirmPassword')}</FieldError> : null}
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> }></Button>
-                        <div className="register-link">Avez-vous déjà un compte ? <Link onClick={() =>navigate('/login')}>Connectez-vous</Link></div>
+                        <div className="register-link">Avez-vous déjà un compte ? <Link onClick={() =>history.push('/login')}>Connectez-vous</Link></div>
                     </div>
                 </FormContainer>
             </div>

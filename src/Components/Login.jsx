@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { getFieldError } from '../Utils/helpers';
 import { Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const schema = yup.object({
     username: yup.string().required('Ce champ est obligatoire'),
@@ -20,12 +20,13 @@ function Login() {
     const [visible, setvisible] = useState(false);
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState([]);
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const mutation = useMutation(loginApi, {
         onSuccess: (res) =>{
             localStorage.setItem('bweteta_token', res.data.data.token);
             setloading(false);
+            history.push('/');
         },
         onError: (error) =>{
             const res = error.response;
@@ -35,6 +36,8 @@ function Login() {
                 }else{
                     seterror(res.data.message);
                 }
+            }else{
+                seterror(['Une erreur est survenue']);
             }
             setloading(false);
         },
@@ -83,7 +86,7 @@ function Login() {
                             getFieldError(error, 'password') ? <FieldError>{getFieldError(error, 'password')}</FieldError> : null}
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> }></Button>
-                        <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>navigate('/signup')}>Inscrivez-vous</Link></div>
+                        <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>history.push('/signup')}>Inscrivez-vous</Link></div>
                     </div>
                 </FormContainer>
             </div>

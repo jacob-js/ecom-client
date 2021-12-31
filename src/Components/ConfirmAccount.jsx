@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { getFieldError } from '../Utils/helpers';
 import { Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { sendNotif } from '../Utils/notif';
 
 const schema = yup.object({
@@ -18,13 +18,13 @@ const schema = yup.object({
 function ConfirmAccount() {
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState([]);
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const mutation = useMutation(verifyAccountApi, {
         onSuccess: (res) =>{
             setloading(false);
             sendNotif(res.data.message);
-            navigate('/login');
+            history.push('/login');
         },
         onError: (error) =>{
             const res = error.response;
@@ -67,7 +67,7 @@ function ConfirmAccount() {
                             getFieldError(error, 'username') ? <FieldError>{getFieldError(error, 'username')}</FieldError> : null}
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> }></Button>
-                        <div className="register-link">N'avez-vous pas réçu le code ? <Link onClick={() =>navigate('/signup')}>Renvoyer le code</Link></div>
+                        <div className="register-link">N'avez-vous pas réçu le code ? <Link onClick={() =>history.push('/signup')}>Renvoyer le code</Link></div>
                     </div>
                 </FormContainer>
             </div>

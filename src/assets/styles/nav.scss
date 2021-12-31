@@ -1,23 +1,30 @@
 .nav{
     padding: 0.5rem 1rem;
-    // height: 4rem;
     background-color: #fff;
     box-shadow: 0 0rem 0.5rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    z-index: 9999;
+    transition: all .3s ease-in-out;
 
     .top{
         padding: 0.5rem 0;
         width: 80%;
         margin: auto;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
+
         .logo{
-            margin-right: 80px;
+            display: flex;
+            align-items: baseline;
+
+            .sticky-categ{
+                display: none;
+            }
         }
 
         .sessions{
             display: flex;
-            margin-left: 80px;
 
             .user, .cart{
                 font-size: 20px;
@@ -55,11 +62,11 @@
     }
     
     .bottom{
-        width: 70%;
+        width: 80%;
         margin: auto;
         display: flex;
         justify-content: space-between;
-        padding: 0.7rem 0;
+        padding: 0.3rem 0;
         align-items: center;
 
         .links{
@@ -74,9 +81,60 @@
         }
 
         .btn-categ{
-            background-color: rgb(236, 236, 236);
+            background-color: rgb(245, 245, 245);
             padding: 5px 20px;
             border-radius: 5px;
+            padding-right: 30px;
+            cursor: pointer;
+
+            .icon{
+                font-size: 20px;
+                margin-right: 5px;
+                position: absolute;
+                margin-top: 3px;
+            }
         }
     }
+}
+
+.nav.sticky{
+    position: sticky;
+    top: 0;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1);
+
+    .bottom{
+        display: none;
+    }
+
+    .top{
+        .sticky-categ{
+            display: block;
+            margin-left: 20px;
+            align-items: baseline;
+            cursor: pointer;
+            color: rgb(168, 168, 168);
+
+            .btn-categ{
+                .icon-categ{
+                    font-size: 25px;
+                }
+            }
+        }
+    }
+}
+
+.categ-menus{
+    width: 300px !important;
+    padding: 10px;
+    position: absolute;
+
+    li{
+        padding: 15px;
+    }
+}
+.sticky-categ-menus{
+    display: block;
+    position: absolute;
+    z-index: 99 !important;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1) !important;
 }
