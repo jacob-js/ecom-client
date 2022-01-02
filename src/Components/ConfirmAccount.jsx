@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { FieldContainer, FieldError, FormContainer, Input, Link, Title } from '../Utils/common'
 import { ArrowRightOutlined } from '@ant-design/icons/lib/icons';
 import { useMutation } from 'react-query';
-import { verifyAccountApi } from '../apis/auth';
+import { sendOtpApi, verifyAccountApi } from '../apis/auth';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { getFieldError } from '../Utils/helpers';
@@ -42,6 +42,21 @@ function ConfirmAccount() {
             seterror([]);
         }
     })
+
+    const sendOtpMutation = useMutation(() =>sendOtpApi(localStorage.getItem('user_phone')), {
+        onSuccess: (res) => {
+            sendNotif('Code envoyé avec succès', 'success');
+        },
+        onError: (error) => {
+            const res = error.response;
+            if (res) {
+                seterror(res.data.message);
+            } else {
+                sendOtpMutation.mutate();
+            }
+        }
+    })
+
     const form = useFormik({
         initialValues: { username: localStorage.getItem('user_phone'), code: '' },
         onSubmit: values =>  mutation.mutate(values),
@@ -67,7 +82,7 @@ function ConfirmAccount() {
                             getFieldError(error, 'username') ? <FieldError>{getFieldError(error, 'username')}</FieldError> : null}
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> }></Button>
-                        <div className="register-link">N'avez-vous pas réçu le code ? <Link onClick={() =>history.push('/signup')}>Renvoyer le code</Link></div>
+                        <div className="register-link">N'avez-vous pas réçu le code ? { sendOtpMutation.isLoading ? 'Chargement ...': <Link onClick={() =>sendOtpMutation.mutate()}>Renvoyer le code</Link> }</div>
                     </div>
                 </FormContainer>
             </div>

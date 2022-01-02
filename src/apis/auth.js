@@ -11,3 +11,11 @@ export const signupApi = (data) =>{
 export const verifyAccountApi = (data) =>{
     return axios.post(`/users/verify`, data)
 }
+
+export const getCurrUserApi = () =>{
+    return axios.get(`/users/current`)
+}
+
+export const sendOtpApi = (username) =>{
+    return axios.get(`/users/send-otp/${username}`)
+}

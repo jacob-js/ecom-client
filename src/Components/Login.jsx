@@ -4,12 +4,15 @@ import { FieldContainer, FieldError, FormContainer, Input, Link, Title } from '.
 import logo from '../assets/images/min_logo.png'
 import { ArrowRightOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons/lib/icons';
 import { useMutation } from 'react-query';
-import { loginApi } from '../apis/auth';
+import { loginApi, sendOtpApi } from '../apis/auth';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { getFieldError } from '../Utils/helpers';
 import { Alert } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { usersActionTypes } from '../Redux/actionsTypes/users';
+import { sendNotif } from '../Utils/notif';
 
 const schema = yup.object({
     username: yup.string().required('Ce champ est obligatoire'),
@@ -21,21 +24,50 @@ function Login() {
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState([]);
     const history = useHistory();
+    const dispatch = useDispatch();
+    const form = useFormik({
+        initialValues: { username: '', password: '' },
+        onSubmit: values =>  mutation.mutate(values),
+        validationSchema: schema
+    });
+
+    const sendOtpMutation = useMutation(() =>sendOtpApi(form.values.username), {
+        onSuccess: (res) => {
+            sendNotif('Veuillez vérifier votre compte pour continuer', 'warn');
+            localStorage.setItem('user_phone', form.values.username);
+            history.push('/confirm-account');
+        },
+        onError: (error) => {
+            const res = error.response;
+            if (res) {
+                seterror(res.data.message);
+            } else {
+                sendOtpMutation.mutate();
+            }
+        }
+    })
 
     const mutation = useMutation(loginApi, {
         onSuccess: (res) =>{
             localStorage.setItem('bweteta_token', res.data.data.token);
             setloading(false);
+            dispatch({
+                type: usersActionTypes.LOGIN_SUCCESS,
+                payload: res.data.data.user
+            })
             history.push('/');
         },
         onError: (error) =>{
             const res = error.response;
             if(res){
-                if(typeof(res.data.message) === 'string'){
+                if(res.data.data?.isVerified === false){
+                    sendOtpMutation.mutate();
+                }else if(typeof(res.data.message) === 'string'){
                     seterror([res.data.message]);
                 }else{
                     seterror(res.data.message);
                 }
+            
             }else{
                 seterror(['Une erreur est survenue']);
             }
@@ -46,11 +78,6 @@ function Login() {
             seterror([]);
         }
     })
-    const form = useFormik({
-        initialValues: { username: '', password: '' },
-        onSubmit: values =>  mutation.mutate(values),
-        validationSchema: schema
-    });
 
     return (
         <div className='auth-page'>

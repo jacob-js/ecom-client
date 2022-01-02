@@ -9,6 +9,9 @@ import { FaBaby } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { usersActionTypes } from '../Redux/actionsTypes/users';
+import { sendNotif } from '../Utils/notif';
 
 const menu = (
     <Menu className='categ-menus'>
@@ -39,6 +42,8 @@ const stickyMenu = (
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
     const history = useHistory();
+    const { data, auth } = useSelector(({ users: { currUser } }) =>currUser);
+    const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) {
             document.querySelector('.nav').classList.add('sticky')
@@ -46,6 +51,14 @@ function Nav({children}) {
             document.querySelector('.nav').classList.remove('sticky')
         }
     });
+
+    const handleLogout = () => {
+        localStorage.removeItem('bweteta_token');
+        sendNotif('Vous êtes déconnecté');
+        dispatch({
+            type: usersActionTypes.LOGOUT_SUCCESS
+        });
+    }
     
     return (
         <div className='page'>
@@ -88,12 +101,12 @@ function Nav({children}) {
                         <Popover trigger='click' content={
                             <Menu>
                                 {
-                                    false ?
+                                    auth ?
                                     <>
-                                        <div style={{ textAlign: 'center', padding: 15 }}>Merci Jacob</div>
+                                        <div style={{ textAlign: 'center', padding: 15 }}>{data.fullname}</div>
                                         <Menu.Item key="1" icon={ <HiOutlineUser /> }>Mon profil</Menu.Item>
                                         <Menu.Item key="2" icon={<RiMoneyDollarCircleLine />}>Mes commandes</Menu.Item>
-                                        <Menu.Item key="3" icon={<HiOutlineLogout />}>Deconnexion</Menu.Item>
+                                        <Menu.Item key="3" onClick={handleLogout} icon={<HiOutlineLogout />}>Deconnexion</Menu.Item>
                                     </>:
                                     <Menu.Item key="4" onClick={() =>history.push('/login')}  icon={<HiOutlineLogin />}>Connexion</Menu.Item>
                                 }

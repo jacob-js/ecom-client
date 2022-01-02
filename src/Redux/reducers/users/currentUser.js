@@ -46,6 +46,19 @@ const currentUser = (state, {type, payload}) => {
                     auth: true
                 }
             }
+
+        case usersActionTypes.LOGOUT_SUCCESS:
+            return{
+                ...state,
+                currUser: {
+                    ...state.currUser,
+                    loading: false,
+                    error: null,
+                    data: {},
+                    auth: false
+                }
+            }
+    
     
         default:
             break;
