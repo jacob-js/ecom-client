@@ -6,6 +6,8 @@ import c1 from '../assets/images/c1.jpg';
 import c2 from '../assets/images/c2.jpg';
 import c3 from '../assets/images/c3.jpg';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
+import { useQuery } from 'react-query';
+import { getTopCategorysApi } from '../apis/products';
 
 const bestProducts = [
     {
@@ -86,6 +88,9 @@ const NextArraow = (props) =>{
 }
 
 function Home() {
+    const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
+        staleTime: 300000,
+    });
     
     const settings = {
         dots: false,
@@ -143,7 +148,8 @@ function Home() {
                         <div className="data">
                             <Slider {...settings} slidesToShow={3} className='carousel'>
                                 {
-                                    bestCategorys.map((category, index) => (
+                                    data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
+                                    .sort((a, b) => a.sort-b.sort).map((category, index) => (
                                         <div className="category" key={index}>
                                             <div className="name">{ category.name }</div>
                                             <div className="cover">
