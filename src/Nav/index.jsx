@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import logo from '../assets/images/min_logo.png'
-import { HiOutlineLogout, HiOutlineShoppingBag, HiOutlineUser } from 'react-icons/hi';
+import { HiOutlineLogin, HiOutlineLogout, HiOutlineShoppingBag, HiOutlineUser } from 'react-icons/hi';
 import { MdCategory, MdOutlineBikeScooter, MdOutlineDevices, MdOutlineKeyboardArrowDown, MdOutlinePets } from 'react-icons/md';
 import { Icon, Input, Dropdown as AtDropDown } from 'atomize';
 import { Dropdown, Menu, Popover } from 'antd';
@@ -8,6 +8,7 @@ import { GiHealing, GiHomeGarage, GiMusicSpell, GiTravelDress } from 'react-icon
 import { FaBaby } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
 
 const menu = (
     <Menu className='categ-menus'>
@@ -37,6 +38,7 @@ const stickyMenu = (
 
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
+    const history = useHistory();
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) {
             document.querySelector('.nav').classList.add('sticky')
@@ -85,12 +87,18 @@ function Nav({children}) {
                     <div className="sessions">
                         <Popover trigger='click' content={
                             <Menu>
-                                <div style={{ textAlign: 'center', padding: 15 }}>Merci Jacob</div>
-                                <Menu.Item key="1" icon={ <HiOutlineUser /> }>Mon profil</Menu.Item>
-                                <Menu.Item key="2" icon={<RiMoneyDollarCircleLine />}>Mes commandes</Menu.Item>
-                                <Menu.Item key="3" icon={<HiOutlineLogout />}>Deconnexion</Menu.Item>
+                                {
+                                    false ?
+                                    <>
+                                        <div style={{ textAlign: 'center', padding: 15 }}>Merci Jacob</div>
+                                        <Menu.Item key="1" icon={ <HiOutlineUser /> }>Mon profil</Menu.Item>
+                                        <Menu.Item key="2" icon={<RiMoneyDollarCircleLine />}>Mes commandes</Menu.Item>
+                                        <Menu.Item key="3" icon={<HiOutlineLogout />}>Deconnexion</Menu.Item>
+                                    </>:
+                                    <Menu.Item key="4" onClick={() =>history.push('/login')}  icon={<HiOutlineLogin />}>Connexion</Menu.Item>
+                                }
                             </Menu>
-                        }>
+                        } zIndex={9999} placement='bottom'>
                             <div className="user">
                                 <HiOutlineUser className='icon' />
                             </div>

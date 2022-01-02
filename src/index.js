@@ -9,6 +9,8 @@ import axios from 'axios';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider as StyletronProvider, DebugEngine } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
+import { Provider } from 'react-redux';
+import store from './Redux/store';
 
 axios.defaults.baseURL = 'http://localhost:5000/api/v1';
 axios.defaults.headers.common['bweteta_token'] = localStorage.getItem('bweteta_token');
@@ -21,7 +23,9 @@ ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <StyletronProvider value={engine} debug={debug} debugAfterHydration>
       <StyleReset />
-      <Routes />
+      <Provider store={store}>
+        <Routes />
+      </Provider>
     </StyletronProvider>
   </QueryClientProvider>,
   document.getElementById('root')
