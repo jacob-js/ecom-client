@@ -141,6 +141,53 @@
             }
         }
     }
+
+    .section-arrival{
+        margin-top: 50px;
+        .data{
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+            .product{
+                width: 175px;
+                height: 100% !important;
+                padding: 20px 10px;
+                cursor: pointer;
+                .cover{
+                    height: 175px;
+                    width: 175px;
+                    border-radius: 10px;
+                    img{
+                        width: 175px;
+                        height: 175px !important;
+                    }
+                    .bg{
+                        position: absolute;
+                        content: '';
+                        top: 8%;
+                        width: 175px;
+                        height: 175px;
+                        border-radius: 10px;
+                        background-color: rgba(0, 0, 0, 0);
+                        z-index: 9;
+                        transition: all .5s ease-in-out;
+    
+                        &:hover{
+                            background-color: rgba(0, 0, 0, 0.3);
+                        }
+                    }
+                }
+                .price{
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: $color_default;
+                }
+            }
+        }
+    }
 }
 
 .carousel{
@@ -229,6 +276,7 @@
             .cover{
                 width: 97%;
                 height: 97%;
+                border-radius: 10px;
                 overflow: hidden;
                 cursor: pointer;
                 img{
@@ -240,8 +288,9 @@
                     content: '';
                     top: 8%;
                     left: 3%;
-                    width: 95%;
+                    width: 91%;
                     height: 85%;
+                    border-radius: 10px;
                     background-color: rgba(0, 0, 0, 0);
                     z-index: 9;
                     transition: all .5s ease-in-out;

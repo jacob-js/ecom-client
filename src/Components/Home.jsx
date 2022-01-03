@@ -8,6 +8,7 @@ import c3 from '../assets/images/c3.jpg';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
 import { useQuery } from 'react-query';
 import { getTopCategorysApi } from '../apis/products';
+import newIcon from '../assets/images/icons/new-product.svg';
 
 const bestProducts = [
     {
@@ -47,24 +48,37 @@ const bestProducts = [
     }
 ];
 
-const bestCategorys = [
+const newProducts = [
     {
-        name: 'Electronique',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fbanners%2Fcategory-2.png&w=1920&q=75'
+        name: 'sunglass',
+        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fimagegoggles.png&w=1920&q=75',
+        price: '$25',
     },
     {
-        name: 'Mode',
-        cover: 'https://thewsh.globalblue.com/wp-content/uploads/2019/12/Fashion-Focus-IVisuels-RS_Blog-1-1110x450.png'
+        name: 'Makeup',
+        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(2).png&w=1920&q=75',
+        price: '$35',
     },
     {
-        name: 'Maison et Jardin',
-        cover: 'https://tinuiti.com/wp-content/uploads/legacysitecontent/cpcs/posts_01/2019/04/16105532/kitchen.jpg'
+        name: 'smartwatch',
+        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fbgwatch.png&w=1920&q=75',
+        price: '$120',
     },
     {
-        name: 'Maison et Jardin',
-        cover: 'https://tinuiti.com/wp-content/uploads/legacysitecontent/cpcs/posts_01/2019/04/16105532/kitchen.jpg'
+        name: 'Lipstick',
+        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(1).png&w=1920&q=75',
+        price: '$5',
+    },
+    {
+        name: 'Green plant',
+        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(4).png&w=1920&q=75',
+        price: '$20',
+    },
+    {
+        name: 'Bonsai tree',
+        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(3).png&w=1920&q=75',
+        price: '$30',
     }
-
 ]
 
 const PrevArraow = (props) =>{
@@ -94,7 +108,7 @@ function Home() {
     
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 1000,
         slidesToShow: 4,
         slidesToScroll: 1,
@@ -160,6 +174,28 @@ function Home() {
                                     ))
                                 }
                             </Slider>
+                        </div>
+                    </section>
+
+                    <section className="section-arrival">
+                        <div className="header">
+                            <div className="title"> <img src={newIcon} alt="" srcset="" className='icon' /> Nouveauté</div>
+                            <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                        </div>
+                        <div className="data">
+                            {
+                                newProducts?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
+                                .sort((a, b) => a.sort-b.sort).map((prod, index) => (
+                                    <div className="product" key={index}>
+                                        <div className="cover">
+                                            <img src={prod.cover} alt="" srcset="" />
+                                            <div className="bg"></div>
+                                        </div>
+                                        <div className="name">{ prod.name }</div>
+                                        <div className="price"> {prod.price} </div>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </section>
                 </div>
