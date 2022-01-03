@@ -243,6 +243,52 @@
             }
         }
     }
+
+    section.electronic{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+        .menus{
+            width: 35% !important;
+            height: 400px;
+            background-color: white;
+            box-shadow: 0 1px 13px rgba(0, 0, 0, 0.1);
+            margin-right: 40px;
+            padding: 20px;
+            border-radius: 10px;
+
+            ul{
+                li{
+                    display: block !important;
+                    background-color: rgb(236, 236, 236);
+                    border-radius: 5px;
+                    height: 50px !important;
+                    padding-top: 5px;
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                    &.ant-menu-item-selected{
+                        background-color: white;
+                        box-shadow: 0 1px 23px rgba(0, 0, 0, 0.1);
+                        color: black;
+                    }
+                    &:last-of-type{
+                        margin-top: 130px !important;
+                    }
+                }
+            }
+        }
+
+        section .data{
+            display: flex;
+            flex-wrap: wrap;
+
+            .product.elec{
+                width: calc(100% / 3 - 20px) !important;
+                margin-bottom: 10px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+        }
+    }
 }
 
 .carousel{

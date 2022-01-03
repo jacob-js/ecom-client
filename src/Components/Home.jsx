@@ -1,4 +1,4 @@
-import { Carousel, Rate } from 'antd';
+import { Carousel, Menu, Rate } from 'antd';
 import React from 'react'
 import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLocalOffer } from 'react-icons/md';
 import Slider from 'react-slick';
@@ -221,6 +221,41 @@ function Home() {
                                 }
                             </Slider>
                         </div>
+                    </section>
+
+                    <section className="electronic">
+                        <div className="menus">
+                            <Menu className=''defaultSelectedKeys={'all'}>
+                                <Menu.Item key="laptop">Ordinateurs portables</Menu.Item>
+                                <Menu.Item key="desktop">Ordinateurs de bureau</Menu.Item>
+                                <Menu.Item key="phone">Telephones portables</Menu.Item>
+                                <Menu.Item key="all">Tous</Menu.Item>
+                            </Menu>
+                        </div>
+
+                        <section className="section-flash">
+                            <div className="header">
+                                <div className="title">Elecroniques</div>
+                                <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                            </div>
+                            <div className="data">
+                                {
+                                    [...bestProducts, bestProducts[1]].map((product, index) => (
+                                        <div className="product elec" key={index}>
+                                            <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
+                                            <div className="info">
+                                                <div className="">
+                                                    <div className="name"> {product.name} </div>
+                                                    <Rate disabled defaultValue={2.5} className='rate' />
+                                                    <div className="price"> {product.price} </div>
+                                                </div>
+                                                <div className="add-to-cart"> <MdOutlineAddShoppingCart className='icon' /> </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </section>
                     </section>
                 </div>
             </div>
