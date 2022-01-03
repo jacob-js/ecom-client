@@ -1,5 +1,5 @@
 import { Carousel, Menu, Rate } from 'antd';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLocalOffer } from 'react-icons/md';
 import Slider from 'react-slick';
 import c1 from '../assets/images/c1.jpg';
@@ -9,6 +9,7 @@ import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
 import { useQuery } from 'react-query';
 import { getTopCategorysApi } from '../apis/products';
 import newIcon from '../assets/images/icons/new-product.svg';
+import Aos from 'aos';
 
 const bestProducts = [
     {
@@ -105,6 +106,10 @@ function Home() {
     const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
         staleTime: 300000,
     });
+
+    useEffect(() =>{
+        Aos.init({ duration: 1000 });
+    }, [])
     
     const settings = {
         dots: false,
@@ -137,7 +142,7 @@ function Home() {
                             <Slider {...settings} className='carousel'>
                                 {
                                     bestProducts.map((product, index) => (
-                                        <div className="product" key={index}>
+                                        <div data-aos='fade-left' className="product" key={index}>
                                             <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                                             <div className="info">
                                                 <div className="">
@@ -164,7 +169,7 @@ function Home() {
                                 {
                                     data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
                                     .sort((a, b) => a.sort-b.sort).map((category, index) => (
-                                        <div className="category" key={index}>
+                                        <div data-aos='fade-right' className="category" key={index}>
                                             <div className="name">{ category.name }</div>
                                             <div className="cover">
                                                 <img src={category.cover} alt="" srcset="" />
@@ -186,7 +191,7 @@ function Home() {
                             {
                                 newProducts?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
                                 .sort((a, b) => a.sort-b.sort).map((prod, index) => (
-                                    <div className="product" key={index}>
+                                    <div data-aos='fade-up' className="product" key={index}>
                                         <div className="cover">
                                             <img src={prod.cover} alt="" srcset="" />
                                             <div className="bg"></div>
@@ -209,7 +214,7 @@ function Home() {
                                 {
                                     newProducts?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
                                     .sort((a, b) => a.sort-b.sort).map((prod, index) => (
-                                        <div className="product" key={index}>
+                                        <div data-aos='fade-right' className="product" key={index}>
                                             <div className="cover">
                                                 <img src={prod.cover} alt="" srcset="" />
                                                 <div className="bg"></div>
@@ -241,7 +246,7 @@ function Home() {
                             <div className="data">
                                 {
                                     [...bestProducts, bestProducts[1]].map((product, index) => (
-                                        <div className="product elec" key={index}>
+                                        <div className="product elec" data-aos='fade-down' key={index}>
                                             <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                                             <div className="info">
                                                 <div className="">
