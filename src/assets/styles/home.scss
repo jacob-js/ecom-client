@@ -188,6 +188,61 @@
             }
         }
     }
+
+    .section-big-discount{
+        margin-top: 50px;
+        .data{
+            display: flex;
+            border-radius: 10px;
+            padding: 10px;
+
+            .product{
+                width: 175px;
+                height: 100% !important;
+                padding: 20px 10px;
+                background-color: white;
+                box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+                cursor: pointer;
+                .cover{
+                    height: 175px;
+                    width: 175px;
+                    margin: auto !important;
+                    border-radius: 10px;
+                    img{
+                        width: 175px;
+                        height: 175px !important;
+                    }
+                    .bg{
+                        position: absolute;
+                        content: '';
+                        top: 8%;
+                        width: 175px;
+                        height: 175px;
+                        border-radius: 10px;
+                        background-color: rgba(0, 0, 0, 0);
+                        z-index: 9;
+                        transition: all .5s ease-in-out;
+    
+                        &:hover{
+                            background-color: rgba(0, 0, 0, 0.3);
+                        }
+                    }
+                }
+                .price{
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: $color_default;
+
+                    .discounted{
+                        color: gray;
+                        text-decoration: line-through;
+                        font-weight: normal;
+                        // margin-left: 20px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .carousel{

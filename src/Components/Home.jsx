@@ -1,6 +1,6 @@
 import { Carousel, Rate } from 'antd';
 import React from 'react'
-import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart } from 'react-icons/md';
+import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLocalOffer } from 'react-icons/md';
 import Slider from 'react-slick';
 import c1 from '../assets/images/c1.jpg';
 import c2 from '../assets/images/c2.jpg';
@@ -196,6 +196,30 @@ function Home() {
                                     </div>
                                 ))
                             }
+                        </div>
+                    </section>
+
+                    <section className="section-big-discount">
+                        <div className="header">
+                            <div className="title"> <MdOutlineLocalOffer className='icon' /> Réduction</div>
+                            <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                        </div>
+                        <div className="data">
+                            <Slider {...settings} slidesToShow={5} className='carousel'>
+                                {
+                                    newProducts?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
+                                    .sort((a, b) => a.sort-b.sort).map((prod, index) => (
+                                        <div className="product" key={index}>
+                                            <div className="cover">
+                                                <img src={prod.cover} alt="" srcset="" />
+                                                <div className="bg"></div>
+                                            </div>
+                                            <div className="name">{ prod.name }</div>
+                                            <div className="price"> {prod.price} <span className="discounted"> {prod.price} </span> </div>
+                                        </div>
+                                    ))
+                                }
+                            </Slider>
                         </div>
                     </section>
                 </div>
