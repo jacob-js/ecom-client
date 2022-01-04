@@ -7,6 +7,7 @@ import { StyleReset } from 'atomize';
 import './global.scss';
 import axios from 'axios';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider as StyletronProvider, DebugEngine } from "styletron-react";
 import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider } from 'react-redux';
@@ -27,6 +28,7 @@ ReactDOM.render(
         <Routes />
       </Provider>
     </StyletronProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>,
   document.getElementById('root')
 );

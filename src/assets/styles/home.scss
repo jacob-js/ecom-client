@@ -245,11 +245,11 @@
     }
 
     section.electronic{
+        width: 100%;
         display: flex;
-        justify-content: space-between;
         margin-top: 50px;
         .menus{
-            width: 35% !important;
+            width: 20% !important;
             height: 400px;
             background-color: white;
             box-shadow: 0 1px 13px rgba(0, 0, 0, 0.1);
@@ -272,22 +272,43 @@
                         color: black;
                     }
                     &:last-of-type{
-                        margin-top: 130px !important;
+                        margin-top: 70px !important;
                     }
                 }
             }
         }
 
-        section .data{
-            display: flex;
-            flex-wrap: wrap;
-
-            .product.elec{
-                width: calc(100% / 3 - 20px) !important;
-                margin-bottom: 10px;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        section{
+            width: 80%;
+            .data{
+                width: 100% !important;
+                display: flex;
+                flex-wrap: wrap;
+    
+                .product.elec{
+                    width: calc(100% / 3 - 20px) !important;
+                    margin-bottom: 10px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                    .cover{
+                        width: 100%;
+                        border-radius: 10px 10px 0px 0px;
+                    }
+                }
             }
         }
+    }
+}
+
+.price{
+    font-size: 14px;
+    font-weight: 600;
+    color: $color_default;
+
+    .discounted{
+        color: gray !important;
+        text-decoration: line-through;
+        font-weight: normal;
+        margin-left: 5px;
     }
 }
 

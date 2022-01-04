@@ -1,5 +1,5 @@
 import { Carousel, Menu, Rate } from 'antd';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLocalOffer } from 'react-icons/md';
 import Slider from 'react-slick';
 import c1 from '../assets/images/c1.jpg';
@@ -7,7 +7,7 @@ import c2 from '../assets/images/c2.jpg';
 import c3 from '../assets/images/c3.jpg';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
 import { useQuery } from 'react-query';
-import { getTopCategorysApi } from '../apis/products';
+import { getProductsByCategoryApi, getTopCategorysApi } from '../apis/products';
 import newIcon from '../assets/images/icons/new-product.svg';
 import Aos from 'aos';
 
@@ -103,13 +103,29 @@ const NextArraow = (props) =>{
 }
 
 function Home() {
+    const [electronicProducts, setelectronicProducts] = useState([]);
     const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
         staleTime: 300000,
     });
+    const { isLoading: loadingLaptops, data: laptops } = useQuery('laptops', () =>getProductsByCategoryApi('laptop'), {
+        staleTime: 300000
+    });
+    const { isLoading: loadingPhones, data: phones } = useQuery('phones', () => getProductsByCategoryApi('mobile phone'), {
+        staleTime: 300000,
+    });
+    const { isLoading: loadingDesktops, data: desktops } = useQuery('desktops', () => getProductsByCategoryApi('desktop'), { staleTime: 300000 });
+    const { isLoading: loadingAccessorys, data: accessorys } = useQuery('accessorys', () => getProductsByCategoryApi('accessoire electronique'), { staleTime: 300000 });
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });
-    }, [])
+    }, []);
+    useEffect(() =>{
+        (() =>{
+            if(phones?.rows && laptops?.rows && desktops?.rows && accessorys?.rows){
+                setelectronicProducts([...laptops.rows, ...phones.rows, ...desktops.rows, ...accessorys.rows ])
+            }
+        })()
+    }, [phones, laptops, desktops, accessorys]);
     
     const settings = {
         dots: false,
@@ -231,10 +247,13 @@ function Home() {
                     <section className="electronic">
                         <div className="menus">
                             <Menu className=''defaultSelectedKeys={'all'}>
-                                <Menu.Item key="laptop">Ordinateurs portables</Menu.Item>
-                                <Menu.Item key="desktop">Ordinateurs de bureau</Menu.Item>
-                                <Menu.Item key="phone">Telephones portables</Menu.Item>
-                                <Menu.Item key="all">Tous</Menu.Item>
+                                <Menu.Item onClick={() =>setelectronicProducts(laptops.rows)} key="laptop">Ordinateurs portables</Menu.Item>
+                                <Menu.Item onClick={() =>setelectronicProducts(desktops.rows)} key="desktop">Ordinateurs de bureau</Menu.Item>
+                                <Menu.Item onClick={() =>setelectronicProducts(phones.rows)} key="phone">Telephones portables</Menu.Item>
+                                <Menu.Item onClick={() =>setelectronicProducts(accessorys.rows)} key="accessory">Accessoires</Menu.Item>
+                                <Menu.Item onClick={() =>{
+                                    setelectronicProducts([...laptops.rows, ...phones.rows, ...desktops.rows, ...accessorys.rows ])
+                                }} key="all">Tous</Menu.Item>
                             </Menu>
                         </div>
 
@@ -245,14 +264,17 @@ function Home() {
                             </div>
                             <div className="data">
                                 {
-                                    [...bestProducts, bestProducts[1]].map((product, index) => (
+                                    electronicProducts.map((product, index) => (
                                         <div className="product elec" data-aos='fade-down' key={index}>
                                             <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                                             <div className="info">
                                                 <div className="">
                                                     <div className="name"> {product.name} </div>
                                                     <Rate disabled defaultValue={2.5} className='rate' />
-                                                    <div className="price"> {product.price} </div>
+                                                    <div className="price">
+                                                        {product.currency === "USD" ? '$': "FC"}{product.price - (product.discount || 0)}
+                                                        { product.discount && <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span> }
+                                                    </div>
                                                 </div>
                                                 <div className="add-to-cart"> <MdOutlineAddShoppingCart className='icon' /> </div>
                                             </div>
