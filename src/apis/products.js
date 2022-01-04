@@ -7,3 +7,7 @@ export const getTopCategorysApi = () => {
 export const getProductsByCategoryApi = async (categoryName) => {
     return (await axios.get(`/categorys/products/${categoryName}`)).data?.data
 };
+
+export const getProducts = async (bigDiscount, isBest, limit, offset) =>{
+    return (await axios.get(`/products?${bigDiscount && `bigDiscount=${bigDiscount}`}&${isBest && `isBest=${isBest}`}&limit=${limit}&offset=${offset}`)).data?.data
+}

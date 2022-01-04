@@ -7,7 +7,7 @@ import c2 from '../assets/images/c2.jpg';
 import c3 from '../assets/images/c3.jpg';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
 import { useQuery } from 'react-query';
-import { getProductsByCategoryApi, getTopCategorysApi } from '../apis/products';
+import { getProducts, getProductsByCategoryApi, getTopCategorysApi } from '../apis/products';
 import newIcon from '../assets/images/icons/new-product.svg';
 import Aos from 'aos';
 
@@ -115,6 +115,7 @@ function Home() {
     });
     const { isLoading: loadingDesktops, data: desktops } = useQuery('desktops', () => getProductsByCategoryApi('desktop'), { staleTime: 300000 });
     const { isLoading: loadingAccessorys, data: accessorys } = useQuery('accessorys', () => getProductsByCategoryApi('accessoire electronique'), { staleTime: 300000 });
+    const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery('discountProducts', () => getProducts(true), { staleTime: 300000 });
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });
@@ -228,7 +229,7 @@ function Home() {
                         <div className="data">
                             <Slider {...settings} slidesToShow={5} className='carousel'>
                                 {
-                                    newProducts?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
+                                    bigDiscountProducts?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
                                     .sort((a, b) => a.sort-b.sort).map((prod, index) => (
                                         <div data-aos='fade-right' className="product" key={index}>
                                             <div className="cover">
@@ -236,7 +237,9 @@ function Home() {
                                                 <div className="bg"></div>
                                             </div>
                                             <div className="name">{ prod.name }</div>
-                                            <div className="price"> {prod.price} <span className="discounted"> {prod.price} </span> </div>
+                                            <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
+                                                <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
+                                            </div>
                                         </div>
                                     ))
                                 }
@@ -264,7 +267,8 @@ function Home() {
                             </div>
                             <div className="data">
                                 {
-                                    electronicProducts.map((product, index) => (
+                                    electronicProducts.map(prod =>({ ...prod, sort: Math.random() }))
+                                    .sort((a, b) => a-b).map((product, index) => (
                                         <div className="product elec" data-aos='fade-down' key={index}>
                                             <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                                             <div className="info">
