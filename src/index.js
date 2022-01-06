@@ -15,7 +15,13 @@ import store from './Redux/store';
 
 axios.defaults.baseURL = 'http://localhost:5000/api/v1';
 axios.defaults.headers.common['bweteta_token'] = localStorage.getItem('bweteta_token');
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 60
+    }
+  }
+});
 
 const debug = process.env.NODE_ENV === "production" ? void 0 : new DebugEngine();
 const engine = new Styletron();

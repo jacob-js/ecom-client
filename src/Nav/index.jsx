@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../assets/images/min_logo.png'
 import { HiOutlineLogin, HiOutlineLogout, HiOutlineShoppingBag, HiOutlineUser } from 'react-icons/hi';
 import { MdCategory, MdOutlineBikeScooter, MdOutlineDevices, MdOutlineKeyboardArrowDown, MdOutlinePets } from 'react-icons/md';
@@ -8,7 +8,7 @@ import { GiHealing, GiHomeGarage, GiMusicSpell, GiTravelDress } from 'react-icon
 import { FaBaby } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
@@ -41,7 +41,9 @@ const stickyMenu = (
 
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
+    const location = useLocation();
     const history = useHistory();
+    const [popupVisible, setPopupVisible] = useState(location.pathname === '/' ? true: false)
     const { data, auth } = useSelector(({ users: { currUser } }) =>currUser);
     const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
@@ -58,7 +60,16 @@ function Nav({children}) {
         dispatch({
             type: usersActionTypes.LOGOUT_SUCCESS
         });
-    }
+    };
+
+    useEffect(() => {
+        if(location.pathname === '/') {
+            setPopupVisible(true)
+        }else{
+            setPopupVisible(false)
+        }
+        return;
+    }, [location.pathname]);
     
     return (
         <div className='page'>
@@ -123,12 +134,12 @@ function Nav({children}) {
                 </div>
                 <div className="bottom">
                     <div className="categ">
-                        <Dropdown visible trigger={['click']} overlay={menu}>
+                        <Dropdown visible={popupVisible} onVisibleChange={(vis) =>setPopupVisible(vis)} trigger={['click']} overlay={menu}>
                             <div className="btn-categ"> <BiCategoryAlt className='icon-categ' /> Catégories <MdOutlineKeyboardArrowDown className='icon' /> </div>
                         </Dropdown>
                     </div>
                     <div className="links">
-                        <div className="link">Accueil</div>
+                        <div className="link" onClick={() =>history.push('/')}>Accueil</div>
                         <div className="link">Compte vendeur</div>
                         <div className="link">Besoin d'aide</div>
                     </div>

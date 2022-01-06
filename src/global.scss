@@ -25,9 +25,14 @@
 $color_default : #dd4900;
 $bg_color: rgb(246, 249, 252);
 
+body{
+    background-color: $bg_color;
+}
+
 @import './assets/styles/auth.scss';
 @import './assets/styles/nav.scss';
 @import './assets/styles/home.scss';
+@import './assets/styles/products.scss';
 @import 'antd/dist/antd.css';
 @import 'aos/dist/aos.css';
 @import "slick-carousel/slick/slick.css";

@@ -56,7 +56,7 @@ function Routes() {
                 <Nav>
                     {
                         notProtectedRoutesWithNav.map((route, index) =>(
-                            <Route path={route.path} key={index} render={ () =><route.component /> } />
+                            <Route path={route.path} exact={route.exact} key={index} render={ () =><route.component /> } />
                         ))
                     }
                 </Nav>

@@ -1,4 +1,4 @@
-import { Carousel, Menu, Rate } from 'antd';
+import { Carousel, Menu, Rate, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLocalOffer } from 'react-icons/md';
 import Slider from 'react-slick';
@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 import { getProducts, getProductsByCategoryApi, getTopCategorysApi } from '../apis/products';
 import newIcon from '../assets/images/icons/new-product.svg';
 import Aos from 'aos';
+import { useHistory } from 'react-router-dom';
 
 const bestProducts = [
     {
@@ -104,6 +105,7 @@ const NextArraow = (props) =>{
 
 function Home() {
     const [electronicProducts, setelectronicProducts] = useState([]);
+    const history = useHistory();
     const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
         staleTime: 300000,
     });
@@ -137,6 +139,8 @@ function Home() {
         nextArrow: <NextArraow />,
         prevArrow: <PrevArraow />
     };
+
+    const isLoadingElec = loadingLaptops || loadingPhones || loadingDesktops || loadingAccessorys;
   
     return (
         <div className='home'>
@@ -227,38 +231,48 @@ function Home() {
                             <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
                         <div className="data">
-                            <Slider {...settings} slidesToShow={5} className='carousel'>
-                                {
-                                    bigDiscountProducts?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
-                                    .sort((a, b) => a.sort-b.sort).map((prod, index) => (
-                                        <div data-aos='fade-right' className="product" key={index}>
-                                            <div className="cover">
-                                                <img src={prod.cover} alt="" srcset="" />
-                                                <div className="bg"></div>
+                            {
+                                loadingBigDiscount ?
+                                [1, 2, 3, 4, 5].map((prod, index) => (
+                                    <Skeleton.Input style={{ width: 200, margin: 20, height: 200,  borderRadius: 10 }} key={index} active loading={true} size='large' />
+                                )):
+                                <Slider {...settings} slidesToShow={5} className='carousel'>
+                                    {
+                                        bigDiscountProducts?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
+                                        .sort((a, b) => a.sort-b.sort).map((prod, index) => (
+                                            <div data-aos='fade-right' className="product" key={index}>
+                                                <div className="cover" onClick={() =>history.push(`/products/${prod.id}`)}>
+                                                    <img src={prod.cover} alt="" srcset="" />
+                                                    <div className="bg"></div>
+                                                </div>
+                                                <div className="name">{ prod.name }</div>
+                                                <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
+                                                    <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
+                                                </div>
                                             </div>
-                                            <div className="name">{ prod.name }</div>
-                                            <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
-                                                <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </Slider>
+                                        ))
+                                    }
+                                </Slider>
+                            }
                         </div>
                     </section>
 
                     <section className="electronic">
-                        <div className="menus">
-                            <Menu className=''defaultSelectedKeys={'all'}>
-                                <Menu.Item onClick={() =>setelectronicProducts(laptops.rows)} key="laptop">Ordinateurs portables</Menu.Item>
-                                <Menu.Item onClick={() =>setelectronicProducts(desktops.rows)} key="desktop">Ordinateurs de bureau</Menu.Item>
-                                <Menu.Item onClick={() =>setelectronicProducts(phones.rows)} key="phone">Telephones portables</Menu.Item>
-                                <Menu.Item onClick={() =>setelectronicProducts(accessorys.rows)} key="accessory">Accessoires</Menu.Item>
-                                <Menu.Item onClick={() =>{
-                                    setelectronicProducts([...laptops.rows, ...phones.rows, ...desktops.rows, ...accessorys.rows ])
-                                }} key="all">Tous</Menu.Item>
-                            </Menu>
-                        </div>
+                        {
+                            isLoadingElec ?
+                            <Skeleton.Input style={{ width: 200, marginRight: 40, height: 400 }} className='menus-load' active loading={true} size='large' />:
+                            <div className="menus">
+                                <Menu className=''defaultSelectedKeys={'all'}>
+                                    <Menu.Item onClick={() =>setelectronicProducts(laptops.rows)} key="laptop">Ordinateurs portables</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(desktops.rows)} key="desktop">Ordinateurs de bureau</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(phones.rows)} key="phone">Telephones portables</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(accessorys.rows)} key="accessory">Accessoires</Menu.Item>
+                                    <Menu.Item onClick={() =>{
+                                        setelectronicProducts([...laptops.rows, ...phones.rows, ...desktops.rows, ...accessorys.rows ])
+                                    }} key="all">Tous</Menu.Item>
+                                </Menu>
+                            </div>
+                        }
 
                         <section className="section-flash">
                             <div className="header">
@@ -267,10 +281,15 @@ function Home() {
                             </div>
                             <div className="data">
                                 {
+                                    isLoadingElec ?
+                                    [0, 1, 2].map((index) => (
+                                        <Skeleton.Input style={{ width: 300, margin: 10, height: 350 }} key={index} active loading={true} size='large' />
+                                    ))
+                                    :
                                     electronicProducts.map(prod =>({ ...prod, sort: Math.random() }))
                                     .sort((a, b) => a-b).map((product, index) => (
                                         <div className="product elec" data-aos='fade-down' key={index}>
-                                            <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
+                                            <div onClick={() =>history.push(`/products/${product.id}`)} className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                                             <div className="info">
                                                 <div className="">
                                                     <div className="name"> {product.name} </div>

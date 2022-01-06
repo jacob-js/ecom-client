@@ -1,6 +1,7 @@
 import ConfirmAccount from "../Components/ConfirmAccount";
 import Home from "../Components/Home";
 import Login from "../Components/Login";
+import ProductDetail from "../Components/ProductDetail";
 import Signup from "../Components/Signup";
 
 const routes = [
@@ -8,7 +9,8 @@ const routes = [
         path: "/",
         component: Home,
         protected: false,
-        nav: true
+        nav: true,
+        exact: true
     },
     {
         name: 'Login',
@@ -32,6 +34,13 @@ const routes = [
         authRoute: true,
         protected: false,
         nav: false
+    },
+    {
+        path: '/products/:id',
+        component: ProductDetail,
+        protected: false,
+        nav: true,
+        exact: true
     }
 ]
 
