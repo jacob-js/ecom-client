@@ -134,7 +134,7 @@ function Nav({children}) {
                 </div>
                 <div className="bottom">
                     <div className="categ">
-                        <Dropdown visible={popupVisible} onVisibleChange={(vis) =>setPopupVisible(vis)} trigger={['click']} overlay={menu}>
+                        <Dropdown visible={location.pathname === '/' ? true: popupVisible} onVisibleChange={(vis) =>setPopupVisible(vis)} trigger={['click']} overlay={menu}>
                             <div className="btn-categ"> <BiCategoryAlt className='icon-categ' /> Catégories <MdOutlineKeyboardArrowDown className='icon' /> </div>
                         </Dropdown>
                     </div>
