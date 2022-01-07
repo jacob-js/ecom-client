@@ -1,6 +1,6 @@
 import { Carousel, Menu, Rate, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { MdArrowRight, MdCategory, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLocalOffer } from 'react-icons/md';
+import { MdArrowRight, MdCategory, MdDesktopMac, MdDevicesOther, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLaptopChromebook, MdOutlineLocalOffer, MdPhoneIphone } from 'react-icons/md';
 import Slider from 'react-slick';
 import c1 from '../assets/images/c1.jpg';
 import c2 from '../assets/images/c2.jpg';
@@ -11,6 +11,8 @@ import { getProducts, getProductsByCategoryApi, getTopCategorysApi } from '../ap
 import newIcon from '../assets/images/icons/new-product.svg';
 import Aos from 'aos';
 import { useHistory } from 'react-router-dom';
+import Cart from '../Utils/cart.utils';
+import { useDispatch } from 'react-redux';
 
 const bestProducts = [
     {
@@ -106,6 +108,7 @@ const NextArraow = (props) =>{
 function Home() {
     const [electronicProducts, setelectronicProducts] = useState([]);
     const history = useHistory();
+    const dispatch = useDispatch();
     const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
         staleTime: 300000,
     });
@@ -263,10 +266,10 @@ function Home() {
                             <Skeleton.Input style={{ width: 200, marginRight: 40, height: 400 }} className='menus-load' active loading={true} size='large' />:
                             <div className="menus">
                                 <Menu className=''defaultSelectedKeys={'all'}>
-                                    <Menu.Item onClick={() =>setelectronicProducts(laptops.rows)} key="laptop">Ordinateurs portables</Menu.Item>
-                                    <Menu.Item onClick={() =>setelectronicProducts(desktops.rows)} key="desktop">Ordinateurs de bureau</Menu.Item>
-                                    <Menu.Item onClick={() =>setelectronicProducts(phones.rows)} key="phone">Telephones portables</Menu.Item>
-                                    <Menu.Item onClick={() =>setelectronicProducts(accessorys.rows)} key="accessory">Accessoires</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(laptops.rows)} key="laptop" icon={ <MdOutlineLaptopChromebook /> }>Ordinateurs portables</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(desktops.rows)} key="desktop" icon={ <MdDesktopMac /> }>Ordinateurs de bureau</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(phones.rows)} icon={<MdPhoneIphone />} key="phone">Telephones portables</Menu.Item>
+                                    <Menu.Item onClick={() =>setelectronicProducts(accessorys.rows)} icon={ <MdDevicesOther /> } key="accessory">Accessoires</Menu.Item>
                                     <Menu.Item onClick={() =>{
                                         setelectronicProducts([...laptops.rows, ...phones.rows, ...desktops.rows, ...accessorys.rows ])
                                     }} key="all">Tous</Menu.Item>
@@ -287,7 +290,7 @@ function Home() {
                                     ))
                                     :
                                     electronicProducts.map(prod =>({ ...prod, sort: Math.random() }))
-                                    .sort((a, b) => a-b).map((product, index) => (
+                                    .sort((a, b) => a.sort-b.sort).map((product, index) => (
                                         <div className="product elec" data-aos='fade-down' key={index}>
                                             <div onClick={() =>history.push(`/products/${product.id}`)} className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                                             <div className="info">
@@ -299,7 +302,7 @@ function Home() {
                                                         { product.discount && <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span> }
                                                     </div>
                                                 </div>
-                                                <div className="add-to-cart"> <MdOutlineAddShoppingCart className='icon' /> </div>
+                                                <div onClick={() =>Cart.addToCart({ ...product, quantity: 1 }, dispatch)} className="add-to-cart"> <MdOutlineAddShoppingCart className='icon' /> </div>
                                             </div>
                                         </div>
                                     ))

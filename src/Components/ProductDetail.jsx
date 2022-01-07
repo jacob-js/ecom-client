@@ -1,8 +1,10 @@
 import { Button, Rate, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../apis/products';
+import Cart from '../Utils/cart.utils';
 
 function ProductDetail() {
     const params = useParams();
@@ -10,6 +12,7 @@ function ProductDetail() {
     const product = res?.data?.data || {};
     const images = [ product.cover, product?.Colors?.length > 0 && product?.Colors?.map(color => color.image) ];
     const [cover, setCover] = useState(product.cover);
+    const dispatch = useDispatch();
     useEffect(() => {
         (() =>{
             setCover(product.cover);
@@ -64,7 +67,7 @@ function ProductDetail() {
                         {
                             isLoading ?
                             <Skeleton.Input style={{ width: 150, height: 40, borderRadius: 20 }} active loading={true} size='large' />:
-                            <Button className='btn'>Ajouter au panier</Button>
+                            <Button className='btn' onClick={() =>Cart.addToCart({ ...product, quantity: 1 }, dispatch)}>Ajouter au panier</Button>
                         }
                     </div>
                 </div>

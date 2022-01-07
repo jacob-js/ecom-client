@@ -3,7 +3,7 @@ import logo from '../assets/images/min_logo.png'
 import { HiOutlineLogin, HiOutlineLogout, HiOutlineShoppingBag, HiOutlineUser } from 'react-icons/hi';
 import { MdCategory, MdOutlineBikeScooter, MdOutlineDevices, MdOutlineKeyboardArrowDown, MdOutlinePets } from 'react-icons/md';
 import { Icon, Input, Dropdown as AtDropDown } from 'atomize';
-import { Dropdown, Menu, Popover } from 'antd';
+import { Badge, Dropdown, Menu, Popover } from 'antd';
 import { GiHealing, GiHomeGarage, GiMusicSpell, GiTravelDress } from 'react-icons/gi';
 import { FaBaby } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
@@ -12,6 +12,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
+import CartDrawer from './CartDrawer';
 
 const menu = (
     <Menu className='categ-menus'>
@@ -41,10 +42,12 @@ const stickyMenu = (
 
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
+    const [cartVisible, setCartVisible] = useState(false);
     const location = useLocation();
     const history = useHistory();
     const [popupVisible, setPopupVisible] = useState(location.pathname === '/' ? true: false)
     const { data, auth } = useSelector(({ users: { currUser } }) =>currUser);
+    const { cartItems: items } = useSelector(({ cart }) => cart);
     const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) {
@@ -76,7 +79,7 @@ function Nav({children}) {
             <div className="nav">
                 <div className="top">
                     <div className="logo">
-                        <img src={logo} alt="logo" srcset="" />
+                        <img src={logo} alt="logo" srcset="" onClick={() =>history.push('/')} />
                         <div className="sticky-categ">
                             <AtDropDown textColor="gray500" isOpen={visible} onClick={() =>setVisible(!visible)} menu={stickyMenu} className='dropdown' border="none">
                                 <div className="btn-categ"> <MdCategory className='icon-categ' /> </div>
@@ -127,9 +130,11 @@ function Nav({children}) {
                                 <HiOutlineUser className='icon' />
                             </div>
                         </Popover>
-                        <div className="cart">
-                            <HiOutlineShoppingBag className='icon' />
-                        </div>
+                        <Badge count={items.length} color='#dd4900' className='cart-count' style={{ marginTop: 15, marginRight: 10 }}>
+                            <div className="cart" onClick={() =>setCartVisible(true)}>
+                                <HiOutlineShoppingBag className='icon' />
+                            </div>
+                        </Badge>
                     </div>
                 </div>
                 <div className="bottom">
@@ -144,6 +149,7 @@ function Nav({children}) {
                         <div className="link">Besoin d'aide</div>
                     </div>
                 </div>
+                <CartDrawer visible={cartVisible} onClose={() =>setCartVisible(false)} />
             </div>
             {children}
         </div>

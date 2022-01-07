@@ -1,5 +1,7 @@
+import cart from "./cart";
 import users from "./users";
 
 export default {
-    users: users
+    users: users,
+    cart: cart
 }

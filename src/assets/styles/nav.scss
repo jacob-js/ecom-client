@@ -16,6 +16,9 @@
         .logo{
             display: flex;
             align-items: baseline;
+            img{
+                cursor: pointer;
+            }
 
             .sticky-categ{
                 display: none;
@@ -139,4 +142,87 @@
 }
 .ant-menu-vertical{
     border: none !important;
+}
+
+.cart-drawer{
+    .header{
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        .icon{
+            margin-right: 10px;
+            font-size: 25px;
+        }
+    }
+    .cart{
+        .item{
+            display: flex;
+            align-items: center;
+            padding: 10px 0px;
+            border-bottom: 1px solid rgb(224, 224, 224);
+            margin-bottom: 20px;
+            .prod{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 80%;
+                .info{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    img{
+                        max-width: 70px;
+                        max-height: 70px;
+                        margin-right: 10px;
+                    }
+                    .name{
+                        font-weight: 600;
+                        font-size: 12px;
+                    }
+                    .sub-price{
+                        font-size: 10px;
+                        color: rgba(0, 0, 0, 0.5);
+                    }
+                }
+                .action{
+                    color: rgba(0, 0, 0, 0.5);
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+            }
+            .qty-manag{
+                width: 20%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .plus, .minus{
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    color: $color_default;
+                    border: 1px solid #eeb79c;
+                    border-radius: 50%;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 600;
+                    background-color: white !important;
+                    &:hover{
+                        background-color: $color_default !important;
+                        color: #fff;
+                    }
+                    &:disabled{
+                        background-color: rgb(199, 199, 199) !important;
+                        color: gray;
+                        border: none;
+                    }
+                }
+                .qty{
+                    font-weight: 600;
+                    margin: 5px 0px;
+                }
+            }
+        }
+    }
 }

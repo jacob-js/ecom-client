@@ -42,7 +42,7 @@ function Routes() {
 
     useEffect(() =>{
         mutation.mutate();
-    }, [mutation])
+    }, [])
 
     return (
         loading ? <PageLoader />:
