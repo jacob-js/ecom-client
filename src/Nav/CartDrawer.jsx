@@ -1,4 +1,4 @@
-import { Drawer } from 'antd'
+import { Button, Drawer } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
@@ -27,7 +27,14 @@ function CartDrawer({visible, onClose}) {
             <div className='header'>
                 <FiShoppingCart className='icon' /> {items.length} article{`${items.length > 1 ? 's': ''}`}
             </div>
-        } placement="right" visible={visible} onClose={onClose} closable={false} zIndex={99999} className='cart-drawer'>
+        } placement="right" visible={visible} onClose={onClose} closable={false} zIndex={99999} className='cart-drawer'
+            footer={
+                <div className="footer">
+                    <Button type="primary" className='btn checkout'>Passer à la caisse</Button>
+                    <Button type="primary" className='btn view-cart'>Voir le panier</Button>
+                </div>
+            }
+        >
 
             <div className="cart">
                 { items.map(item => <div key={item.id} className='item'>

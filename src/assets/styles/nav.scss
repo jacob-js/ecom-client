@@ -225,4 +225,32 @@
             }
         }
     }
+    .footer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .btn.checkout{
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .btn.view-cart{
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: white;
+            border: 1px solid $color_default;
+            color: $color_default;
+            &:hover, &:active, &:focus{
+                background-color: $color_default;
+                color: white;
+            }
+        }
+    }
 }
