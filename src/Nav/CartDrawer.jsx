@@ -1,13 +1,15 @@
 import { Button, Drawer } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Cart from '../Utils/cart.utils'
 
 function CartDrawer({visible, onClose}) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { cartItems: items } = useSelector(({ cart }) => cart);
 
     useEffect(() =>{
@@ -31,7 +33,7 @@ function CartDrawer({visible, onClose}) {
             footer={
                 <div className="footer">
                     <Button type="primary" className='btn checkout'>Passer à la caisse</Button>
-                    <Button type="primary" className='btn view-cart'>Voir le panier</Button>
+                    <Button type="primary" className='btn view-cart' onClick={() =>{history.push('/cart'); onClose()}}>Voir le panier</Button>
                 </div>
             }
         >

@@ -15,17 +15,34 @@ export const Input = styled.input`
     padding: 0 10px;
     border-radius: 10px;
     display: block !important;
-    border-bottom: 2px solid rgba(200, 200, 200, 0.3);
-    transition: .5s ease-in-out;
+    transition: .2s ease-in-out;
 
     &::placeholder {
         color: rgba(200, 200, 200, 1);
     }
     
-    // &:focus {
-    //     outline: none;
-    //     border-bottom-color: #F27405;
-    // }
+    &:focus {
+        outline: none;
+        border-color: #dd4900;
+    }
+`;
+
+export const TextArea = styled.textarea`
+    outline: none;
+    width: 100%;
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+    display: block !important;
+    transition: .2s ease-in-out;
+
+    &::placeholder {
+        color: rgba(200, 200, 200, 1);
+    }
+    &:focus {
+        outline: none;
+        border-color: #dd4900;
+    }
 `;
 
 export const Select = styled.select`

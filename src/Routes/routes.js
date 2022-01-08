@@ -1,3 +1,4 @@
+import Carts from "../Components/Cart";
 import ConfirmAccount from "../Components/ConfirmAccount";
 import Home from "../Components/Home";
 import Login from "../Components/Login";
@@ -38,6 +39,13 @@ const routes = [
     {
         path: '/products/:id',
         component: ProductDetail,
+        protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/cart',
+        component: Carts,
         protected: false,
         nav: true,
         exact: true
