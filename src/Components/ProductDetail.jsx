@@ -87,10 +87,13 @@ function ProductDetail() {
                             ))}
                         </div>
                     }
-                    <div className="stock">
-                        <div className="title">Stock : </div>
-                        { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' }
-                    </div>
+                    {
+                        !isLoading &&
+                        <div className="stock">
+                            <div className="title">Stock : </div>
+                            { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' }
+                        </div>
+                    }
                     {
                         !isLoading &&
                         <>
