@@ -25,6 +25,13 @@ function Carts() {
     const onDecrement = (id) => {
         Cart.decrementItem(id, dispatch);
     }
+
+    const getColorImage = (item, colorName) => {
+        return item.Colors?.find(color => color.name === colorName)?.image;
+    }
+    const getColorName = (item) => {
+        return item.details?.find(detail => detail?.key === 'color')?.value;
+    }
     return (
         <div className='cart-component'>
             <div className="items">
@@ -32,9 +39,14 @@ function Carts() {
                     items.map((item, key) =>(
                         <div className="item" key={key}>
                             <div className="prod">
-                                <img src={item.cover} alt="" />
+                                <img src={getColorName(item) ? getColorImage(item, getColorName(item)): item.cover} alt="" />
                                 <div className="info">
                                     <div className="name"> {item.name} </div>
+                                    <div className="specs">
+                                        { item.details?.map((spec, key) =>(
+                                            spec &&<Tag className='spec-tag' key={key}> {spec.key} : { spec.key === 'color' && !spec.value ? 'couleur principale': spec.value} </Tag>
+                                        )) }
+                                    </div>
                                     <div className="prices">
                                         <div className="sub">{item.currency === "USD" ? '$': "FC"}{ item.price-(item.discount || 0)} x {item.quantity}</div>
                                         <div className="price"> {item.currency === "USD" ? '$': "FC"}{ (item.price-(item.discount || 0))*parseInt(item.quantity) }</div>
@@ -42,12 +54,12 @@ function Carts() {
                                 </div>
                             </div>
                             <div className="actions">
-                                <div className="delete" onClick={() =>onDelete(item.id)}><MdClose className='icon' /></div>
+                                <div className="delete" onClick={() =>onDelete(item.cartId)}><MdClose className='icon' /></div>
                                 <div className="qty-manag">
-                                    <button onClick={() =>onDecrement(item.id)} className="minus" disabled={item.quantity < 2}>                     <HiOutlineMinusSm   className='icon' /> 
+                                    <button onClick={() =>onDecrement(item.cartId)} className="minus" disabled={item.quantity < 2}>                     <HiOutlineMinusSm   className='icon' /> 
                                     </button>
                                     <div className="qty"> { item.quantity } </div>
-                                    <button className="plus" onClick={() =>onIncrement(item.id)}> <HiOutlinePlusSm className='icon' /> </button>
+                                    <button className="plus" onClick={() =>onIncrement(item.cartId)}> <HiOutlinePlusSm className='icon' /> </button>
                                 </div>
                             </div>
                         </div>

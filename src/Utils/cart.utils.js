@@ -2,6 +2,25 @@ import { cartActionTypes } from "../Redux/actionsTypes/cart";
 import { sendNotif } from "./notif";
 
 let items = JSON.parse(localStorage.getItem('cartItems')) || [];
+const checkSameItem = async(item1, item2) => {
+    let results = [];
+    return new Promise((resolve, reject) => {
+        item1?.details?.forEach((elmt, index) => {
+            results.push(elmt.key === item2.details[index].key && elmt.value === item2?.details[index].value)
+        });
+        if(item1?.details?.length > 0){
+            if(results.length === item1.details?.length) {
+                if(results.every(elmt => elmt === true)){
+                    resolve(true);
+                }else{
+                    resolve(false);
+                }
+            }
+        }else{
+            resolve(false);
+        }
+    })
+}
 const Cart = {
     getCartItems(dispatch) {
         dispatch({
@@ -9,9 +28,10 @@ const Cart = {
             payload:  JSON.parse(localStorage.getItem('cartItems')) || []
         });
     },
-    addToCart(item, dispatch) {
+    async addToCart(item, dispatch) {
         const prod =  items.find(i => i.id === item.id);
-        if(prod){
+        const isSameItem = await checkSameItem(prod, item);
+        if(prod && isSameItem){
             const prodIndex = items.findIndex(i => i.id === item.id);
             prod.quantity += 1;
             items[prodIndex] = prod;
@@ -35,9 +55,9 @@ const Cart = {
             payload: products
         });
     },
-    incrementItem(id, dispatch) {
-        const prod = items.find(i => i.id === id);
-        const prodIndex = items.findIndex(i => i.id === id);
+    incrementItem(cartId, dispatch) {
+        const prod = items.find(i => i.cartId === cartId);
+        const prodIndex = items.findIndex(i => i.cartId === cartId);
         prod.quantity += 1;
         items[prodIndex] = prod;
         localStorage.setItem('cartItems', JSON.stringify(items));
@@ -46,9 +66,9 @@ const Cart = {
             payload: items
         });
     },
-    decrementItem(id, dispatch) {
-        const prod = items.find(i => i.id === id);
-        const prodIndex = items.findIndex(i => i.id === id);
+    decrementItem(cartId, dispatch) {
+        const prod = items.find(i => i.cartId === cartId);
+        const prodIndex = items.findIndex(i => i.cartId === cartId);
         prod.quantity -= 1;
         items[prodIndex] =prod;
         localStorage.setItem('cartItems', JSON.stringify(items));

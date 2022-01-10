@@ -63,6 +63,27 @@
             .add-to-cart{
                 margin-top: 1rem;
             }
+            .sizes, .stock{
+                display: flex;
+                margin-top: 15px;
+                font-weight: 600;
+                .title{
+                    font-weight: 600;
+                    margin-right: 20px;
+                }
+                .size{
+                    margin-right: 5px;
+                    cursor: pointer;
+                    border: 1px solid rgb(189, 189, 189);
+                    padding: 0px 5px;
+                    color: gray;
+                    font-weight: 600;
+                    &.selected{
+                        border: 1px solid $color_default;
+                        color: $color_default;
+                    }
+                }
+            }
         }
     }
 }

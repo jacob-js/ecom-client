@@ -174,7 +174,7 @@ function Home() {
                                                     <Rate disabled defaultValue={4} className='rate' />
                                                     <div className="price"> {product.price} </div>
                                                 </div>
-                                                <div className="add-to-cart"> <MdOutlineAddShoppingCart className='icon' /> </div>
+                                                <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                             </div>
                                         </div>
                                     ))
@@ -296,13 +296,13 @@ function Home() {
                                             <div className="info">
                                                 <div className="">
                                                     <div className="name"> {product.name} </div>
-                                                    <Rate disabled defaultValue={2.5} className='rate' />
+                                                    <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
                                                     <div className="price">
                                                         {product.currency === "USD" ? '$': "FC"}{product.price - (product.discount || 0)}
                                                         { product.discount && <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span> }
                                                     </div>
                                                 </div>
-                                                <div onClick={() =>Cart.addToCart({ ...product, quantity: 1 }, dispatch)} className="add-to-cart"> <MdOutlineAddShoppingCart className='icon' /> </div>
+                                                <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                             </div>
                                         </div>
                                     ))

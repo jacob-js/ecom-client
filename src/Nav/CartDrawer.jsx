@@ -24,6 +24,12 @@ function CartDrawer({visible, onClose}) {
     const onDecrement = (id) => {
         Cart.decrementItem(id, dispatch);
     }
+    const getColorImage = (item, colorName) => {
+        return item.Colors?.find(color => color.name === colorName)?.image;
+    }
+    const getColorName = (item) => {
+        return item.details?.find(detail => detail?.key === 'color')?.value;
+    }
     return (
         <Drawer title={
             <div className='header'>
@@ -41,20 +47,20 @@ function CartDrawer({visible, onClose}) {
             <div className="cart">
                 { items.map(item => <div key={item.id} className='item'>
                     <div className="qty-manag">
-                        <button className="plus" onClick={() =>onIncrement(item.id)}> <HiOutlinePlusSm className='icon' /> </button>
+                        <button className="plus" onClick={() =>onIncrement(item.cartId)}> <HiOutlinePlusSm className='icon' /> </button>
                         <div className="qty"> { item.quantity } </div>
-                        <button onClick={() =>onDecrement(item.id)} className="minus" disabled={item.quantity < 2}> <HiOutlineMinusSm className='icon' /> </button>
+                        <button onClick={() =>onDecrement(item.cartId)} className="minus" disabled={item.quantity < 2}> <HiOutlineMinusSm className='icon' /> </button>
                     </div>
                     <div className="prod">
                         <div className="info">
-                            <img src={item.cover} alt="" className='cover' />
+                            <img src={getColorName(item) ? getColorImage(item, getColorName(item)): item.cover} alt="" className='cover' />
                             <div className="sub">
                                 <div className="name"> {item.name} </div>
                                 <div className="sub-price"> {item.currency === "USD" ? '$': "FC"}{ item.price } <span className="sign">x</span> { item.quantity } </div>
                                 <div className="price"> {item.currency === "USD" ? '$': "FC"}{ item.price*parseInt(item.quantity) }</div>
                             </div>
                         </div>
-                        <div className="action" onClick={() =>onDelete(item.id)}> <MdClose className='icon' /> </div>
+                        <div className="action" onClick={() =>onDelete(item.cartId)}> <MdClose className='icon' /> </div>
                     </div>
                 </div>) }
             </div>
