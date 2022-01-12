@@ -55,7 +55,7 @@ function Login() {
                 type: usersActionTypes.LOGIN_SUCCESS,
                 payload: res.data.data.user
             })
-            history.push(history.location.state?.state?.from || '/');
+            history.push(history.location.state?.from || '/');
         },
         onError: (error) =>{
             const res = error.response;
