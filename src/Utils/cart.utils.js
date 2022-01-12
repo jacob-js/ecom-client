@@ -6,7 +6,7 @@ const checkSameItem = async(item1, item2) => {
     let results = [];
     return new Promise((resolve, reject) => {
         item1?.details?.forEach((elmt, index) => {
-            results.push(elmt.key === item2.details[index].key && elmt.value === item2?.details[index].value)
+            results.push(elmt?.key === item2.details[index]?.key && elmt?.value === item2?.details[index]?.value)
         });
         if(item1?.details?.length > 0){
             if(results.length === item1.details?.length) {
@@ -76,6 +76,12 @@ const Cart = {
             type: cartActionTypes.REFETCH_CART,
             payload:  items
         });
+    },
+    clearCart(dispatch) {
+        dispatch({
+            type: cartActionTypes.CLEAR_CART
+        });
+        localStorage.removeItem('cartItems');
     }
 }
 

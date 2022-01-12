@@ -1,4 +1,5 @@
 import Carts from "../Components/Cart";
+import Checkout from "../Components/Checkout";
 import ConfirmAccount from "../Components/ConfirmAccount";
 import Home from "../Components/Home";
 import Login from "../Components/Login";
@@ -47,6 +48,13 @@ const routes = [
         path: '/cart',
         component: Carts,
         protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/checkout',
+        component: Checkout,
+        protected: true,
         nav: true,
         exact: true
     }

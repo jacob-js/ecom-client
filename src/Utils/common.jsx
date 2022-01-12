@@ -25,6 +25,9 @@ export const Input = styled.input`
         outline: none;
         border-color: #dd4900;
     }
+    &.error{
+        border: 1px solid red;
+    }
 `;
 
 export const TextArea = styled.textarea`
@@ -53,7 +56,6 @@ export const Select = styled.select`
     padding: 0 10px;
     border-radius: 10px;
     display: block !important;
-    border-bottom: 2px solid rgba(200, 200, 200, 0.3);
     transition: .5s ease-in-out;
 
     &::placeholder {
@@ -62,7 +64,10 @@ export const Select = styled.select`
 
     &:focus {
         outline: none;
-        border-bottom-color: #F27405;
+        border-color: #F27405;
+    }
+    &.error{
+        border: 1px solid red;
     }
 `;
 

@@ -7,6 +7,11 @@ const cartReducer = (state, {type, payload}) =>{
                 ...state,
                 cartItems: payload
             }
+        case cartActionTypes.CLEAR_CART:
+            return {
+                ...state,
+                cartItems: []
+            }
     }
 }
 

@@ -6,12 +6,14 @@ import Cart from '../Utils/cart.utils';
 import { FieldContainer, FormContainer, Input, TextArea } from '../Utils/common';
 import { Tag } from 'atomize';
 import { Button } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 function Carts() {
     const dispatch = useDispatch();
     const { cartItems: items } = useSelector(({ cart }) => cart);
     const cdfItems = items.filter(item => item.currency === "FC");
     const usdItems = items.filter(item => item.currency === "USD");
+    const history = useHistory();
 
     useEffect(() =>{
         Cart.getCartItems(dispatch);
@@ -79,7 +81,7 @@ function Carts() {
                     <Input type="text" placeholder="Code prompo" />
                 </FieldContainer>
                 <Button type="primary" className='btn apply-promo'>Appliquer le code promo</Button>
-                <Button type="primary" className='btn checkout'>Passer à la caisse</Button>
+                <Button type="primary" className='btn checkout' onClick={() =>history.push('/checkout')}>Passer à la caisse</Button>
             </div>
         </div>
     )

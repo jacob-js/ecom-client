@@ -6,8 +6,9 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { getCurrUserApi } from '../apis/auth';
 import Nav from '../Nav';
 import { usersActionTypes } from '../Redux/actionsTypes/users';
-import { authRoutes, notProtectedRoutesWithNav } from '../Utils/helpers';
+import { authRoutes, notProtectedRoutesWithNav, protectedRoutesWithNav } from '../Utils/helpers';
 import { PageLoader } from '../Utils/loaders';
+import ProtectedRoute from './ProtectedRoute';
 
 function Routes() {
     const dispatch = useDispatch();
@@ -57,6 +58,11 @@ function Routes() {
                     {
                         notProtectedRoutesWithNav.map((route, index) =>(
                             <Route path={route.path} exact={route.exact} key={index} render={ () =><route.component /> } />
+                        ))
+                    }
+                    {
+                        protectedRoutesWithNav.map((route, index) =>(
+                            <ProtectedRoute route={route} key={index} />
                         ))
                     }
                 </Nav>
