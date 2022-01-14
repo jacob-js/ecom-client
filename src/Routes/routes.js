@@ -3,6 +3,7 @@ import Checkout from "../Components/Checkout";
 import ConfirmAccount from "../Components/ConfirmAccount";
 import Home from "../Components/Home";
 import Login from "../Components/Login";
+import OrdersList from "../Components/OrdersList";
 import ProductDetail from "../Components/ProductDetail";
 import Signup from "../Components/Signup";
 
@@ -54,6 +55,13 @@ const routes = [
     {
         path: '/checkout',
         component: Checkout,
+        protected: true,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/orders',
+        component: OrdersList,
         protected: true,
         nav: true,
         exact: true

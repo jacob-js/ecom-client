@@ -72,7 +72,7 @@ function Checkout() {
                         <Alert severity='error' className='alert' > {error[0]} </Alert>:null
                     }
                     <FieldContainer>
-                        <Input type='tel' placeholder="Numéro de téléphone" onChange={form.handleChange('phone')} className={
+                        <Input type='tel' name='phone' placeholder="Numéro de téléphone" onChange={form.handleChange('phone')} className={
                                 form.errors.phone && form.touched.phone || getFieldError(error, 'phone') ? 'error' : ''
                             } />
                         {form.errors.phone && form.touched.phone ? <FieldError>{form.errors.phone}</FieldError> : 
@@ -111,7 +111,7 @@ function Checkout() {
                             getFieldError(error, 'city') ? <FieldError>{getFieldError(error, 'city')}</FieldError> : null}
                     </FieldContainer>
                     <FieldContainer>
-                        <Input type='text' placeholder="Adresse (ex: Quartier: Katindo, Avenue: La frontiere, N° 136)" className={
+                        <Input name='address' type='text' placeholder="Adresse (ex: Quartier: Katindo, Avenue: La frontiere, N° 136)" className={
                                 form.errors.address && form.touched.address || getFieldError(error, 'address') ? 'error' : ''
                             }
                             onChange={form.handleChange('address')}
@@ -156,7 +156,7 @@ function Checkout() {
                     </FieldContainer>
                     <Button type="primary" className='btn apply-promo'>Appliquer le code promo</Button>
                 </div>
-                <Button type="primary" className='btn submit' loading={checkoutMutation.isLoading} onClick={form.handleSubmit}>Soumettre la commande</Button>
+                <Button type="primary" className='btn submit' loading={checkoutMutation.isLoading} onClick={form.handleSubmit}>Passer commande</Button>
             </div>
         </div>
     )

@@ -1,0 +1,92 @@
+.orders-list{
+    width: 80%;
+    margin: auto;
+    margin-top: 2.5%;
+    
+    .title{
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        .icon{
+            color: $color_default;
+        }
+    }
+    * table{
+        background-color: $bg_color !important;
+    }
+    * thead tr{
+        display: flex;
+        justify-content: space-between;
+    }
+    * thead tr th{
+        width: 200px;
+        background-color: $bg_color !important;
+        &:not(:last-of-type){
+            width: 100%;
+        }
+    }
+    * tr{
+        display: table-row-group;
+        margin-bottom: 12px;
+    }
+    * tbody{
+        tr{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background-color: white;
+            padding: 0px 10px;
+            border-bottom: none !important;
+            &:hover{
+                background-color: white !important;
+            }
+            
+            td{
+                width: 200px;
+                border: none !important;
+                cursor: pointer;
+                background-color: white !important;
+                &:hover{
+                    background-color: white !important;
+                }
+                &:not(:last-of-type){
+                    width: 100%;
+                }
+                .view-detail-btn{
+                    outline: none;
+                    border: none;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    font-weight: 600;
+                    color: inherit;
+                    transition: all 150ms ease-in-out 0s;
+                    background-color: rgb(255, 255, 255);
+                    padding: 7px 12px;
+                    // font-size: 18px;
+                    &:hover{
+                        background-color: rgb(243, 245, 249);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ant-pagination{
+    justify-content: center !important;
+    li{
+        border-radius: 50%;
+        .ant-pagination-item-link{
+            border-radius: 50% !important;
+        }
+    }
+    .ant-pagination-item.ant-pagination-item-active{
+        border-color: $color_default !important;
+        color: $color_default !important;
+        a{
+            color: $color_default !important;
+        }
+    }
+}

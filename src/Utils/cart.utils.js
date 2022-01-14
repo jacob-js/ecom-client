@@ -47,7 +47,7 @@ const Cart = {
         sendNotif(`${item.name} ajouté au panier`, 'success');
     },
     removeItem(id, dispatch) {
-        const products = items.filter(i => i.id !== id);
+        const products = items.filter(i => i.cartId !== id);
         items = products;
         localStorage.setItem('cartItems', JSON.stringify(products));
         dispatch({
@@ -81,7 +81,7 @@ const Cart = {
         dispatch({
             type: cartActionTypes.CLEAR_CART
         });
-        localStorage.removeItem('cartItems');
+        localStorage.setItem('cartItems', "[]");
     }
 }
 

@@ -45,7 +45,7 @@ function CartDrawer({visible, onClose}) {
         >
 
             <div className="cart">
-                { items.map(item => <div key={item.id} className='item'>
+                { items.map(item => <div key={item.cartId} className='item'>
                     <div className="qty-manag">
                         <button className="plus" onClick={() =>onIncrement(item.cartId)}> <HiOutlinePlusSm className='icon' /> </button>
                         <div className="qty"> { item.quantity } </div>
