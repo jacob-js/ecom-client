@@ -38,7 +38,7 @@ function ProductDetail() {
 
     const addToCart = () => {
         if(checkValidOptions()){
-            Cart.addToCart({ ...product, cartId: Math.random()*10, quantity: 1, details: [ selectedSize &&{ key: 'size', value: selectedSize }, { key: 'color', value: getProductColor() } ] }, dispatch);
+            Cart.addToCart({ ...product, cartId: Math.random()*10, quantity: 1, details: [ selectedSize &&{ key: 'size', value: selectedSize }, { key: 'color', value: getProductColor() || 'couleur principale' } ] }, dispatch);
         }
     }
 

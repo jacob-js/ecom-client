@@ -5,5 +5,9 @@ export const sendOrderApi = async (data) => {
 }
 
 export const getOrdersApi = async (userId, limit, offset) => {
-    return (await axios.get(`/orders/${userId}?limit=${limit}&offset=${offset}`))?.data;
+    return (await axios.get(`/orders/user/${userId}?limit=${limit}&offset=${offset}`))?.data;
+}
+
+export const getOrderApi = async (orderId) => {
+    return (await axios.get(`/orders/${orderId}`))?.data;
 }

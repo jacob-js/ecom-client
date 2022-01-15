@@ -3,7 +3,7 @@ import moment from 'moment'
 import { HiOutlineArrowRight } from "react-icons/hi"
 import fr from 'moment/locale/fr'
 
-export const ordersColumns = () =>{
+export const ordersColumns = (onViewOrder) =>{
     return[
         {
             title: 'Order ID',
@@ -45,7 +45,7 @@ export const ordersColumns = () =>{
             title: '',
             key: 'action',
             render: (record) => (
-                <button className="view-detail-btn"><HiOutlineArrowRight className="icon" /></button>
+                <button onClick={() =>onViewOrder(record.id)} className="view-detail-btn"><HiOutlineArrowRight className="icon" /></button>
             )
         }
     ]

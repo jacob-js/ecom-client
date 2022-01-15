@@ -74,6 +74,148 @@
     }
 }
 
+.order-details{
+    width: 60%;
+    margin: auto;
+    margin-top: 2.5%;
+    .title{
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        .icon{
+            color: $color_default;
+        }
+    }
+    .card{
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        background-color: white;
+
+        .header{
+            padding: 12px;
+            background-color: rgb(243, 245, 249);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .order-ref, .order-date{
+                span{
+                    // font-size: 1.2rem;
+                    font-weight: 500;
+                }
+            }
+        }
+        .items{
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            .item{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px;
+                &:not(:last-of-type){
+                    border-bottom: 1px solid rgb(243, 245, 249);
+                    margin-bottom: 10px;
+                }
+                .prod{
+                    display: flex;
+                    align-items: center;
+                    .pic{
+                        width: 64px;
+                        height: 64px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        img{
+                            max-width: 100%;
+                            max-height: 100%;
+                        }
+                    }
+                    .info{
+                        margin-left: 20px;
+                        .name{
+                            font-weight: 500;
+                        }
+                        .price{
+                            font-weight: normal;
+                            color: rgb(165, 165, 165);
+                        }
+                    }
+                }
+                .propertys{
+                    color: rgb(165, 165, 165);
+                }
+                .action{
+                    color: $color_default;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all .3s ease-in-out 0s;
+                    padding: 11px 1.5rem;
+                    border-radius: 5px;
+                    &:hover{
+                        background-color: rgba(221,73,0, 0.1);
+                    }
+                }
+            }
+        }
+    }
+    .extra{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-bottom: 20px;
+        
+        .shipping-address{
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background-color: white;
+            height: 120px;
+            width: 45%;
+            word-wrap: break-word;
+            padding: 20px;
+            border-radius: 10px;
+            .title{
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+        }
+        .totals{
+            .title{
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            width: 50%;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            .total, .sub-total, .reduction, .shipping, .tax{
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                color: rgba(0, 0, 0, 0.5);
+                .price{
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: black;
+                }
+            }
+            .total{
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
+                padding-top: 15px;
+                .price{
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: black;
+                }
+            }
+        }
+    }
+}
+
 .ant-pagination{
     justify-content: center !important;
     li{
