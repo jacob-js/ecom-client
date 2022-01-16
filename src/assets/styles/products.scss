@@ -86,4 +86,44 @@
             }
         }
     }
+    .other-infos{
+        margin-top: 50px;
+        padding-bottom: 30px;
+        .titles{
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            cursor: pointer;
+            .title{
+                border-bottom: 3px solid transparent;
+                padding-bottom: 10px;
+                color: rgb(163, 163, 163);
+                transition: all .3s ease;
+                &:not(:last-of-type){
+                    margin-right: 20px;
+                }
+                &.active{
+                    color: $color_default;
+                    border-color: $color_default;
+                }
+            }
+            &::after{
+                content: '';
+                margin: auto;
+                position: absolute;
+                width: 80%;
+                margin-top: 35px;
+                z-index: -1;
+                border-bottom: 1px solid rgb(214, 214, 214);
+            }
+        }
+        .content{
+            .title{
+                font-weight: 600;
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+        }
+    }
 }

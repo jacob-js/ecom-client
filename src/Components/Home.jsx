@@ -174,12 +174,14 @@ function Home() {
                                     {
                                         bestProds?.rows?.map((product, index) => (
                                             <div data-aos='fade-left' className="product" key={index}>
-                                                <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
+                                                <div className="cover" onClick={() =>history.push(`/products/${product.id}`)}> <img src={product.cover} alt="" srcset="" /> </div>
                                                 <div className="info">
                                                     <div className="">
                                                         <div className="name"> {product.name} </div>
-                                                        <Rate disabled defaultValue={4} className='rate' />
-                                                        <div className="price"> {product.price} </div>
+                                                        <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
+                                                        <div className="price"> {product.currency === "USD" ? '$': "FC"}{product.price-(product.discount || 0)}
+                                                            <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span>
+                                                        </div>
                                                     </div>
                                                     <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                                 </div>
@@ -225,15 +227,17 @@ function Home() {
                                 [1, 2, 3, 4, 5].map((prod, index) => (
                                     <Skeleton.Input style={{ width: 200, margin: 20, height: 200,  borderRadius: 10 }} key={index} active loading={true} size='large' />
                                 )):
-                                newProds?.rows?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
+                                newProds?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
                                 .sort((a, b) => a.sort-b.sort).map((prod, index) => (
                                     <div data-aos='fade-up' className="product" key={index}>
-                                        <div className="cover">
+                                        <div className="cover" onClick={() =>history.push(`/products/${prod.id}`)}>
                                             <img src={prod.cover} alt="" srcset="" />
                                             <div className="bg"></div>
                                         </div>
                                         <div className="name">{ prod.name }</div>
-                                        <div className="price"> {prod.price} </div>
+                                        <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
+                                            <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
+                                        </div>
                                     </div>
                                 ))
                             }

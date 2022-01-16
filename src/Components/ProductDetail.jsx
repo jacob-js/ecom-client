@@ -16,6 +16,7 @@ function ProductDetail() {
     const [cover, setCover] = useState({ index: 0, image: product.cover, id: '' });
     const [selectedSize, setSelectedSize] = useState();
     const dispatch = useDispatch();
+    const [active, setActive] = useState(1);
     useEffect(() => {
         (() =>{
             setCover({ index: 0, image: product.cover });
@@ -111,6 +112,24 @@ function ProductDetail() {
                             isLoading ?
                             <Skeleton.Input style={{ width: 150, height: 40, borderRadius: 20 }} active loading={true} size='large' />:
                             <Button className='btn' onClick={addToCart}>Ajouter au panier</Button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className="other-infos">
+                <div className="titles">
+                    <div className={`title ${active === 1 ? 'active': ''}`} onClick={() =>setActive(1)}>Description</div>
+                    <div className={`title ${active === 2 ? 'active': ''}`} onClick={() =>setActive(2)}>Commentaires</div>
+                </div>
+                <div className="content">
+                    <div className="title">Caracteristiques</div>
+                    <div className="items">
+                        {
+                            product?.specifications?.map((spec, index) => (
+                                <div className="item" key={index}>
+                                    {spec.key} : {spec.value}
+                                </div>
+                            ))
                         }
                     </div>
                 </div>
