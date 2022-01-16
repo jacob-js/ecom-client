@@ -28,7 +28,7 @@ function CartDrawer({visible, onClose}) {
         return item.Colors?.find(color => color.name === colorName)?.image;
     }
     const getColorName = (item) => {
-        return item.details?.find(detail => detail?.key === 'color')?.value;
+        return item.details?.find(detail => detail?.key === 'color' && detail?.value !== 'couleur principale')?.value;
     }
     return (
         <Drawer title={

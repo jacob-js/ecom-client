@@ -121,6 +121,8 @@ function Home() {
     const { isLoading: loadingDesktops, data: desktops } = useQuery('desktops', () => getProductsByCategoryApi('desktop'), { staleTime: 300000 });
     const { isLoading: loadingAccessorys, data: accessorys } = useQuery('accessorys', () => getProductsByCategoryApi('accessoire electronique'), { staleTime: 300000 });
     const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery('discountProducts', () => getProducts(true), { staleTime: 300000 });
+    const { isLoading: loadingBestProducts, data: bestProds } = useQuery('bestProds', () => getProducts(false, true), { staleTime: 300000 });
+    const { isLoading: loadingNewProducts, data: newProds } = useQuery('newProds', () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });
@@ -163,23 +165,29 @@ function Home() {
                             <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
                         <div className="data">
-                            <Slider {...settings} className='carousel'>
-                                {
-                                    bestProducts.map((product, index) => (
-                                        <div data-aos='fade-left' className="product" key={index}>
-                                            <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
-                                            <div className="info">
-                                                <div className="">
-                                                    <div className="name"> {product.name} </div>
-                                                    <Rate disabled defaultValue={4} className='rate' />
-                                                    <div className="price"> {product.price} </div>
+                            {
+                                loadingBestProducts?
+                                [1, 2, 3, 4].map((prod, index) => (
+                                    <Skeleton.Input style={{ width: 275, margin: 20, height: 300,  borderRadius: 10 }} key={index} active loading={true} size='large' />
+                                )):
+                                <Slider {...settings} className='carousel'>
+                                    {
+                                        bestProds?.rows?.map((product, index) => (
+                                            <div data-aos='fade-left' className="product" key={index}>
+                                                <div className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
+                                                <div className="info">
+                                                    <div className="">
+                                                        <div className="name"> {product.name} </div>
+                                                        <Rate disabled defaultValue={4} className='rate' />
+                                                        <div className="price"> {product.price} </div>
+                                                    </div>
+                                                    <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                                 </div>
-                                                <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                             </div>
-                                        </div>
-                                    ))
-                                }
-                            </Slider>
+                                        ))
+                                    }
+                                </Slider>
+                            }
                         </div>
                     </section>
 
@@ -213,7 +221,11 @@ function Home() {
                         </div>
                         <div className="data">
                             {
-                                newProducts?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
+                                loadingNewProducts?
+                                [1, 2, 3, 4, 5].map((prod, index) => (
+                                    <Skeleton.Input style={{ width: 200, margin: 20, height: 200,  borderRadius: 10 }} key={index} active loading={true} size='large' />
+                                )):
+                                newProds?.rows?.map((prod, index) =>({ name: prod.name, cover: prod.cover, price: prod.price, sort: Math.random() }))
                                 .sort((a, b) => a.sort-b.sort).map((prod, index) => (
                                     <div data-aos='fade-up' className="product" key={index}>
                                         <div className="cover">

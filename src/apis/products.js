@@ -8,8 +8,8 @@ export const getProductsByCategoryApi = async (categoryName) => {
     return (await axios.get(`/categorys/products/${categoryName}`)).data?.data
 };
 
-export const getProducts = async (bigDiscount, isBest, limit, offset) =>{
-    return (await axios.get(`/products?${bigDiscount && `bigDiscount=${bigDiscount}`}&${isBest && `isBest=${isBest}`}&limit=${limit}&offset=${offset}`)).data?.data
+export const getProducts = async (bigDiscount, isBest, isNew, limit, offset) =>{
+    return (await axios.get(`/products?${bigDiscount && `bigDiscount=${bigDiscount}`}&${isBest && `isBest=${isBest}`}${isNew && `isNew=${isNew}`}&limit=${limit}&offset=${offset}`)).data?.data
 }
 
 export const getProductById = async (id) => {
