@@ -20,7 +20,6 @@
                 width: 100% !important;
                 
                 img{
-                    // width: 100%;
                     max-height: 400px;
                     background-size: cover;
                     background-position: center;
@@ -91,11 +90,13 @@
 
                         .cover{
                             width: 100%;
+                            border-radius: 10px 10px 0px 0px;
                             overflow: hidden;
                             cursor: pointer;
                             img{
                                 max-width: 100% !important;
                                 max-height: 280px;
+                                transition: all .2s ease-in;
                             }
                             &:hover img{
                                 transform: scale(1.1);
@@ -183,6 +184,7 @@
                     img{
                         max-width: 175px !important;
                         max-height: 175px !important;
+                        transition: all .2s ease-in;
                     }
                     .bg{
                         position: absolute;
@@ -234,6 +236,7 @@
                     img{
                         max-width: 175px !important;
                         max-height: 175px !important;
+                        transition: all .2s ease-in;
                     }
                     .bg{
                         position: absolute;
@@ -319,9 +322,11 @@
                         align-items: center;
                         justify-content: center;
                         border-radius: 10px 10px 0px 0px;
+                        transition: all .2s ease-in;
                         img{
                             max-width: 100% !important;
                             max-height: 280px;
+                            transition: all .2s ease-in;
                         }
                     }
                 }

@@ -11,7 +11,6 @@ import { getProducts, getProductsByCategoryApi, getTopCategorysApi } from '../ap
 import newIcon from '../assets/images/icons/new-product.svg';
 import Aos from 'aos';
 import { useHistory } from 'react-router-dom';
-import Cart from '../Utils/cart.utils';
 import { useDispatch } from 'react-redux';
 
 const bestProducts = [
@@ -115,25 +114,26 @@ function Home() {
     const { isLoading: loadingLaptops, data: laptops } = useQuery('laptops', () =>getProductsByCategoryApi('laptop'), {
         staleTime: 300000
     });
-    const { isLoading: loadingPhones, data: phones } = useQuery('phones', () => getProductsByCategoryApi('mobile phone'), {
+    const { isLoading: loadingPhones, data: phones } = useQuery('phones', () => getProductsByCategoryApi('mobile phone', 6, 0), {
         staleTime: 300000,
     });
-    const { isLoading: loadingDesktops, data: desktops } = useQuery('desktops', () => getProductsByCategoryApi('desktop'), { staleTime: 300000 });
-    const { isLoading: loadingAccessorys, data: accessorys } = useQuery('accessorys', () => getProductsByCategoryApi('accessoire electronique'), { staleTime: 300000 });
+    const { isLoading: loadingDesktops, data: desktops } = useQuery('desktops', () => getProductsByCategoryApi('desktop', 6, 0), { staleTime: 300000 });
+    const { isLoading: loadingAccessorys, data: accessorys } = useQuery('accessorys', () => getProductsByCategoryApi('accessoire electronique', 6, 0), { staleTime: 300000 });
     const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery('discountProducts', () => getProducts(true), { staleTime: 300000 });
     const { isLoading: loadingBestProducts, data: bestProds } = useQuery('bestProds', () => getProducts(false, true), { staleTime: 300000 });
     const { isLoading: loadingNewProducts, data: newProds } = useQuery('newProds', () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
+    const { isLoading: loadingElecProds, data: elecProds } = useQuery('elecProds', () => getProductsByCategoryApi([ 'laptop', 'desktop', 'mobile phone', 'accessoire electronique' ], 6, 0));
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });
     }, []);
     useEffect(() =>{
         (() =>{
-            if(phones?.rows && laptops?.rows && desktops?.rows && accessorys?.rows){
-                setelectronicProducts([...laptops.rows, ...phones.rows, ...desktops.rows, ...accessorys.rows ])
+            if(elecProds?.rows){
+                setelectronicProducts(elecProds?.rows);
             }
         })()
-    }, [phones, laptops, desktops, accessorys]);
+    }, [elecProds]);
     
     const settings = {
         dots: false,
@@ -145,7 +145,7 @@ function Home() {
         prevArrow: <PrevArraow />
     };
 
-    const isLoadingElec = loadingLaptops || loadingPhones || loadingDesktops || loadingAccessorys;
+    const isLoadingElec = loadingLaptops || loadingPhones || loadingDesktops || loadingAccessorys || loadingElecProds;
   
     return (
         <div className='home'>
@@ -219,7 +219,7 @@ function Home() {
                     <section className="section-arrival">
                         <div className="header">
                             <div className="title"> <img src={newIcon} alt="" srcset="" className='icon' /> Nouveauté</div>
-                            <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                            <div className="view-all" onClick={() =>history.push(`/products-key?key=isNew`)}> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
                         <div className="data">
                             {
@@ -247,7 +247,7 @@ function Home() {
                     <section className="section-big-discount">
                         <div className="header">
                             <div className="title"> <MdOutlineLocalOffer className='icon' /> Réduction</div>
-                            <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                            <div className="view-all" onClick={() =>history.push(`/products-key??key=bigDiscount`)}> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
                         <div className="data">
                             {
@@ -296,7 +296,7 @@ function Home() {
                         <section className="section-flash">
                             <div className="header">
                                 <div className="title">Elecroniques</div>
-                                <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                                <div className="view-all" onClick={() =>history.push('/products/category/electroniques')}> Voir tout <MdArrowRight className='icon' /> </div>
                             </div>
                             <div className="data">
                                 {

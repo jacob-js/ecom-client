@@ -6,6 +6,8 @@ import Login from "../Components/Login";
 import OrderDetails from "../Components/OrderDetails";
 import OrdersList from "../Components/OrdersList";
 import ProductDetail from "../Components/ProductDetail";
+import ProductsByCateg from "../Components/ProductsByCateg";
+import ProductsByKey from "../Components/ProductsByKey";
 import Signup from "../Components/Signup";
 
 const routes = [
@@ -42,6 +44,20 @@ const routes = [
     {
         path: '/products/:id',
         component: ProductDetail,
+        protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/products/category/:category',
+        component: ProductsByCateg,
+        protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/products-key',
+        component: ProductsByKey,
         protected: false,
         nav: true,
         exact: true

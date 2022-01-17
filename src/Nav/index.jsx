@@ -14,32 +14,6 @@ import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
 import CartDrawer from './CartDrawer';
 
-const menu = (
-    <Menu className='categ-menus'>
-      <Menu.Item key="1" icon={ <GiTravelDress /> }>Mode</Menu.Item>
-      <Menu.Item key="2" icon={<MdOutlineDevices />}>Electonique</Menu.Item>
-      <Menu.Item key="3" icon={<MdOutlineBikeScooter />}>Velos</Menu.Item>
-      <Menu.Item key="3" icon={<GiHomeGarage />}>Maison et jardin</Menu.Item>
-      <Menu.Item key="3" icon={<GiMusicSpell />}>Musique</Menu.Item>
-      <Menu.Item key="3" icon={<GiHealing />}>Santé et beauté</Menu.Item>
-      <Menu.Item key="3" icon={<FaBaby />}>Jouets pour bébé</Menu.Item>
-      <Menu.Item key="3" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
-    </Menu>
-  );
-
-const stickyMenu = (
-<Menu className='sticky-categ-menus'>
-    <Menu.Item key="1" icon={ <GiTravelDress /> }>Mode</Menu.Item>
-    <Menu.Item key="2" icon={<MdOutlineDevices />}>Electonique</Menu.Item>
-    <Menu.Item key="3" icon={<MdOutlineBikeScooter />}>Velos</Menu.Item>
-    <Menu.Item key="4" icon={<GiHomeGarage />}>Maison et jardin</Menu.Item>
-    <Menu.Item key="5" icon={<GiMusicSpell />}>Musique</Menu.Item>
-    <Menu.Item key="6" icon={<GiHealing />}>Santé et beauté</Menu.Item>
-    <Menu.Item key="7" icon={<FaBaby />}>Jouets pour bébé</Menu.Item>
-    <Menu.Item key="8" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
-</Menu>
-);
-
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
     const [cartVisible, setCartVisible] = useState(false);
@@ -58,6 +32,32 @@ function Nav({children}) {
             document.querySelector('.nav').classList.remove('sticky')
         }
     });
+
+    const menu = (
+        <Menu className='categ-menus'>
+            <Menu.Item key="1" onClick={() =>history.push('/products/category/mode')} icon={ <GiTravelDress /> }>Mode</Menu.Item>
+            <Menu.Item key="2" onClick={() =>history.push('/products/category/electroniques')} icon={<MdOutlineDevices />}>Electonique</Menu.Item>
+            <Menu.Item key="3" onClick={() =>history.push('/products/category/velos')} icon={<MdOutlineBikeScooter />}>Velos</Menu.Item>
+            <Menu.Item key="4" onClick={() =>history.push('/products/category/maison et jardin')} icon={<GiHomeGarage />}>Maison et jardin</Menu.Item>
+            <Menu.Item key="5" onClick={() =>history.push('/products/category/musique')} icon={<GiMusicSpell />}>Musique</Menu.Item>
+            <Menu.Item key="3" icon={<GiHealing />}>Santé et beauté</Menu.Item>
+            <Menu.Item key="3" icon={<FaBaby />}>Jouets pour bébé</Menu.Item>
+            <Menu.Item key="3" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
+        </Menu>
+    );
+
+    const stickyMenu = (
+        <Menu className='sticky-categ-menus'>
+            <Menu.Item key="1" onClick={() =>history.push('/products/category/mode')} icon={ <GiTravelDress /> }>Mode</Menu.Item>
+            <Menu.Item key="2" onClick={() =>history.push('/products/category/electroniques')} icon={<MdOutlineDevices />}>Electonique</Menu.Item>
+            <Menu.Item key="3" onClick={() =>history.push('/products/category/velos')} icon={<MdOutlineBikeScooter />}>Velos</Menu.Item>
+            <Menu.Item key="4" onClick={() =>history.push('/products/category/maison et jardin')} icon={<GiHomeGarage />}>Maison et jardin</Menu.Item>
+            <Menu.Item key="5" onClick={() =>history.push('/products/category/musique')} icon={<GiMusicSpell />}>Musique</Menu.Item>
+            <Menu.Item key="6" icon={<GiHealing />}>Santé et beauté</Menu.Item>
+            <Menu.Item key="7" icon={<FaBaby />}>Jouets pour bébé</Menu.Item>
+            <Menu.Item key="8" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
+        </Menu>
+    );
 
     const handleLogout = () => {
         localStorage.removeItem('bweteta_token');
