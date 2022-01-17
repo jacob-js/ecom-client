@@ -1,15 +1,20 @@
-import { Button, Rate, Skeleton } from 'antd';
+import { Avatar, Button, Rate, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { useQuery } from 'react-query';
-import { useDispatch } from 'react-redux';
+import { HiOutlineUser } from 'react-icons/hi';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getProductById } from '../apis/products';
+import { getProductById, getProductRatings, rateProducApi } from '../apis/products';
 import Cart from '../Utils/cart.utils';
 import { sendNotif } from '../Utils/notif';
+import moment from 'moment';
+import { FieldContainer, Label, TextArea } from '../Utils/common';
 
 function ProductDetail() {
     const params = useParams();
+    const queryClient = useQueryClient();
     const { isLoading, data: res, error } = useQuery(['product', params.id], () => getProductById(params.id));
+    const { isLoading: loadingRates, data: ratings } = useQuery(['ratings', params.id], () => getProductRatings(params.id));
     const product = res?.data?.data || {};
     const images = product?.Colors?.length > 0 && product?.Colors?.map(color => ({url: color.image, id: color.id})) || [];
     images.unshift({ url: product?.cover });
@@ -17,6 +22,9 @@ function ProductDetail() {
     const [selectedSize, setSelectedSize] = useState();
     const dispatch = useDispatch();
     const [active, setActive] = useState(1);
+    const [rate, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+    const { data: currUser } = useSelector(({ users: { currUser } }) =>currUser);
     useEffect(() => {
         (() =>{
             setCover({ index: 0, image: product.cover });
@@ -42,6 +50,18 @@ function ProductDetail() {
             Cart.addToCart({ ...product, cartId: Math.random()*10, quantity: 1, details: [ selectedSize &&{ key: 'size', value: selectedSize }, { key: 'color', value: getProductColor() || 'couleur principale' } ] }, dispatch);
         }
     }
+    const rateMutaion = useMutation(() => rateProducApi(params.id, {value: rate, comment}), {
+        onSuccess: (data) => {
+            setRating(0);
+            setComment('');
+            sendNotif(data.message, 'success');
+            queryClient.invalidateQueries();
+        },
+        onError: (err) => {
+            const { message } = err?.response?.data;
+            sendNotif(message || 'Quelque chose s\'est mal passée', 'error');
+        }
+    })
 
     if(error) return <div>Error</div>;
 
@@ -119,19 +139,62 @@ function ProductDetail() {
             <div className="other-infos">
                 <div className="titles">
                     <div className={`title ${active === 1 ? 'active': ''}`} onClick={() =>setActive(1)}>Description</div>
-                    <div className={`title ${active === 2 ? 'active': ''}`} onClick={() =>setActive(2)}>Commentaires</div>
+                    <div className={`title ${active === 2 ? 'active': ''}`} onClick={() =>setActive(2)}>Avis</div>
                 </div>
                 <div className="content">
-                    <div className="title">Caracteristiques</div>
-                    <div className="items">
-                        {
-                            product?.specifications?.map((spec, index) => (
-                                <div className="item" key={index}>
-                                    {spec.key} : {spec.value}
+                    {
+                        active === 1 ?
+                        <>
+                            <div className="title">Caracteristiques</div>
+                            <div className="items">
+                                {
+                                    product?.specifications?.map((spec, index) => (
+                                        <div className="item" key={index}>
+                                            {spec.key} : {spec.value}
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </>:
+                        <>
+                            <div className="reviews">
+                                {
+                                    ratings?.ratings?.map((rat, index) => (
+                                        <div className="review" key={index}>
+                                            <div className="user">
+                                                <div className="avatar">
+                                                    <Avatar size={50} >
+                                                    {rat?.User.cover ? 
+                                                        <img src={rat?.User.cover} alt="avatar" srcset="" />:
+                                                        <HiOutlineUser className='icon' />
+                                                    }
+                                                    </Avatar>
+                                                </div>
+                                                <div className="left">
+                                                    <div className="name">{ rat?.User.id === currUser.id ? 'Moi': rat.User?.fullname}</div>
+                                                    <Rate disabled value={rat.value} className='rate' /> <span className="value">{rat.value}</span>
+                                                    <span className="date"> {moment(rat.createdAt).fromNow()} </span>
+                                                </div>
+                                            </div>
+                                            <div className="comment"> {rat.comment} </div>
+                                        </div>
+                                    ))
+                                }
+                                <div className="title">Noter ce produit</div>
+                                <div className="form">
+                                    <FieldContainer>
+                                        <Label> Votre note </Label>
+                                        <Rate className='rate' value={rate} onChange={(value) => setRating(value)} />
+                                    </FieldContainer>
+                                    <FieldContainer>
+                                        <Label> Votre avis </Label>
+                                        <TextArea value={comment} onChange={(e) => setComment(e.target.value)} />
+                                    </FieldContainer>
+                                    <Button className='btn rate' loading={rateMutaion.isLoading} disabled={!comment || !rate} onClick={() =>rateMutaion.mutate()}>Soumettre</Button>
                                 </div>
-                            ))
-                        }
-                    </div>
+                            </div>
+                        </>
+                    }
                 </div>
             </div>
         </div>

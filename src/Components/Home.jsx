@@ -111,18 +111,18 @@ function Home() {
     const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
         staleTime: 300000,
     });
-    const { isLoading: loadingLaptops, data: laptops } = useQuery('laptops', () =>getProductsByCategoryApi('laptop'), {
+    const { isLoading: loadingLaptops, data: laptops } = useQuery(['products', 'laptops'], () =>getProductsByCategoryApi('laptop'), {
         staleTime: 300000
     });
-    const { isLoading: loadingPhones, data: phones } = useQuery('phones', () => getProductsByCategoryApi('mobile phone', 6, 0), {
+    const { isLoading: loadingPhones, data: phones } = useQuery([ 'products', 'phones'], () => getProductsByCategoryApi('mobile phone', 6, 0), {
         staleTime: 300000,
     });
-    const { isLoading: loadingDesktops, data: desktops } = useQuery('desktops', () => getProductsByCategoryApi('desktop', 6, 0), { staleTime: 300000 });
-    const { isLoading: loadingAccessorys, data: accessorys } = useQuery('accessorys', () => getProductsByCategoryApi('accessoire electronique', 6, 0), { staleTime: 300000 });
-    const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery('discountProducts', () => getProducts(true), { staleTime: 300000 });
-    const { isLoading: loadingBestProducts, data: bestProds } = useQuery('bestProds', () => getProducts(false, true), { staleTime: 300000 });
-    const { isLoading: loadingNewProducts, data: newProds } = useQuery('newProds', () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
-    const { isLoading: loadingElecProds, data: elecProds } = useQuery('elecProds', () => getProductsByCategoryApi([ 'laptop', 'desktop', 'mobile phone', 'accessoire electronique' ], 6, 0));
+    const { isLoading: loadingDesktops, data: desktops } = useQuery([ 'products', 'desktops'], () => getProductsByCategoryApi('desktop', 6, 0), { staleTime: 300000 });
+    const { isLoading: loadingAccessorys, data: accessorys } = useQuery([ 'products', 'accessorys'], () => getProductsByCategoryApi('accessoire electronique', 6, 0), { staleTime: 300000 });
+    const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery([ 'products', 'discountProducts'], () => getProducts(true), { staleTime: 300000 });
+    const { isLoading: loadingBestProducts, data: bestProds } = useQuery([ 'products', 'bestProds'], () => getProducts(false, true), { staleTime: 300000 });
+    const { isLoading: loadingNewProducts, data: newProds } = useQuery([ 'products', 'newProds'], () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
+    const { isLoading: loadingElecProds, data: elecProds } = useQuery([ 'products', 'elecProds'], () => getProductsByCategoryApi([ 'laptop', 'desktop', 'mobile phone', 'accessoire electronique' ], 6, 0));
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });

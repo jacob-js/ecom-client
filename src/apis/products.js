@@ -5,7 +5,7 @@ export const getTopCategorysApi = () => {
 }
 
 export const getProductsByCategoryApi = async (categoryName, limit, offset) => {
-    return (await axios.get(`/categorys/products/${categoryName}?limit=${limit}&offset=${offset}`)).data?.data
+    return (await axios.get(`/categorys/products/${categoryName}?limit=${limit}&offset=${offset}`))?.data?.data
 };
 
 export const getProducts = async (bigDiscount, isBest, isNew, limit, offset) =>{
@@ -17,6 +17,8 @@ export const getProductById = async (id) => {
 }
 
 export const getProductRatings = async (id) => {
-    const res = await axios.get(`/products/ratings/${id}`)
-    return res
+    return (await axios.get(`/products/ratings/${id}`))?.data?.data
+}
+export const rateProducApi = async (id, data) => {
+    return (await axios.post(`/products/ratings/${id}`, data))?.data
 }

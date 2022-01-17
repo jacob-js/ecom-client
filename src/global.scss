@@ -17,6 +17,11 @@
         background-color: #dd4900 !important;
         color: white;
     }
+    &:disabled{
+        background-color: rgb(218, 225, 231);
+        color: rgb(125, 135, 156);
+        border-color: rgb(218, 225, 231);
+    }
 }
 .alert{
     margin-bottom: 20px;

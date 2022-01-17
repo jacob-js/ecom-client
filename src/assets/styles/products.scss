@@ -125,6 +125,59 @@
                 margin-bottom: 15px;
             }
         }
+        .reviews{
+            display: flex;
+            flex-direction: column;
+            .review{
+                &:not(:last-of-type){
+                    margin-bottom: 35px;
+                }
+                .user{
+                    display: flex;
+                    .left{
+                        margin-left: 10px;
+                        .name{
+                            font-size: 16px;
+                            font-weight: 600;
+                        }
+                        .rate{
+                            font-size: 12px;
+                            li:not(:last-child){
+                                margin-right: 2px !important;
+                            }
+                        }
+                        .value{
+                            font-size: 14px;
+                            font-weight: 600;
+                            margin-left: 10px;
+                        }
+                        .date{
+                            color: rgb(75, 86, 107);
+                            margin-left: 15px;
+                            font-size: 12px;
+                        }
+                    }
+                }
+                .comment{
+                    color: rgb(75, 86, 107);
+                    margin-top: 10px;
+                }
+            }
+            .title{
+                margin-top: 55px;
+                margin-bottom: 20px;
+                font-size: 25px;
+            }
+            .form{
+                textarea{
+                    height: 200px;
+                }
+                .btn.rate{
+                    border-radius: 5px;
+                    font-weight: bold;
+                }
+            }
+        }
     }
 }
 

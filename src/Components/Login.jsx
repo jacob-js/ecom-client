@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
+import axios from 'axios';
 
 const schema = yup.object({
     username: yup.string().required('Ce champ est obligatoire'),
@@ -50,6 +51,7 @@ function Login() {
     const mutation = useMutation(loginApi, {
         onSuccess: (res) =>{
             localStorage.setItem('bweteta_token', res.data.data.token);
+            axios.defaults.headers.common['bweteta_token'] = res.data.data.token;
             setloading(false);
             dispatch({
                 type: usersActionTypes.LOGIN_SUCCESS,

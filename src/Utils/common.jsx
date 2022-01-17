@@ -11,7 +11,7 @@ export const Input = styled.input`
     outline: none;
     width: 100%;
     height: 42px;
-    border: 1px solid rgba(200, 200, 200, 0.3);
+    border: 1px solid rgb(218, 225, 231);
     padding: 0 10px;
     border-radius: 10px;
     display: block !important;
@@ -33,7 +33,7 @@ export const Input = styled.input`
 export const TextArea = styled.textarea`
     outline: none;
     width: 100%;
-    border: 1px solid rgba(200, 200, 200, 0.3);
+    border: 1px solid rgb(218, 225, 231);
     padding: 10px;
     border-radius: 10px;
     display: block !important;
@@ -52,7 +52,7 @@ export const Select = styled.select`
     outline: none;
     width: 100%;
     height: 42px;
-    border: 1px solid rgba(200, 200, 200, 0.3);
+    border: 1px solid rgb(218, 225, 231);
     padding: 0 10px;
     border-radius: 10px;
     display: block !important;
@@ -101,4 +101,13 @@ export const FieldError = styled.span`
     font-size: 14px;
     max-height: 18px,
     margin: 0 10px;
+`
+
+export const Label = styled.label`
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 6px;
+    color: rgb(75, 86, 107);
 `
