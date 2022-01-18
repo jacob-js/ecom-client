@@ -98,6 +98,74 @@
             }
         }
     }
+    .footer{
+        box-shadow: none;
+        cursor: unset;
+        background-color: rgb(15, 52, 96);
+        width: 100%;
+        padding: 80px 15%;
+        display: flex;
+        justify-content: space-between;
+        .block{
+            color: rgb(174, 180, 190);
+            width: calc(100% / 4 - 40px);
+            &:first-of-type{
+                width: calc(100% / 4);
+                margin-right: 30px;
+            }
+            &:last-of-type{
+                margin-left: 30px;
+                width: calc(100% / 4);
+            }
+            .title{
+                font-size: 25px;
+                font-weight: 600;
+                line-height: 1;
+                margin-bottom: 1.25rem;
+                color: white;
+            }
+            .logo{
+                margin-bottom: 2rem;
+            }
+            .links{
+                .link{
+                    display: block;
+                    padding: 0.3rem 0rem;
+                    color: rgb(174, 180, 190);
+                    cursor: pointer;
+                    border-radius: 4px;
+                    transition: all .3s ease-in-out;
+                    &:hover{
+                        color: white;
+                    }
+                }
+            }
+            .address, .phone, .email{
+                padding: 0.3rem 0rem;
+            }
+            .socials{
+                padding: 0.3rem 0rem;
+                display: flex;
+                .social{
+                    display: block;
+                    color: rgb(174, 180, 190);
+                    font-size: 16px;
+                    box-shadow: none;
+                    cursor: pointer;
+                    margin: 5px;
+                    padding: 5px 10px;
+                    padding-top: 10px;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    border-radius: 30%;
+                    transition: all .3s ease-out;
+                    &:hover{
+                        background-color: rgba(0, 0, 0, 0.3);
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .nav.sticky{
