@@ -56,8 +56,8 @@ function CartDrawer({visible, onClose}) {
                             <img src={getColorName(item) ? getColorImage(item, getColorName(item)): item.cover} alt="" className='cover' />
                             <div className="sub">
                                 <div className="name"> {item.name} </div>
-                                <div className="sub-price"> {item.currency === "USD" ? '$': "FC"}{ item.price } <span className="sign">x</span> { item.quantity } </div>
-                                <div className="price"> {item.currency === "USD" ? '$': "FC"}{ item.price*parseInt(item.quantity) }</div>
+                                <div className="sub-price"> {item.currency === "USD" ? '$': "FC"}{ (item.price-(item.discount || 0))*parseInt(item.quantity) } <span className="sign">x</span> { item.quantity } </div>
+                                <div className="price"> {item.currency === "USD" ? '$': "FC"}{ (item.price-(item.discount || 0))*parseInt(item.quantity) }</div>
                             </div>
                         </div>
                         <div className="action" onClick={() =>onDelete(item.cartId)}> <MdClose className='icon' /> </div>
