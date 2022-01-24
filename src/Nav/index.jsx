@@ -19,6 +19,7 @@ function Nav({children}) {
     const [visible, setVisible] = useState(false);
     const [cartVisible, setCartVisible] = useState(false);
     const [ container, setContainer ] = useState(null);
+    const [ searchTerm, setSearchTerm ] = useState();
     const location = useLocation();
     const history = useHistory();
     const [popupVisible, setPopupVisible] = useState(location.pathname === '/' ? true: false)
@@ -76,6 +77,14 @@ function Nav({children}) {
         }
         return;
     }, [location.pathname]);
+
+    document.addEventListener('keypress', e =>{
+        if(e.key === 'Enter') {
+            if(searchTerm) {
+                history.push(`/products/search/${searchTerm}`)
+            }
+        }
+    })
     
     return (
         <div className='page' ref={setContainer}>
@@ -92,7 +101,7 @@ function Nav({children}) {
                         </div>
                         <div className="search">
                             <Input
-                                placeholder="Rechercer"
+                                placeholder="Rechercer... puis appuyer sur Entrée"
                                 p={{ x: "2.5rem" }}
                                 rounded="circle"
                                 w="40rem"
@@ -100,6 +109,8 @@ function Nav({children}) {
                                 borderColor="gray500"
                                 hoverBorderColor="#dd4900"
                                 focusBorderColor="#dd4900"
+                                textWeight="300"
+                                onChange={(e) => setSearchTerm(e.target.value)}
                                 prefix={
                                     <Icon
                                     name="Search"

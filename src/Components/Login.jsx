@@ -1,10 +1,10 @@
-import { Button } from 'antd';
+import { Button, Divider } from 'antd';
 import React, { useState } from 'react'
 import { FieldContainer, FieldError, FormContainer, Input, Link, Title } from '../Utils/common'
 import logo from '../assets/images/min_logo.png'
 import { ArrowRightOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons/lib/icons';
 import { useMutation } from 'react-query';
-import { loginApi, sendOtpApi } from '../apis/auth';
+import { googleLoginApi, loginApi, sendOtpApi } from '../apis/auth';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { getFieldError } from '../Utils/helpers';
@@ -14,6 +14,10 @@ import { useDispatch } from 'react-redux';
 import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
 import axios from 'axios';
+import GoogleLogin from 'react-google-login';
+import { FcGoogle } from 'react-icons/fc';
+import ReactFacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { FaFacebookF } from 'react-icons/fa';
 
 const schema = yup.object({
     username: yup.string().required('Ce champ est obligatoire'),
@@ -79,6 +83,19 @@ function Login() {
             setloading(true);
             seterror([]);
         }
+    });
+
+    const { mutate, isLoading: gLoading } = useMutation(googleLoginApi, {
+        onSuccess: (data) =>{
+            localStorage.setItem('bweteta_token', data.data.token);
+            axios.defaults.headers.common['bweteta_token'] = data.data.token;
+            setloading(false);
+            dispatch({
+                type: usersActionTypes.LOGIN_SUCCESS,
+                payload: data.data.user
+            })
+            history.push(history.location.state?.from || '/');
+        }
     })
 
     return (
@@ -118,6 +135,27 @@ function Login() {
                         <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>history.push('/signup')}>Inscrivez-vous</Link></div>
                     </div>
                 </FormContainer>
+            </div>
+            <div className="socials-auth">
+                <Divider>Ou</Divider>
+                <div className="socials">
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_G_CLIENT_ID}
+                        onSuccess={(res) => mutate({ googleToken: res.tokenId })}
+                        render={renderProps => (
+                            <Button className='btn google' loading={gLoading} onClick={renderProps.onClick} disabled={renderProps.disabled} icon={<FcGoogle size={20} style={{ marginRight: 5 }} />}>Connexion avec google</Button>
+                        )}
+                    />
+                    <ReactFacebookLogin
+                        appId={process.env.REACT_APP_FB_APP_ID}
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        callback={(res) => {} }
+                        render={renderProps => (
+                            <Button type='primary' className='btn facebook' onClick={renderProps.onClick} disabled={renderProps.isDisabled} loading={renderProps.isProcessing} icon={<FaFacebookF style={{ marginRight: 5 }}/> } > Connexion avec facebook </Button>
+                        )}
+                    />
+                </div>
             </div>
         </div>
     )

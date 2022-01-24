@@ -82,6 +82,7 @@ const Cart = {
             type: cartActionTypes.CLEAR_CART
         });
         localStorage.setItem('cartItems', "[]");
+        items = [];
     }
 }
 

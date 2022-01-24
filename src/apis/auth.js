@@ -19,3 +19,7 @@ export const getCurrUserApi = () =>{
 export const sendOtpApi = (username) =>{
     return axios.get(`/users/send-otp/${username}`)
 }
+
+export const googleLoginApi = async(data) =>{
+    return (await axios.post(`/users/oauth/google`, data))?.data
+}
