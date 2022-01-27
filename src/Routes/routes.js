@@ -8,6 +8,7 @@ import OrdersList from "../Components/OrdersList";
 import ProductDetail from "../Components/ProductDetail";
 import ProductsByCateg from "../Components/ProductsByCateg";
 import ProductsByKey from "../Components/ProductsByKey";
+import Profile from "../Components/Profile";
 import Signup from "../Components/Signup";
 
 const routes = [
@@ -86,6 +87,13 @@ const routes = [
     {
         path: '/orders/:id',
         component: OrderDetails,
+        protected: true,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/profile',
+        component: Profile,
         protected: true,
         nav: true,
         exact: true

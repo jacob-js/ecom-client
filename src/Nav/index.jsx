@@ -133,7 +133,7 @@ function Nav({children}) {
                                         auth ?
                                         <>
                                             <div style={{ textAlign: 'center', padding: 15 }}>{data.fullname}</div>
-                                            <Menu.Item key="1" icon={ <HiOutlineUser /> }>Mon profil</Menu.Item>
+                                            <Menu.Item key="1" icon={ <HiOutlineUser /> } onClick={() =>{ history.push('/profile'); setUserPopVisible(false) }}>Mon profile</Menu.Item>
                                             <Menu.Item key="2" icon={<RiMoneyDollarCircleLine />} onClick={() =>{history.push('/orders'); setUserPopVisible(false)}}>Mes commandes</Menu.Item>
                                             <Menu.Item key="3" onClick={() =>{handleLogout(); setUserPopVisible(false)}} icon={<HiOutlineLogout />}>Deconnexion</Menu.Item>
                                         </>:

@@ -1,0 +1,126 @@
+.profile{
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+    padding-bottom: 50px;
+    .header{
+        .title{
+            font-size: 25px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            .icon{
+                color: $color_default;
+                margin-right: 10px;
+            }
+        }
+    }
+    .user-stats{
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+        .card{
+            background-color: white;
+            border-radius: 7px;
+            padding: 20px 40px;
+            box-shadow: 0 1px 3px rgba(107, 107, 107, 0.1);
+            &:not(:first-of-type){
+                width: 200px;
+                text-align: center;
+            }
+            &.user{
+                display: flex;
+                align-items: center;
+                .info{
+                    margin-left: 10px;
+                    .fullname{
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+                    .email{
+                        color: rgb(125, 135, 156);
+                    }
+                }
+            }
+            .stat{
+                font-size: 20px;
+                font-weight: 600;
+                color: $color_default;
+                margin-bottom: 10px;
+            }
+            .stat-name{
+                color: rgb(125, 135, 156);
+                font-size: 13px;
+                font-weight: 200;
+                line-height: 1.5;
+            }
+        }
+    }
+    .user-infos{
+        margin-top: 30px;
+        background-color: white;
+        border-radius: 7px;
+        padding: 40px 40px;
+        box-shadow: 0 1px 3px rgba(107, 107, 107, 0.1);
+        display: flex;
+        justify-content: space-between;
+        .section{
+            .title{
+                color: rgb(125, 135, 156);
+                font-size: 13px;
+            }
+        }
+    }
+    .edit-btn{
+        width: 100px;
+        margin-top: 30px;
+        background-color: rgb(160, 160, 160);
+        color: white;
+        border: none;
+        outline: 0;
+        border-radius: 5px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all .3s ease-in-out;
+        font-weight: 600;
+        cursor: pointer;
+        &:hover, &:focus {
+            background-color: rgb(182, 182, 182);
+            color: white;
+        }
+        .icon{
+            margin-right: 5px;
+        }
+    }
+    .profile-form{
+        height: 0 !important;
+        overflow: hidden;
+        background-color: white;
+        border-radius: 7px;
+        box-shadow: 0 1px 3px rgba(107, 107, 107, 0.1);
+        margin-top: 30px;
+        padding: 0px;
+        transition: all .3s ease-in-out;
+        .form-row{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            div{
+                width: 47%;
+                label{
+                    font-weight: normal;
+                }
+            }
+            .btn.btn-save{
+                width: 30%;
+                height: 45px;
+                padding: auto 40px;
+            }
+        }
+        &.visible{
+            height: auto !important;
+            padding: 40px 40px;
+        }
+    }
+}
