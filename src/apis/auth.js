@@ -23,3 +23,7 @@ export const sendOtpApi = (username) =>{
 export const googleLoginApi = async(data) =>{
     return (await axios.post(`/users/oauth/google`, data))?.data
 }
+
+export const updateUser = async(id, data) =>{
+    return (await axios.put(`/users/details/${id}`, data))?.data
+}

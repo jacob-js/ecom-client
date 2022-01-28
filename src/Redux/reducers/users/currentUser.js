@@ -59,6 +59,14 @@ const currentUser = (state, {type, payload}) => {
                 }
             }
     
+        case usersActionTypes.UPDATE_USER:
+            return{
+                ...state,
+                currUser: {
+                    ...state.currUser,
+                    data: payload
+                }
+            }
     
         default:
             break;
