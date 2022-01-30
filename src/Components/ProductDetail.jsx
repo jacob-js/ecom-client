@@ -64,13 +64,21 @@ function ProductDetail() {
     })
 
     const imgContainer = document.querySelector('.cover');
-    const img = document.querySelector('#image');
+    const [img, setImg] = useState(document.querySelector('#image'));
+    const [imgRect, setImgRect] = useState(img?.getBoundingClientRect());
     const lens = document.querySelector('.lens');
     const result = document.querySelector('.result');
+    const resultContainer = document.querySelector('.res-container');
+
+    useEffect(() =>{
+        (() =>{
+            setImg(document.querySelector('#image'));
+            setImgRect(img?.getBoundingClientRect());
+        })();
+    }, [cover])
 
     if(imgContainer && img && lens && result){
         const imgContainerRect = imgContainer.getBoundingClientRect();
-        const imgRect = img.getBoundingClientRect();
         const lensRect = lens.getBoundingClientRect();
         const resultRect = result.getBoundingClientRect();
 
@@ -94,12 +102,12 @@ function ProductDetail() {
             lens.style.left = x + 'px';
             lens.style.top = y + 'px';
 
-            let fx = resultRect.width / lensRect.width;
-            let fy = resultRect.height / lensRect.height;
+            let fx = imgRect.width / lensRect.width;
+            let fy = imgRect.height / lensRect.height;
 
-            result.style.width = imgRect.width + 'px';
-            result.style.height = imgRect.height + 'px';
-            result.style.left = (imgContainerRect.width - imgRect.width) / 2 + 'px';
+            resultContainer.style.width = imgRect.width + 'px';
+            resultContainer.style.height = imgRect.height + 'px';
+            resultContainer.style.left = (imgContainerRect.width - imgRect.width) / 2 + 'px';
             result.style.backgroundImage = `url(${img.src})`;
             result.style.backgroundSize = `${imgRect.width * fx}px ${imgRect.height * fy}px`;
             result.style.backgroundPosition = `-${x * fx}px -${y * fy}px`;
@@ -125,7 +133,9 @@ function ProductDetail() {
                             <>
                                 <img src={cover.image} id='image' alt="product" srcset="" />
                                 <div className="lens"></div>
-                                <div className="result"></div>
+                                <div className="res-container">
+                                    <div className="result"></div>
+                                </div>
                             </>
                         }
                     </div>
