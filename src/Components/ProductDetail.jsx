@@ -63,6 +63,55 @@ function ProductDetail() {
         }
     })
 
+    const imgContainer = document.querySelector('.cover');
+    const img = document.querySelector('#image');
+    const lens = document.querySelector('.lens');
+    const result = document.querySelector('.result');
+
+    if(imgContainer && img && lens && result){
+        const imgContainerRect = imgContainer.getBoundingClientRect();
+        const imgRect = img.getBoundingClientRect();
+        const lensRect = lens.getBoundingClientRect();
+        const resultRect = result.getBoundingClientRect();
+
+        const getMousePos = (e) => {
+            let minX = 0;
+            let minY = 0;
+            let maxX = imgContainerRect.width - (lensRect.width * 2);
+            let maxY = imgContainerRect.height - (lensRect.height);
+            let x = e.clientX - imgContainerRect.left - lensRect.width / 2;
+            let y = e.clientY - imgContainerRect.top - lensRect.height / 2;
+
+            if(x <= minX) x = minX;
+            if(x >= maxX) x = maxX;
+            if(y <= minY) y = minY;
+            if(y >= maxY) y = maxY;
+            return { x, y };
+        }
+
+        const zoomImage = (e) => {
+            const { x, y } = getMousePos(e);
+            lens.style.left = x + 'px';
+            lens.style.top = y + 'px';
+
+            let fx = resultRect.width / lensRect.width;
+            let fy = resultRect.height / lensRect.height;
+
+            result.style.width = imgRect.width + 'px';
+            result.style.height = imgRect.height + 'px';
+            result.style.left = (imgContainerRect.width - imgRect.width) / 2 + 'px';
+            result.style.backgroundImage = `url(${img.src})`;
+            result.style.backgroundSize = `${imgRect.width * fx}px ${imgRect.height * fy}px`;
+            result.style.backgroundPosition = `-${x * fx}px -${y * fy}px`;
+        }
+
+        imgContainer.addEventListener('mousemove', zoomImage);
+        imgContainer.addEventListener('mouseleave', (e) => {
+            lens.style.left = '0%';
+            result.style.backgroundImage = `none`;
+        });
+    }
+
     if(error) return <div>Error</div>;
 
     return (
@@ -73,7 +122,11 @@ function ProductDetail() {
                         {
                             isLoading ?
                             <Skeleton.Input style={{ width: 500, height: 400 }} active loading={true} size='large' />:
-                            <img src={cover.image} alt="product" srcset="" />
+                            <>
+                                <img src={cover.image} id='image' alt="product" srcset="" />
+                                <div className="lens"></div>
+                                <div className="result"></div>
+                            </>
                         }
                     </div>
                     <div className="color-images">

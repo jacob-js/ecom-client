@@ -40,9 +40,15 @@ function ProfileForm({ formVisible, setFormVisible, user }) {
             formData.append('gender', values.gender);
             formData.append('profession', values.profession);
             formData.append('cover', file);
-            mutate(formData)
+            if(isAvailableChange){
+                mutate(formData)
+            }else{
+                setFormVisible(false);
+            }
         }
     });
+
+    const isAvailableChange = form.values.fullname !== user.fullname || form.values.email !== user.email || form.values.phone !== user.phone || form. values.city !== user.city || form.values.province !== user.state || form.values.country !== user.country || form.values.birthdate !== user.birthdate || form.values.gender !== user.gender || form.values.profession !== user.profession || file;
 
     const onImgChange = e =>{
         const file = e.target.files[0];
