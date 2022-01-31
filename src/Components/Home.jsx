@@ -196,14 +196,13 @@ function Home() {
                     <section className="section-top-categ">
                         <div className="header">
                             <div className="title"> <MdCategory className='icon' />Top catégories</div>
-                            <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
                         <div className="data">
                             <Slider {...settings} slidesToShow={3} className='carousel'>
                                 {
                                     data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
                                     .sort((a, b) => a.sort-b.sort).map((category, index) => (
-                                        <div data-aos='fade-right' className="category" key={index}>
+                                        <div data-aos='fade-right' className="category" key={index} onClick={() =>history.push(`/products/category/${category.name}`)}>
                                             <div className="name">{ category.name }</div>
                                             <div className="cover">
                                                 <img src={category.cover} alt="" srcset="" />

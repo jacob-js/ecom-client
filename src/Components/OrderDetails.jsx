@@ -57,8 +57,10 @@ function OrderDetails() {
                         data?.data.isGift && 
                         <div className="gift">
                             <div className="icon"><AiOutlineGift /></div>
-                            <div className="title">Cadeau à {data?.data.receiverName}</div>
-                            <div className="msg">{data?.data.giftMention}</div>
+                            <div className="details">
+                                <div className="title">Cadeau à {data?.data.receiverName}</div>
+                                <div className="msg">{data?.data.giftMention}</div>
+                            </div>
                         </div>
                     }
                 </div>
