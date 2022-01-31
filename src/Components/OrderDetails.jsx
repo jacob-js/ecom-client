@@ -5,6 +5,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { getOrderApi } from '../apis/orders';
 import moment from 'moment';
 import { Tag } from 'atomize';
+import { AiOutlineGift } from 'react-icons/ai'
 
 function OrderDetails() {
     const params = useParams();
@@ -46,10 +47,20 @@ function OrderDetails() {
                 </div>
             </div>
             <div className="extra">
-                <div className="shipping-address">
-                    <div className="title">Adresse de livraison</div>
-                    {data?.data.country}, {data?.data.city}, {data?.data.address}
-                    <div className="phone">N° de téléphone : <span>{data?.data.phone}</span></div>
+                <div className="left">
+                    <div className="shipping-address">
+                        <div className="title">Adresse de livraison</div>
+                        {data?.data.country}, {data?.data.city}, {data?.data.address}
+                        <div className="phone">N° de téléphone : <span>{data?.data.phone}</span></div>
+                    </div>
+                    {
+                        data?.data.isGift && 
+                        <div className="gift">
+                            <div className="icon"><AiOutlineGift /></div>
+                            <div className="title">Cadeau à {data?.data.receiverName}</div>
+                            <div className="msg">{data?.data.giftMention}</div>
+                        </div>
+                    }
                 </div>
                 <div className="totals">
                     <div className="title">Resumé du total</div>

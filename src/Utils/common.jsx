@@ -46,6 +46,9 @@ export const TextArea = styled.textarea`
         outline: none;
         border-color: #dd4900;
     }
+    &.error{
+        border: 1px solid red;
+    }
 `;
 
 export const Select = styled.select`

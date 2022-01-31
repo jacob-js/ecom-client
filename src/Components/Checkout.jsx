@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { Tag } from 'atomize';
+import { Checkbox, Label, Tag } from 'atomize';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -15,11 +15,22 @@ import { getFieldError } from '../Utils/helpers';
 import { Alert } from '@mui/material';
 
 const schema = yup.object({
-    phone: yup.string().required("Le numéro de téléphone est requis").matches(/^[+243]/, "Le numéro de téléphone doit commencé avec +243"),
+    phone: yup.string().required("Le numéro de téléphone est requis")
+                .matches(/^[+243]/, "Le numéro de téléphone doit commencé avec +243")
+                .matches(/^[+][0-9]{12}$/, "Le numéro de téléphone est invalide"),
     country: yup.string().required("Le pays est requis"),
     province: yup.string().required("La province est requise"),
     city: yup.string().required("La ville est requise"),
-    address: yup.string().required("L'adresse est requise")
+    address: yup.string().required("L'adresse est requise"),
+    isGift: yup.boolean(),
+    giftMention: yup.string().when('isGift', {
+        is: true,
+        then: yup.string().required("Le message du cadeau est requis"),
+    }),
+    receiverName: yup.string().when('isGift', {
+        is: true,
+        then: yup.string().required("Le nom du destinataire est requis"),
+    })
 })
 
 function Checkout() {
@@ -30,7 +41,7 @@ function Checkout() {
     const usdItems = items.filter(item => item.currency === "USD");
     const history = useHistory();
     const form = useFormik({
-        initialValues: { phone: '', country: 'Congo DRC', province: '', city: '', address: '' },
+        initialValues: { phone: '+243', country: 'Congo DRC', province: '', city: '', address: '', note: history.location.state?.note || '', receiverName: '', isGift: false, giftMention: '' },
         validationSchema: schema,
         onSubmit: () => checkoutMutation.mutate()
     });
@@ -61,6 +72,7 @@ function Checkout() {
     useEffect(() =>{
         Cart.getCartItems(dispatch);
     }, []);
+    console.log(history.location.state);
 
     return (
         <div className='checkout-component'>
@@ -72,7 +84,7 @@ function Checkout() {
                         <Alert severity='error' className='alert' > {error[0]} </Alert>:null
                     }
                     <FieldContainer>
-                        <Input type='tel' name='phone' placeholder="Numéro de téléphone" onChange={form.handleChange('phone')} className={
+                        <Input type='tel' value={form.values.phone} name='phone' placeholder="Numéro de téléphone" onChange={form.handleChange('phone')} className={
                                 form.errors.phone && form.touched.phone || getFieldError(error, 'phone') ? 'error' : ''
                             } />
                         {form.errors.phone && form.touched.phone ? <FieldError>{form.errors.phone}</FieldError> : 
@@ -122,8 +134,39 @@ function Checkout() {
 
                     <FieldContainer className='comment'>
                         <div className="label">Commentaire <Tag bg='warning200' textColor='warning700'>Note</Tag> </div>
-                        <TextArea />
+                        <TextArea value={form.values.note} onChange={form.handleChange('note')} />
                     </FieldContainer>
+                    <FieldContainer className='gift'>
+                        <Label>
+                            <Checkbox
+                                checked={form.values.isGift}
+                                onChange={e =>form.setFieldValue('isGift', e.target.checked)}
+                                activeColor='#dd4900'
+                                inactiveColor='gray700'
+                            />
+                            C'est un cadeau ?
+                        </Label>
+                    </FieldContainer>
+                    {form.values.isGift && 
+                        <>
+                        <FieldContainer className='gift-msg'>
+                            <div className="label">Mention sur le cadeau</div>
+                            <TextArea value={form.values.giftMention} className={
+                                    form.errors.giftMention && form.touched.giftMention || getFieldError(error, 'giftMention') ? 'error' : ''
+                                } onChange={form.handleChange('giftMention')} placeholder='Ex: fêtes bien ton anniversaire mon fils avec joie et bonheur, de la part de ton père' />
+                            {form.errors.giftMention && form.touched.giftMention ? <FieldError>{form.errors.giftMention}</FieldError> :
+                                getFieldError(error, 'giftMention') ? <FieldError>{getFieldError(error, 'giftMention')}</FieldError> : null
+                            }
+                        </FieldContainer>
+                        <FieldContainer>
+                            <Input type='tel' name='receiverName' placeholder="Nom du destinatire" onChange={form.handleChange('receiverName')} className={
+                                    form.errors.receiverName && form.touched.receiverName || getFieldError(error, 'receiverName') ? 'error' : ''
+                                } />
+                            {form.errors.receiverName && form.touched.receiverName ? <FieldError>{form.errors.receiverName}</FieldError> : 
+                                getFieldError(error, 'receiverName') ? <FieldError>{getFieldError(error, 'receiverName')}</FieldError> : null}
+                        </FieldContainer>
+                        </>
+                    }
                 </FormContainer>
             </div>
 

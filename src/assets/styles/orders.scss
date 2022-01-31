@@ -167,18 +167,35 @@
         margin-top: 20px;
         padding-bottom: 20px;
         
-        .shipping-address{
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            background-color: white;
-            height: 120px;
+        .left{
             width: 45%;
-            word-wrap: break-word;
-            padding: 20px;
-            border-radius: 10px;
-            .title{
-                font-size: 16px;
-                font-weight: 600;
-                margin-bottom: 10px;
+            .shipping-address, .gift{
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+                background-color: white;
+                height: 120px;
+                word-wrap: break-word;
+                padding: 20px;
+                border-radius: 10px;
+                .title{
+                    font-size: 16px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+            }
+            .gift{
+                position: relative;
+                margin-top: 20px;
+                height: 90px;
+                overflow: hidden;
+                .icon{
+                    color: $color_default;
+                    position: absolute;
+                    font-size: 100px;
+                    left: calc(50% - 40px);
+                    transform: rotate3d(0, 0, 1, 45deg);
+                    top: 0px;
+                    filter: blur(2px) opacity(0.2);
+                }
             }
         }
         .totals{

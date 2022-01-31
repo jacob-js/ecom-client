@@ -2,8 +2,18 @@
     padding: 40px 0px;
     width: 80%;
     margin: auto;
-    display: flex;
-    justify-content: space-between;
+    .title{
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        .icon{
+            color: $color_default;
+        }
+    }
+    .content{
+        display: flex;
+        justify-content: space-between;
+    }
     .items{
         width: 68%;
         display: flex;
