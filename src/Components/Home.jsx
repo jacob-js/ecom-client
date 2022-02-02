@@ -170,25 +170,46 @@ function Home() {
                                 [1, 2, 3, 4].map((prod, index) => (
                                     <Skeleton.Input style={{ width: 275, margin: 20, height: 300,  borderRadius: 10 }} key={index} active loading={true} size='large' />
                                 )):
-                                <Slider {...settings} className='carousel'>
-                                    {
-                                        bestProds?.rows?.map((product, index) => (
-                                            <div data-aos='fade-left' className="product" key={index}>
-                                                <div className="cover" onClick={() =>history.push(`/products/${product.id}`)}> <img src={product.cover} alt="" srcset="" /> </div>
-                                                <div className="info">
-                                                    <div className="">
-                                                        <div className="name"> {product.name} </div>
-                                                        <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
-                                                        <div className="price"> {product.currency === "USD" ? '$': "FC"}{product.price-(product.discount || 0)}
-                                                            <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span>
+                                <>
+                                    <Slider {...settings} className='carousels'>
+                                        {
+                                            bestProds?.rows?.map((product, index) => (
+                                                <div data-aos='fade-left' className="product" key={index}>
+                                                    <div className="cover" onClick={() =>history.push(`/products/${product.id}`)}> <img src={product.cover} alt="" srcset="" /> </div>
+                                                    <div className="info">
+                                                        <div className="">
+                                                            <div className="name"> {product.name} </div>
+                                                            <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
+                                                            <div className="price"> {product.currency === "USD" ? '$': "FC"}{product.price-(product.discount || 0)}
+                                                                <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span>
+                                                            </div>
                                                         </div>
+                                                        <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                                     </div>
-                                                    <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
                                                 </div>
-                                            </div>
-                                        ))
-                                    }
-                                </Slider>
+                                            ))
+                                        }
+                                    </Slider>
+                                    <Slider {...settings} slidesToShow={1} className='carousel-mob'>
+                                        {
+                                            bestProds?.rows?.map((product, index) => (
+                                                <div data-aos='fade-left' className="product" key={index}>
+                                                    <div className="cover" onClick={() =>history.push(`/products/${product.id}`)}> <img src={product.cover} alt="" srcset="" /> </div>
+                                                    <div className="info">
+                                                        <div className="">
+                                                            <div className="name"> {product.name} </div>
+                                                            <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
+                                                            <div className="price"> {product.currency === "USD" ? '$': "FC"}{product.price-(product.discount || 0)}
+                                                                <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </Slider>
+                                </>
                             }
                         </div>
                     </section>
@@ -198,7 +219,21 @@ function Home() {
                             <div className="title"> <MdCategory className='icon' />Top catégories</div>
                         </div>
                         <div className="data">
-                            <Slider {...settings} slidesToShow={3} className='carousel'>
+                            <Slider {...settings} slidesToShow={3} className='carousels'>
+                                {
+                                    data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
+                                    .sort((a, b) => a.sort-b.sort).map((category, index) => (
+                                        <div data-aos='fade-right' className="category" key={index} onClick={() =>history.push(`/products/category/${category.name}`)}>
+                                            <div className="name">{ category.name }</div>
+                                            <div className="cover">
+                                                <img src={category.cover} alt="" srcset="" />
+                                                <div className="bg"></div>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </Slider>
+                            <Slider {...settings} slidesToShow={1} className='carousel-mob'>
                                 {
                                     data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
                                     .sort((a, b) => a.sort-b.sort).map((category, index) => (
@@ -220,7 +255,7 @@ function Home() {
                             <div className="title"> <img src={newIcon} alt="" srcset="" className='icon' /> Nouveauté</div>
                             <div className="view-all" onClick={() =>history.push(`/products-key?key=isNew`)}> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
-                        <div className="data">
+                        <div className="data-new">
                             {
                                 loadingNewProducts?
                                 [1, 2, 3, 4, 5].map((prod, index) => (
@@ -228,7 +263,7 @@ function Home() {
                                 )):
                                 newProds?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
                                 .sort((a, b) => a.sort-b.sort).map((prod, index) => (
-                                    <div data-aos='fade-up' className="product" key={index}>
+                                    <div data-aos='fade-up' className="new-product" key={index}>
                                         <div className="cover" onClick={() =>history.push(`/products/${prod.id}`)}>
                                             <img src={prod.cover} alt="" srcset="" />
                                             <div className="bg"></div>

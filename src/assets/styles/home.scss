@@ -79,7 +79,7 @@
                     width: 100%;
 
                     .product{
-                        width: 90% !important;
+                        width: 90%;
                         height: 380px;
                         background-color: white;
                         border-radius: 10px;
@@ -161,37 +161,46 @@
 
     .section-arrival{
         margin-top: 50px;
-        .data{
+        .data-new{
             display: flex;
             background-color: white;
             border-radius: 10px;
             padding: 10px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
 
-            .product{
-                width: 175px;
+            .new-product{
+                width: 275px;
                 height: 100% !important;
                 padding: 20px 10px;
                 border: 2px solid $bg_color;
+                background-color: white;
+                border-radius: 10px;
+                box-sizing: border-box;
+                margin-left: 15px !important;
+                position: relative;
+                z-index: 999;
                 cursor: pointer;
                 .cover{
-                    height: 175px;
-                    width: 175px;
+                    height: 200px;
+                    width: 90%;
                     border-radius: 10px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    position: relative;
                     img{
-                        max-width: 175px !important;
-                        max-height: 175px !important;
+                        max-width: 100% !important;
+                        max-height: 100% !important;
                         transition: all .2s ease-in;
                     }
                     .bg{
                         position: absolute;
                         content: '';
-                        top: 8%;
-                        width: 90%;
-                        height: 175px;
+                        top: 1%;
+                        left: 5%;
+                        width: 95%;
+                        height: 200px;
                         border-radius: 10px;
                         background-color: rgba(0, 0, 0, 0);
                         z-index: 9;
@@ -348,7 +357,7 @@
     }
 }
 
-.carousel{
+.carousels, .carousel-mob, .carousel{
     width: 100%;
 
     .prev-arrow{

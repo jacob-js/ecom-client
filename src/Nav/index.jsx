@@ -167,6 +167,35 @@ function Nav({children}) {
                 </div>
                 <CartDrawer visible={cartVisible} onClose={() =>setCartVisible(false)} />
             </div>
+            <div className="nav-mob">
+                <div className="logo">Bweteta white logo</div>
+                <div className="bar">
+                    <div className="search">
+                        <Input
+                            placeholder="Rechercer... puis appuyer sur Entrée"
+                            p={{ x: "2.5rem", y: "2px" }}
+                            rounded="circle"
+                            w="100%"
+                            h="2.5rem"
+                            borderColor="gray500"
+                            hoverBorderColor="#dd4900"
+                            focusBorderColor="#dd4900"
+                            textWeight="300"
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            prefix={
+                                <Icon
+                                name="Search"
+                                color="gray500"
+                                size="20px"
+                                pos="absolute"
+                                top="29%"
+                                left="1rem"
+                                />
+                            }
+                        />
+                    </div>
+                </div>
+            </div>
             <div className="children">{children}</div>
             <div className="footer">
                 <div className="block">
