@@ -289,23 +289,42 @@ function Home() {
                                 [1, 2, 3, 4, 5].map((prod, index) => (
                                     <Skeleton.Input style={{ width: 200, margin: 20, height: 200,  borderRadius: 10 }} key={index} active loading={true} size='large' />
                                 )):
-                                <Slider {...settings} slidesToShow={5} className='carousel'>
-                                    {
-                                        bigDiscountProducts?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
-                                        .sort((a, b) => a.sort-b.sort).map((prod, index) => (
-                                            <div data-aos='fade-right' className="product" key={index}>
-                                                <div className="cover" onClick={() =>history.push(`/products/${prod.id}`)}>
-                                                    <img src={prod.cover} alt="" srcset="" />
-                                                    <div className="bg"></div>
+                                <>
+                                    <Slider {...settings} slidesToShow={5} className='carousels'>
+                                        {
+                                            bigDiscountProducts?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
+                                            .sort((a, b) => a.sort-b.sort).map((prod, index) => (
+                                                <div data-aos='fade-right' className="product" key={index}>
+                                                    <div className="cover" onClick={() =>history.push(`/products/${prod.id}`)}>
+                                                        <img src={prod.cover} alt="" srcset="" />
+                                                        <div className="bg"></div>
+                                                    </div>
+                                                    <div className="name">{ prod.name }</div>
+                                                    <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
+                                                        <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
+                                                    </div>
                                                 </div>
-                                                <div className="name">{ prod.name }</div>
-                                                <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
-                                                    <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
+                                            ))
+                                        }
+                                    </Slider>
+                                    <Slider {...settings} slidesToShow={1} className='carousel-mob'>
+                                        {
+                                            bigDiscountProducts?.rows?.map((prod, index) =>({ ...prod, sort: Math.random() }))
+                                            .sort((a, b) => a.sort-b.sort).map((prod, index) => (
+                                                <div data-aos='fade-right' className="product-discounted" key={index}>
+                                                    <div className="cover" onClick={() =>history.push(`/products/${prod.id}`)}>
+                                                        <img src={prod.cover} alt="" srcset="" />
+                                                        <div className="bg"></div>
+                                                    </div>
+                                                    <div className="name">{ prod.name }</div>
+                                                    <div className="price"> {prod.currency === "USD" ? '$': "FC"}{prod.price-(prod.discount || 0)}
+                                                        <span className="discounted"> {prod.currency === "USD" ? '$': "FC"}{prod.price} </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))
-                                    }
-                                </Slider>
+                                            ))
+                                        }
+                                    </Slider>
+                                </>
                             }
                         </div>
                     </section>

@@ -79,7 +79,7 @@
                     }
     
                     .data{
-                        margin-top: 30px;
+                        margin-top: 15px;
                         width: 100%;
                         display: flex;
                         overflow: hidden;
@@ -192,6 +192,9 @@
             }
         }
         .section-arrival{
+            width: 95% !important;
+            margin: auto;
+            margin-top: 20px;
             .data-new{
                 flex-wrap: wrap;
                 .new-product{
@@ -202,6 +205,34 @@
                     height: 250px !important;
                     .cover{
                         height: 150px !important;
+                    }
+                }
+            }
+        }
+        .section-big-discount{
+            .data{
+                .product-discounted{
+                    width: 320px !important;
+                    margin: 0 5px;
+                    border-radius: 8px;
+                    box-shadow: 0 1px 3px rgb(199, 199, 199);
+                }
+            }
+        }
+        section.electronic{
+            width: 100%;
+            .menus{
+                display: none;
+            }
+            section{
+                width: 95%;
+                margin: auto;
+                .data{
+                    justify-content: center;
+                    padding-top: 15px;
+                    .product.elec{
+                        width: 95% !important;
+                        margin-bottom: 20px;
                     }
                 }
             }
