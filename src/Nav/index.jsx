@@ -5,6 +5,7 @@ import { MdCategory, MdOutlineBikeScooter, MdOutlineDevices, MdOutlineKeyboardAr
 import { Icon, Input, Dropdown as AtDropDown } from 'atomize';
 import { Affix, Badge, Dropdown, Menu, Popover } from 'antd';
 import { GiHealing, GiHomeGarage, GiMusicSpell, GiTravelDress } from 'react-icons/gi';
+import { BiHomeAlt } from 'react-icons/bi';
 import { FaBaby } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
@@ -28,10 +29,12 @@ function Nav({children}) {
     const { cartItems: items } = useSelector(({ cart }) => cart);
     const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 200) {
             document.querySelector('.nav').classList.add('sticky')
+            document.querySelector('.bar').classList.add('sticky')
         } else {
             document.querySelector('.nav').classList.remove('sticky')
+            document.querySelector('.bar').classList.remove('sticky')
         }
     });
 
@@ -197,6 +200,28 @@ function Nav({children}) {
                 </div>
             </div>
             <div className="children">{children}</div>
+            <div className="bottom-bar">
+                <div className={`link ${location.pathname === '/' ? 'active': ''}`} onClick={() =>history.push('/')}>
+                    <div className="icon"> <BiHomeAlt /> </div>
+                    <div className="text">Accueil</div>
+                </div>
+                <div className={`link ${location.pathname === '/mob/category' ? 'active': ''}`} onClick={() =>history.push('/mob/category')}>
+                    <div className="icon"> <BiCategoryAlt /> </div>
+                    <div className="text">Categories</div>
+                </div>
+                <div className={`link ${location.pathname === '/cart' ? 'active': ''}`} onClick={() =>history.push('/cart')}>
+                    <Badge count={items.length} color='#dd4900' className='cart-count'>
+                        <div className="cart">
+                            <HiOutlineShoppingBag className='icon' />
+                        </div>
+                    </Badge>
+                    <div className="text">Panier</div>
+                </div>
+                <div className={`link ${location.pathname === '/profile' ? 'active': ''}`} onClick={() =>history.push('/profile')}>
+                    <div className="icon"> <HiOutlineUser /> </div>
+                    <div className="text">Mon compte</div>
+                </div>
+            </div>
             <div className="footer">
                 <div className="block">
                     <div className="logo"> <img src={logo} alt="" srcset="" /> </div>
