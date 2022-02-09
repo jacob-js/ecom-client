@@ -1,0 +1,42 @@
+@media (max-width: 600px) {
+    .cart-component{
+        width: 90%;
+        .content{
+            flex-direction: column;
+            .items{
+                width: 100%;
+                .item{
+                    height: inherit;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    .prod{
+                        align-items: center;
+                        .info{
+                            margin-left: 0px;
+                            .specs{
+                                display: flex;
+                                justify-content: space-between;
+                                flex-wrap: wrap;
+                                .spec-tag:not(:first-of-type){
+                                    margin-left: 0px;
+                                }
+                            }
+                        }
+                    }
+                    .actions{
+                        .delete{
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                        }
+                    }
+                }
+            }
+            .rigth{
+                width: 100%;
+            }
+        }
+    }
+}
