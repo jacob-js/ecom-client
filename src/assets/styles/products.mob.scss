@@ -1,0 +1,19 @@
+@media (max-width: 600px) {
+    .product-detail{
+        .top{
+            flex-direction: column;
+            .image{
+                width: 100%;
+                .cover{
+                    img{
+                        max-width: 100%;
+                    }
+                }
+            }
+            .info{
+                width: 100%;
+                margin-left: 0px;
+            }
+        }
+    }
+}
