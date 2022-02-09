@@ -17,7 +17,7 @@ function Profile() {
                 <FaUserAlt className='icon' /> Mon profile
             </div>
         </div>
-        <div className="user-stats">
+        <div className="user-cards">
             <div className="card user">
                 <div className="pic">
                     <Avatar src={data?.cover && data.cover} size={60}> { !data.cover && acronym } </Avatar>
@@ -27,21 +27,23 @@ function Profile() {
                     <div className="email">{data.email}</div>
                 </div>
             </div>
-            <div className="card">
-                <div className="stat">20</div>
-                <div className="stat-name">Toutes mes commandes</div>
-            </div>
-            <div className="card">
-                <div className="stat">2</div>
-                <div className="stat-name">Commandes en attente</div>
-            </div>
-            <div className="card">
-                <div className="stat">10</div>
-                <div className="stat-name">Commandes livrées</div>
-            </div>
-            <div className="card">
-                <div className="stat">8</div>
-                <div className="stat-name">Commandes annulées</div>
+            <div className="stats">
+                <div className="card">
+                    <div className="stat">20</div>
+                    <div className="stat-name">Toutes mes commandes</div>
+                </div>
+                <div className="card">
+                    <div className="stat">2</div>
+                    <div className="stat-name">Commandes en attente</div>
+                </div>
+                <div className="card">
+                    <div className="stat">10</div>
+                    <div className="stat-name">Commandes livrées</div>
+                </div>
+                <div className="card">
+                    <div className="stat">8</div>
+                    <div className="stat-name">Commandes annulées</div>
+                </div>
             </div>
         </div>
         <div className="user-infos">

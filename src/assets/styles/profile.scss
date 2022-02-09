@@ -14,20 +14,23 @@
             }
         }
     }
-    .user-stats{
+    .user-cards{
         margin-top: 40px;
         display: flex;
         justify-content: space-between;
+        .stats{
+            width: calc(100% - 330px);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
         .card{
             background-color: white;
             border-radius: 7px;
             padding: 20px 40px;
             box-shadow: 0 1px 3px rgba(107, 107, 107, 0.1);
-            &:not(:first-of-type){
-                width: 200px;
-                text-align: center;
-            }
             &.user{
+                width: 300px;
                 display: flex;
                 align-items: center;
                 .info{
@@ -63,6 +66,7 @@
         box-shadow: 0 1px 3px rgba(107, 107, 107, 0.1);
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         .section{
             .title{
                 color: rgb(125, 135, 156);

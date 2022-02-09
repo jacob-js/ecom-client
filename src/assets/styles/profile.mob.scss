@@ -1,0 +1,40 @@
+@media (max-width: 600px) {
+    .profile{
+        .user-cards{
+            flex-direction: column;
+            .card.user{
+                width: 100%;
+            }
+            .stats{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-top: 10px;
+                .card{
+                    width: calc(50% - 5px);
+                    margin-bottom: 10px;
+                }
+            }
+        }
+        .user-infos{
+            padding: 20px;
+            .section{
+                width: calc(50% - 5px);
+                word-wrap: break-word;
+                margin-bottom: 10px;
+            }
+        }
+        .profile-form{
+            .form-row{
+                display: block;
+                div{
+                    width: 100%;
+                }
+                .btn.btn-save{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
