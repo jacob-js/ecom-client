@@ -5,11 +5,13 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import ProfileForm from './ProfileForm';
+import { useHistory } from 'react-router-dom';
 
 function Profile() {
     const [ formVisible, setFormVisible ] = useState(false);
     const { data } = useSelector(({ users: { currUser } }) => currUser);
     const acronym = data?.fullname?.split(' ').map(name => name[0].toUpperCase()).join('');
+    const history = useHistory();
 
     return <div className='profile'>
         <div className="header">
@@ -28,7 +30,7 @@ function Profile() {
                 </div>
             </div>
             <div className="stats">
-                <div className="card">
+                <div className="card" onClick={() =>history.push('/orders')}>
                     <div className="stat">20</div>
                     <div className="stat-name">Toutes mes commandes</div>
                 </div>
