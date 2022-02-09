@@ -41,7 +41,7 @@ function Checkout() {
     const usdItems = items.filter(item => item.currency === "USD");
     const history = useHistory();
     const form = useFormik({
-        initialValues: { phone: '+243', country: 'Congo DRC', province: '', city: '', address: '', note: history.location.state?.note || '', receiverName: '', isGift: false, giftMention: '' },
+        initialValues: { phone: '', country: 'Congo DRC', province: '', city: '', address: '', note: history.location.state?.note || '', receiverName: '', isGift: false, giftMention: '' },
         validationSchema: schema,
         onSubmit: () => checkoutMutation.mutate()
     });
