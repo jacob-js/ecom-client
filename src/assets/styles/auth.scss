@@ -25,6 +25,8 @@
             font-size: 30px;
             font-weight: bold;
             border-radius: 20px 0 0 20px;
+            .mob-logo{ display: none; }
+            .desk-logo{ display: block; }
         }
         form{
             width: 50%;
@@ -47,11 +49,12 @@
                 .input-pass{
                     display: flex;
                     justify-content: space-between;
+                    position: relative;
 
                     .eye{
                         position: absolute;
-                        margin-left: 32%;
-                        margin-top: 15px;
+                        top: 35%;
+                        right: 15px;
                     }
                 }
             }
@@ -76,17 +79,6 @@
 
         form{
             width: 100%;
-
-            .input-pass{
-                display: flex;
-                justify-content: space-between;
-
-                .eye{
-                    position: absolute;
-                    margin-left: 63%;
-                    margin-top: 15px;
-                }
-            }
         }
         p{
             text-align: center;

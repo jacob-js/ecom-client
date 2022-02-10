@@ -102,8 +102,8 @@ function Login() {
         <div className='auth-page'>
             <div data-aos='fade-down' className="card">
                 <div className="intro">
-                    {/* <img src={logo} alt="" srcset="" /> */}
-                    Bweteta LOGO
+                    <img src={logo} alt="" srcset="" className='mob-logo' />
+                    <span className='desk-logo'>Bweteta LOGO</span>
                 </div>
                 <FormContainer onSubmit={form.handleSubmit}>
                     <Title>Connexion</Title>

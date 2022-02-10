@@ -1,0 +1,45 @@
+@media (max-width: 600px) {
+    .auth-page{
+        // padding-top: 80px;
+        .card{
+            margin-top: 60px;
+            min-height: 300px;
+            width: 90%;
+            position: relative;
+            .intro{
+                width: 100%;
+                position: absolute;
+                top: -60px;
+                color: $color_default;
+                background: none;
+                .desk-logo{
+                    display: none;
+                }
+                .mob-logo{
+                    display: block;
+                }
+            }
+            form{
+                width: 100%;
+                padding: 30px;
+                .btn.login{
+                    width: 100%;
+                }
+            }
+            &.confirm-account{
+                width: 90%;
+                margin-top: 0px;
+            }
+        }
+        .socials-auth{
+            width: 90%;
+            margin-top: 0px;
+            .socials{
+                flex-direction: column;
+                .btn.google{
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}
