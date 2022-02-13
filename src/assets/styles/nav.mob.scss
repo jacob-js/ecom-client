@@ -22,6 +22,60 @@
             padding: 15px;
             .search{
                 width: 95%;
+                .result{
+                    position: absolute;
+                    width: 85%;
+                    min-height: 20px;
+                    background-color: white;
+                    box-shadow: 0 1px 3px rgb(207, 207, 207);
+                    z-index: 9999;
+                    .loading{
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .list{
+                        width: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 10px;
+                        .item{
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 10px;
+                            cursor: pointer;
+                            transition: all .3s ease;
+                            &:hover{
+                                background-color: rgb(238, 238, 238);
+                            }
+                            .first{
+                                display: flex;
+                                .cover{
+                                    width: 80px;
+                                    height: 70px;
+                                    img{
+                                        max-width: 100%;
+                                        max-height: 100%;
+                                    }
+                                }
+                                .rate{
+                                    font-size: 12px;
+                                    li:not(:last-child){
+                                        margin-right: 2px !important;
+                                    }
+                                }
+                            }
+                            &:not(:last-child){
+                                border-bottom: 1px solid rgb(221, 221, 221);
+                            }
+                        }
+                    }
+                }
             }
             &.sticky{
                 width: 100%;

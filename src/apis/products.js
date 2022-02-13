@@ -22,3 +22,7 @@ export const getProductRatings = async (id) => {
 export const rateProducApi = async (id, data) => {
     return (await axios.post(`/products/ratings/${id}`, data))?.data
 }
+
+export const searchProductsApi = async(query, limit, offset, categoryId) => {
+    return (await axios.get(`/products/search/all?query=${query}&limit=${limit}&offset=${offset}&categoryId=${categoryId}`))?.data?.data
+}

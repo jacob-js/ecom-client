@@ -3,7 +3,7 @@ import logo from '../assets/images/min_logo.png'
 import { HiOutlineLogin, HiOutlineLogout, HiOutlineShoppingBag, HiOutlineUser } from 'react-icons/hi';
 import { MdCategory, MdOutlineBikeScooter, MdOutlineDevices, MdOutlineKeyboardArrowDown, MdOutlinePets } from 'react-icons/md';
 import { Icon, Input, Dropdown as AtDropDown } from 'atomize';
-import { Affix, Badge, Dropdown, Menu, Popover } from 'antd';
+import { Affix, Badge, Dropdown, Empty, Menu, Popover, Rate, Spin } from 'antd';
 import { GiHealing, GiHomeGarage, GiMusicSpell, GiTravelDress } from 'react-icons/gi';
 import { BiHomeAlt } from 'react-icons/bi';
 import { FaBaby } from 'react-icons/fa';
@@ -15,6 +15,8 @@ import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
 import CartDrawer from './CartDrawer';
 import { GrFacebookOption, GrInstagram, GrLinkedinOption, GrTwitter } from 'react-icons/gr';
+import { useMutation } from 'react-query';
+import { searchProductsApi } from '../apis/products';
 
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
@@ -25,8 +27,10 @@ function Nav({children}) {
     const history = useHistory();
     const [popupVisible, setPopupVisible] = useState(location.pathname === '/' ? true: false)
     const [ userPopVisible, setUserPopVisible ] = useState(false);
+    const [ resultVisible, setResultVisible ] = useState(false);
     const { data, auth } = useSelector(({ users: { currUser } }) =>currUser);
     const { cartItems: items } = useSelector(({ cart }) => cart);
+    const { data: searchData, isLoading, mutate: mutateSearch } = useMutation(data =>searchProductsApi(data, 5, 0, null));
     const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) {
@@ -81,13 +85,13 @@ function Nav({children}) {
         return;
     }, [location.pathname]);
 
-    document.addEventListener('keypress', e =>{
+    const onSearch = (e) =>{
         if(e.key === 'Enter') {
             if(searchTerm) {
-                history.push(`/products/search/${searchTerm}`)
+                history.push(`/search/products?query=${searchTerm}`)
             }
         }
-    })
+    }
     
     return (
         <div className='page' ref={setContainer}>
@@ -102,7 +106,7 @@ function Nav({children}) {
                                 </AtDropDown>
                             </div>
                         </div>
-                        <div className="search">
+                        <div className="search" onMouseLeave={() =>setResultVisible(false)}>
                             <Input
                                 placeholder="Rechercer... puis appuyer sur Entrée"
                                 p={{ x: "2.5rem" }}
@@ -113,7 +117,9 @@ function Nav({children}) {
                                 hoverBorderColor="#dd4900"
                                 focusBorderColor="#dd4900"
                                 textWeight="300"
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => {setSearchTerm(e.target.value); e.target.value.length > 0 && mutateSearch(e.target.value)}}
+                                onKeyPress={onSearch}
+                                onFocus={() =>setResultVisible(true)}
                                 prefix={
                                     <Icon
                                     name="Search"
@@ -128,6 +134,44 @@ function Nav({children}) {
                                     <div className="search-drop"> Toutes les categories <MdOutlineKeyboardArrowDown className='icon' /> </div>
                                 }
                             />
+                            {
+                                resultVisible &&
+                                <div className="result">
+                                    {
+                                        isLoading ?
+                                        <div className="loading">
+                                            <Spin />
+                                        </div>:
+                                        searchData?.count > 0 ?
+                                        <div className="list">
+                                            {
+                                                searchData?.rows.map((product, index) => (
+                                                    <div className="item" key={index} onClick={() =>history.push(`/products/${product.id}`)}>
+                                                        <div className="first">
+                                                            <div className="cover">
+                                                                <img src={product.cover} alt="product" srcset="" />
+                                                            </div>
+                                                            <div className="info">
+                                                                <div className="name">{product.name}</div>
+                                                                <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
+                                                            </div>
+                                                        </div>
+                                                        <div className="second">
+                                                            <div className="price">
+                                                                {product.currency === "USD" ? '$': "FC"}{product.price - (product.discount || 0)}
+                                                                { product.discount && <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span> }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>:
+                                        <div className="empty">
+                                            <Empty description="Aucun résultat trouvé" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
                         <div className="sessions">
                             <Popover visible={userPopVisible} onVisibleChange={setUserPopVisible} trigger='click' content={
@@ -173,7 +217,7 @@ function Nav({children}) {
             <div className="nav-mob">
                 <div className="logo">Bweteta white logo</div>
                 <div className="bar">
-                    <div className="search">
+                    <div className="search" onMouseLeave={() =>setResultVisible(false)}>
                         <Input
                             placeholder="Rechercer... puis appuyer sur Entrée"
                             p={{ x: "2.5rem", y: "2px" }}
@@ -184,7 +228,9 @@ function Nav({children}) {
                             hoverBorderColor="#dd4900"
                             focusBorderColor="#dd4900"
                             textWeight="300"
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => {setSearchTerm(e.target.value); e.target.value.length > 0 && mutateSearch(e.target.value)}}
+                            onKeyPress={onSearch}
+                            onFocus={() =>setResultVisible(true)}
                             prefix={
                                 <Icon
                                 name="Search"
@@ -196,6 +242,44 @@ function Nav({children}) {
                                 />
                             }
                         />
+                        {
+                                resultVisible &&
+                                <div className="result">
+                                    {
+                                        isLoading ?
+                                        <div className="loading">
+                                            <Spin />
+                                        </div>:
+                                        searchData?.count > 0 ?
+                                        <div className="list">
+                                            {
+                                                searchData?.rows.map((product, index) => (
+                                                    <div className="item" key={index} onClick={() =>history.push(`/products/${product.id}`)}>
+                                                        <div className="first">
+                                                            <div className="cover">
+                                                                <img src={product.cover} alt="product" srcset="" />
+                                                            </div>
+                                                            <div className="info">
+                                                                <div className="name">{product.name}</div>
+                                                                <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
+                                                            </div>
+                                                        </div>
+                                                        <div className="second">
+                                                            <div className="price">
+                                                                {product.currency === "USD" ? '$': "FC"}{product.price - (product.discount || 0)}
+                                                                { product.discount && <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span> }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>:
+                                        <div className="empty">
+                                            <Empty description="Aucun résultat trouvé" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                                        </div>
+                                    }
+                                </div>
+                            }
                     </div>
                 </div>
             </div>

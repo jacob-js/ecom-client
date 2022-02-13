@@ -47,19 +47,76 @@
                 }
             }
     
-            .search-drop{
-                position: absolute;
-                left: 70%;
-                top: 20%;
-                color: rgb(224, 224, 224);
-                font-weight: 200 !important;
-                border-left: 1px solid rgb(224, 224, 224);
-                padding-left: 15px;
-                cursor: pointer;
-    
-                .icon{
-                    font-size: 25px;
+            .search{
+                position: relative;
+                .search-drop{
                     position: absolute;
+                    left: 70%;
+                    top: 20%;
+                    color: rgb(224, 224, 224);
+                    font-weight: 200 !important;
+                    border-left: 1px solid rgb(224, 224, 224);
+                    padding-left: 15px;
+                    cursor: pointer;
+        
+                    .icon{
+                        font-size: 25px;
+                        position: absolute;
+                    }
+                }
+                .result{
+                    position: absolute;
+                    width: 40rem;
+                    min-height: 20px;
+                    background-color: white;
+                    box-shadow: 0 1px 3px rgb(207, 207, 207);
+                    z-index: 9999;
+                    .loading{
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .list{
+                        width: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 20px;
+                        .item{
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 10px;
+                            cursor: pointer;
+                            transition: all .3s ease;
+                            &:hover{
+                                background-color: rgb(238, 238, 238);
+                            }
+                            .first{
+                                display: flex;
+                                .cover{
+                                    width: 100px;
+                                    height: 70px;
+                                    img{
+                                        max-width: 100%;
+                                        max-height: 100%;
+                                    }
+                                }
+                                .rate{
+                                    font-size: 12px;
+                                    li:not(:last-child){
+                                        margin-right: 2px !important;
+                                    }
+                                }
+                            }
+                            &:not(:last-child){
+                                border-bottom: 1px solid rgb(221, 221, 221);
+                            }
+                        }
+                    }
                 }
             }
         }

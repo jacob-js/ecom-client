@@ -9,6 +9,7 @@ import ProductDetail from "../Components/ProductDetail";
 import ProductsByCateg from "../Components/ProductsByCateg";
 import ProductsByKey from "../Components/ProductsByKey";
 import Profile from "../Components/Profile";
+import Search from "../Components/Search";
 import Signup from "../Components/Signup";
 
 const routes = [
@@ -45,6 +46,13 @@ const routes = [
     {
         path: '/products/:id',
         component: ProductDetail,
+        protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/search/products',
+        component: Search,
         protected: false,
         nav: true,
         exact: true
