@@ -108,7 +108,7 @@ function Home() {
     const [electronicProducts, setelectronicProducts] = useState([]);
     const history = useHistory();
     const dispatch = useDispatch();
-    const { isLoading, data } = useQuery('categorys', getTopCategorysApi, {
+    const { isLoading, data } = useQuery(['categorys', 'top'], getTopCategorysApi, {
         staleTime: 300000,
     });
     const { isLoading: loadingLaptops, data: laptops } = useQuery(['products', 'laptops'], () =>getProductsByCategoryApi('laptop'), {

@@ -15,14 +15,16 @@ import { usersActionTypes } from '../Redux/actionsTypes/users';
 import { sendNotif } from '../Utils/notif';
 import CartDrawer from './CartDrawer';
 import { GrFacebookOption, GrInstagram, GrLinkedinOption, GrTwitter } from 'react-icons/gr';
-import { useMutation } from 'react-query';
-import { searchProductsApi } from '../apis/products';
+import { useMutation, useQuery } from 'react-query';
+import { getCategorysApi, searchProductsApi } from '../apis/products';
 
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
+    const [visibleCatg, setVisibleCateg] = useState(false);
     const [cartVisible, setCartVisible] = useState(false);
     const [ container, setContainer ] = useState(null);
     const [ searchTerm, setSearchTerm ] = useState();
+    const [ selectedCateg, setCateg ] = useState({ key: 'all', name: 'Toutes les categories' })
     const location = useLocation();
     const history = useHistory();
     const [popupVisible, setPopupVisible] = useState(location.pathname === '/' ? true: false)
@@ -30,7 +32,10 @@ function Nav({children}) {
     const [ resultVisible, setResultVisible ] = useState(false);
     const { data, auth } = useSelector(({ users: { currUser } }) =>currUser);
     const { cartItems: items } = useSelector(({ cart }) => cart);
-    const { data: searchData, isLoading, mutate: mutateSearch } = useMutation(data =>searchProductsApi(data, 5, 0, null));
+    const { isLoading: loadingCategs, data: categs } = useQuery('categorys', getCategorysApi, {
+        staleTime: 300000,
+    });
+    const { data: searchData, isLoading, mutate: mutateSearch } = useMutation(data =>searchProductsApi(data, 5, 0, selectedCateg.key !== 'all' ? selectedCateg.key: null));
     const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
         if (window.scrollY > 200) {
@@ -54,6 +59,17 @@ function Nav({children}) {
             <Menu.Item key="3" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
         </Menu>
     );
+
+    const searchCategsMenus = (
+        <Menu className='search-categ-menus' selectedKeys={[selectedCateg.key]}>
+            <Menu.Item key='all' onClick={() =>setCateg({key: 'all', name: 'Toutes les categories'})}>Toutes les categories</Menu.Item>
+            {
+                categs?.map((categ, index) =>(
+                    <Menu.Item key={index} onClick={() =>setCateg({key: categ.id, name: categ.name})}>{categ.name}</Menu.Item>
+                ))
+            }
+        </Menu>
+    )
 
     const stickyMenu = (
         <Menu className='sticky-categ-menus'>
@@ -88,7 +104,7 @@ function Nav({children}) {
     const onSearch = (e) =>{
         if(e.key === 'Enter') {
             if(searchTerm) {
-                history.push(`/search/products?query=${searchTerm}`)
+                history.push(`/search/products?query=${searchTerm}${selectedCateg.key !== 'all' && `&category=${selectedCateg.key}`}`)
             }
         }
     }
@@ -131,7 +147,11 @@ function Nav({children}) {
                                     />
                                 }
                                 suffix={
-                                    <div className="search-drop"> Toutes les categories <MdOutlineKeyboardArrowDown className='icon' /> </div>
+                                    <div className="search-drop">
+                                            <AtDropDown textColor="gray500" isOpen={visibleCatg} onClick={() =>setVisibleCateg(!visibleCatg)} menu={searchCategsMenus} className='dropdown' border="none">
+                                            <div className=""> {selectedCateg.name} </div>
+                                        </AtDropDown>
+                                </div>
                                 }
                             />
                             {

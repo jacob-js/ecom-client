@@ -4,6 +4,10 @@ export const getTopCategorysApi = () => {
     return axios.get(`/categorys?isTop=${true}`).then(res => res.data.data)
 }
 
+export const getCategorysApi = async() => {
+    return (await axios.get(`/categorys`))?.data.data
+}
+
 export const getProductsByCategoryApi = async (categoryName, limit, offset) => {
     return (await axios.get(`/categorys/products/${categoryName}?limit=${limit}&offset=${offset}`))?.data?.data
 };

@@ -9,7 +9,8 @@ function Search() {
     const location = useLocation();
     const history = useHistory();
     const query = useUrlQuery(location).get('query');
-    const { data, isLoading } = useQuery(['products', query], () => searchProductsApi(query, 10, 0, null));
+    const category = useUrlQuery(location).get('category');
+    const { data, isLoading } = useQuery(['products', query], () => searchProductsApi(query, 10, 0, category));
     return (
         <div className='search-component'>
             <div className="header">
