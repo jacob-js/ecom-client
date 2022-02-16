@@ -1,3 +1,4 @@
+import BestProducts from "../Components/BestProducts";
 import Carts from "../Components/Cart";
 import Checkout from "../Components/Checkout";
 import ConfirmAccount from "../Components/ConfirmAccount";
@@ -5,6 +6,7 @@ import Home from "../Components/Home";
 import Login from "../Components/Login";
 import OrderDetails from "../Components/OrderDetails";
 import OrdersList from "../Components/OrdersList";
+import OthersProducts from "../Components/OthersProds";
 import ProductDetail from "../Components/ProductDetail";
 import ProductsByCateg from "../Components/ProductsByCateg";
 import ProductsByKey from "../Components/ProductsByKey";
@@ -67,6 +69,20 @@ const routes = [
     {
         path: '/products-key',
         component: ProductsByKey,
+        protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/products/type/best',
+        component: BestProducts,
+        protected: false,
+        nav: true,
+        exact: true
+    },
+    {
+        path: '/products/type/all',
+        component: OthersProducts,
         protected: false,
         nav: true,
         exact: true

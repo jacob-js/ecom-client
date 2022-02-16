@@ -121,6 +121,7 @@ function Home() {
     const { isLoading: loadingAccessorys, data: accessorys } = useQuery([ 'products', 'accessorys'], () => getProductsByCategoryApi('accessoire electronique', 6, 0), { staleTime: 300000 });
     const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery([ 'products', 'discountProducts'], () => getProducts(true), { staleTime: 300000 });
     const { isLoading: loadingBestProducts, data: bestProds } = useQuery([ 'products', 'bestProds'], () => getProducts(false, true), { staleTime: 300000 });
+    const { isLoading: loadingOtherProducts, data: otherProds } = useQuery([ 'products', 'others'], () => getProducts(null, null, null, 12, 0));
     const { isLoading: loadingNewProducts, data: newProds } = useQuery([ 'products', 'newProds'], () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
     const { isLoading: loadingElecProds, data: elecProds } = useQuery([ 'products', 'elecProds'], () => getProductsByCategoryApi([ 'laptop', 'desktop', 'mobile phone', 'accessoire electronique' ], 6, 0));
 
@@ -162,7 +163,7 @@ function Home() {
                     <section className="section-flash">
                         <div className="header">
                             <div className="title"> <MdFlashOn className='icon' />Meilleurs produits</div>
-                            <div className="view-all"> Voir tout <MdArrowRight className='icon' /> </div>
+                            <div className="view-all" onClick={() =>history.push('/products/type/best')}> Voir tout <MdArrowRight className='icon' /> </div>
                         </div>
                         <div className="data">
                             {
@@ -378,6 +379,38 @@ function Home() {
                                 }
                             </div>
                         </section>
+                    </section>
+                    <section className="others">
+                        <div className="header">
+                            <div className="title">Autres suggestions</div>
+                            <div className="view-all" onClick={() =>history.push('/products/type/all')}> Voir tout <MdArrowRight className='icon' /> </div>
+                        </div>
+                        <div className="data">
+                            {
+                                loadingOtherProducts ?
+                                [0, 1, 2].map((index) => (
+                                    <Skeleton.Input style={{ width: 300, margin: 10, height: 350 }} key={index} active loading={true} size='large' />
+                                ))
+                                :
+                                otherProds?.rows?.map(prod =>({ ...prod, sort: Math.random() }))
+                                .sort((a, b) => a.sort-b.sort).map((product, index) => (
+                                    <div className="product elec" data-aos='fade-down' key={index}>
+                                        <div onClick={() =>history.push(`/products/${product.id}`)} className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
+                                        <div className="info">
+                                            <div className="">
+                                                <div className="name"> {product.name} </div>
+                                                <Rate disabled defaultValue={product.Ratings?.reduce((total, rate) => total + rate.value, 0) / product.Ratings?.length} className='rate' />
+                                                <div className="price">
+                                                    {product.currency === "USD" ? '$': "FC"}{product.price - (product.discount || 0)}
+                                                    { product.discount && <span className="discounted"> {product.currency === "USD" ? '$': "FC"}{product.price} </span> }
+                                                </div>
+                                            </div>
+                                            <div className="stock"> <span>Stock : </span> { product.quantity ? `${product.quantity+product.quantityMetric}`: 'Indisponible' } </div>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </section>
                 </div>
             </div>
