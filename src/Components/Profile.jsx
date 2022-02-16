@@ -1,22 +1,50 @@
-import { Avatar } from 'antd';
+import { Avatar, Drawer, Menu } from 'antd';
 import React, { useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
+import { AiOutlineEdit, AiOutlineMenu } from 'react-icons/ai';
+import { BiLogOut } from 'react-icons/bi';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import ProfileForm from './ProfileForm';
 import { useHistory } from 'react-router-dom';
+import { HiOutlineUser } from 'react-icons/hi';
+import { RiMoneyDollarCircleLine } from 'react-icons/ri';
+import { sendNotif } from '../Utils/notif';
+import { usersActionTypes } from '../Redux/actionsTypes/users';
 
 function Profile() {
     const [ formVisible, setFormVisible ] = useState(false);
+    const [ menuVisible, setMenuVisible ] = useState(false);
     const { data } = useSelector(({ users: { currUser } }) => currUser);
     const acronym = data?.fullname?.split(' ').map(name => name[0].toUpperCase()).join('');
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        localStorage.removeItem('bweteta_token');
+        sendNotif('Vous êtes déconnecté');
+        dispatch({
+            type: usersActionTypes.LOGOUT_SUCCESS
+        });
+        history.push('/');
+    };
 
     return <div className='profile'>
+        <Drawer zIndex={99} className='drawer' placement='left' closable={false} visible={menuVisible} onClose={() =>setMenuVisible(false)} width='70%' >
+            <Menu mode='inline' defaultSelectedKeys={['2']} className='menu'>
+                <div className="title">Tableau de bord</div>
+                <Menu.Item key='1' icon={<RiMoneyDollarCircleLine />} onClick={() =>history.push('/orders')}>Commandes</Menu.Item>
+                <div className="title">Parametres du compte</div>
+                <Menu.Item key='2' icon={ <HiOutlineUser /> } onClick={() =>history.push('/profile')}>Profile</Menu.Item>
+                <Menu.Item key='3' icon={<BiLogOut />} onClick={() =>{handleLogout(); setMenuVisible(false)}}>Deconnexion</Menu.Item>
+            </Menu>
+        </Drawer>
         <div className="header">
             <div className="title">
                 <FaUserAlt className='icon' /> Mon profile
+            </div>
+            <div className="menu" onClick={() =>setMenuVisible(true)}>
+                <AiOutlineMenu className='icon' />
             </div>
         </div>
         <div className="user-cards">
@@ -30,7 +58,7 @@ function Profile() {
                 </div>
             </div>
             <div className="stats">
-                <div className="card" onClick={() =>history.push('/orders')}>
+                <div className="card">
                     <div className="stat">20</div>
                     <div className="stat-name">Toutes mes commandes</div>
                 </div>

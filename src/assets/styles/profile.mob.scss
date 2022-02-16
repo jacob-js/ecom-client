@@ -1,6 +1,21 @@
 @media (max-width: 600px) {
     .profile{
+        .header{
+            display: flex;
+            justify-content: space-between;
+            .title{
+                font-size: 20px;
+            }
+            .menu{
+                display: block;
+                cursor: pointer;
+                .icon{
+                    font-size: 20px;
+                }
+            }
+        }
         .user-cards{
+            margin-top: 10px;
             flex-direction: column;
             .card.user{
                 width: 100%;
@@ -36,5 +51,26 @@
                 }
             }
         }
+    }
+
+    .drawer{
+        * .menu{
+            font-size: 12px;
+            .title{
+                font-size: 12px;
+                text-transform: uppercase;
+                padding: 26px 0px;
+                color: rgb(125, 135, 156);
+            }
+        }
+    }
+    .ant-menu-inline .ant-menu-item::after{
+        border-color: $color_default;
+    }
+    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+        background-color: rgba(209, 209, 209, 0.1);
+    }
+    .ant-menu-item-selected{
+        color: $color_default;
     }
 }
