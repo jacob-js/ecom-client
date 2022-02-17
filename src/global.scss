@@ -36,6 +36,9 @@ $bg_color: rgb(246, 249, 252);
 body{
     background-color: $bg_color;
 }
+.infinite-scroll-component{
+    overflow: hidden !important;
+}
 
 @import './assets/styles/auth.scss';
 @import './assets/styles/auth.mob.scss';

@@ -104,7 +104,7 @@ function Nav({children}) {
     const onSearch = (e) =>{
         if(e.key === 'Enter') {
             if(searchTerm) {
-                history.push(`/search/products?query=${searchTerm}${selectedCateg.key !== 'all' && `&category=${selectedCateg.key}`}`)
+                history.push(`/search/products?query=${searchTerm}${selectedCateg.key !== 'all' ? `&category=${selectedCateg.key}`: ''}`)
             }
         }
     }

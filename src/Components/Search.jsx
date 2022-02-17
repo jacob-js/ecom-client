@@ -1,6 +1,9 @@
-import { Empty, Rate, Skeleton } from 'antd';
+import { Divider, Empty, Rate, Skeleton } from 'antd';
 import React from 'react'
-import { useQuery } from 'react-query'
+import { useState } from 'react';
+import { useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useQuery, useQueryClient } from 'react-query'
 import { useHistory, useLocation } from 'react-router-dom';
 import { searchProductsApi } from '../apis/products';
 import { useQuery as useUrlQuery } from '../Utils/helpers';
@@ -10,7 +13,39 @@ function Search() {
     const history = useHistory();
     const query = useUrlQuery(location).get('query');
     const category = useUrlQuery(location).get('category');
-    const { data, isLoading } = useQuery(['products', query], () => searchProductsApi(query, 10, 0, category));
+    const limit = 12;
+    const [offset, setOffset] = useState(0);
+    const { data, isLoading, refetch } = useQuery(['products', query], () => searchProductsApi(query, limit, offset, category), {
+        enabled: false
+    });
+    const [ products, setProducts ] = useState([]);
+    const queryClient = useQueryClient()
+
+    useEffect(() =>{
+        (() =>{
+            if(data?.rows){
+                setProducts([...products, ...data?.rows])
+            }
+        })()
+    }, [data]);
+
+    useEffect(() =>{
+        (() =>{
+            setProducts(data?.rows);
+            setOffset(0);
+        })()
+    }, [query])
+
+    useEffect(() =>{
+        refetch()
+    }, [offset, query])
+
+    const loadMore = () =>{
+        setOffset(value => value + limit);
+        queryClient.invalidateQueries(['products', query])
+        console.log('offset', offset);
+    };
+
     return (
         <div className='search-component'>
             <div className="header">
@@ -18,7 +53,18 @@ function Search() {
                     <>Resultats pour "{query}"</>
                 } </div>
             </div>
-            <div className="products">
+            <InfiniteScroll
+                loader={
+                    [0, 1, 2, 4].map((index) => (
+                        <Skeleton.Input style={{ width: 290, margin: 10, height: 350 }} key={index} active loading={true} size='large' />
+                    ))
+                }
+                endMessage={ <Divider>Vous avez tout vu</Divider> }
+                dataLength={products.length}
+                hasMore={products.length < data?.count}
+                next={loadMore}
+                className='products'
+            >
                 {
                     isLoading ?
                     [0, 1, 2, 4, 5, 6, 7, 8].map((index) => (
@@ -29,8 +75,7 @@ function Search() {
                     <div className="empty">
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={ <span>Aucun resultat</span> } />
                     </div>:
-                    data?.rows?.map(prod =>({ ...prod, sort: Math.random() }))
-                    .sort((a, b) => a.sort-b.sort).map((product, index) => (
+                    products.map(prod =>({ ...prod, sort: Math.random() })).map((product, index) => (
                         <div className="product elec" data-aos='fade-down' key={index}>
                             <div onClick={() =>history.push(`/products/${product.id}`)} className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                             <div className="info">
@@ -47,7 +92,7 @@ function Search() {
                         </div>
                     ))
                 }
-            </div>
+            </InfiniteScroll>
         </div>
     )
 }
