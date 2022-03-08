@@ -5,13 +5,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom'
 import { getProductsByCategoryApi } from '../apis/products';
+import { getSubCategorys } from '../Utils/helpers';
 
 function ProductsByCateg() {
     const { category } = useParams();
     const history = useHistory();
     const limit = 12;
     const [ offset, setOffset ] = useState(0);
-    const { isLoading, data, refetch } = useQuery(['products', category], () => getProductsByCategoryApi(category === 'electroniques' ? [ 'laptop', 'desktop', 'mobile phone', 'accessoire electronique' ]: category, limit, offset), {
+    const { isLoading, data, refetch } = useQuery(['products', category], () => getProductsByCategoryApi(getSubCategorys(category), limit, offset), {
         enabled: false
     } );
     const [ products, setProducts ] = useState([]);
@@ -27,7 +28,15 @@ function ProductsByCateg() {
 
     useEffect(() =>{
         refetch()
-    }, [offset])
+    }, [offset]);
+
+    useEffect(() =>{
+        (() =>{
+            setProducts(data?.rows || []);
+            setOffset(0);
+            refetch()
+        })()
+    }, [category]);
 
     const loadMore = () =>{
         setOffset(value => value + limit);

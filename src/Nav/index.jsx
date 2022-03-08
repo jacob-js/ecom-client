@@ -17,6 +17,9 @@ import CartDrawer from './CartDrawer';
 import { GrFacebookOption, GrInstagram, GrLinkedinOption, GrTwitter } from 'react-icons/gr';
 import { useMutation, useQuery } from 'react-query';
 import { getCategorysApi, searchProductsApi } from '../apis/products';
+import { categorys } from '../Utils/data';
+
+const { SubMenu } = Menu;
 
 function Nav({children}) {
     const [visible, setVisible] = useState(false);
@@ -48,15 +51,32 @@ function Nav({children}) {
     });
 
     const menu = (
-        <Menu className='categ-menus'>
-            <Menu.Item key="1" onClick={() =>history.push('/products/category/mode')} icon={ <GiTravelDress /> }>Mode</Menu.Item>
-            <Menu.Item key="2" onClick={() =>history.push('/products/category/electroniques')} icon={<MdOutlineDevices />}>Electonique</Menu.Item>
-            <Menu.Item key="3" onClick={() =>history.push('/products/category/velos')} icon={<MdOutlineBikeScooter />}>Velos</Menu.Item>
-            <Menu.Item key="4" onClick={() =>history.push('/products/category/maison et jardin')} icon={<GiHomeGarage />}>Maison et jardin</Menu.Item>
-            <Menu.Item key="5" onClick={() =>history.push('/products/category/musique')} icon={<GiMusicSpell />}>Musique</Menu.Item>
-            <Menu.Item key="3" icon={<GiHealing />}>Santé et beauté</Menu.Item>
-            <Menu.Item key="3" icon={<FaBaby />}>Jouets pour bébé</Menu.Item>
-            <Menu.Item key="3" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
+        <Menu className='categ-menus' mode='vertical'>
+            {
+                categorys.map((categ, index) => (
+                    categ.sub ? (
+                        <SubMenu key={index} title={<span onClick={() =>history.push(`/products/category/${categ.routeName}`)}>{categ.name}</span>}
+                        icon={ <categ.icon size={18} /> } popupClassName='sub'>
+                            {
+                                categ.sub.map((subCateg, index) => (
+                                    <div className="categ-sub">
+                                        <Menu.Item key={index} onClick={() =>history.push(`/products/category/${subCateg.routeName}`)}>
+                                            {subCateg.name}
+                                        </Menu.Item>
+                                        {subCateg.subs && subCateg.subs.map((sub, index) => (
+                                            <div key={index} className="sub-item" onClick={() =>history.push(`/products/category/${sub.routeName}`)}>
+                                                {sub.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))
+                            }
+                        </SubMenu>
+                    ):
+                    <Menu.Item key={index} onClick={() =>history.push(`/products/category/${categ.routeName}`)}
+                    icon={ <categ.icon size={18} /> }>{categ.name}</Menu.Item>
+                ))
+            }
         </Menu>
     );
 

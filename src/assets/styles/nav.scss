@@ -280,6 +280,32 @@
 
     li{
         padding: 15px;
+        &.ant-dropdown-menu-submenu{
+            padding: 0px;
+            div{
+                padding: 15px;
+            }
+        }
+    }
+}
+.ant-dropdown-menu-sub{
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    .ant-dropdown-menu-item{
+        padding: 0px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        text-transform: capitalize;
+    }
+    .sub-item{
+        font-size: 13px;
+        margin: 10px 0;
+        color: gray;
+        cursor: pointer;
+    }
+    .categ-sub:not(:first-of-type){
+        margin-left: 40px;
     }
 }
 .sticky-categ-menus{
