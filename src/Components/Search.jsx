@@ -24,14 +24,14 @@ function Search() {
     useEffect(() =>{
         (() =>{
             if(data?.rows){
-                setProducts([...products, ...data?.rows])
+                setProducts(thisData => [...thisData, ...data?.rows])
             }
         })()
     }, [data]);
 
     useEffect(() =>{
         (() =>{
-            setProducts(data?.rows);
+            setProducts(data?.rows || []);
             setOffset(0);
         })()
     }, [query])
@@ -60,8 +60,8 @@ function Search() {
                     ))
                 }
                 endMessage={ <Divider>Vous avez tout vu</Divider> }
-                dataLength={products.length}
-                hasMore={products.length < data?.count}
+                dataLength={products?.length}
+                hasMore={products?.length < data?.count}
                 next={loadMore}
                 className='products'
             >
@@ -75,7 +75,7 @@ function Search() {
                     <div className="empty">
                         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={ <span>Aucun resultat</span> } />
                     </div>:
-                    products.map(prod =>({ ...prod, sort: Math.random() })).map((product, index) => (
+                    products?.map(prod =>({ ...prod, sort: Math.random() })).map((product, index) => (
                         <div className="product elec" data-aos='fade-down' key={index}>
                             <div onClick={() =>history.push(`/products/${product.id}`)} className="cover"> <img src={product.cover} alt="" srcset="" /> </div>
                             <div className="info">
