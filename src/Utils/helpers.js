@@ -17,7 +17,6 @@ export const getSubCategorys = (category) => {
     let subs = [];
     const allCategs = categorys.map(cat => ([cat, cat.sub?.map(sub => ([sub, sub.subs?.map(subs => subs)].flat(2)))].flat(2))).flat();
     const categ = allCategs.find(c => c.routeName === category);
-    console.log('finded', categ);
     if (categ) {
         const categSub = categ.sub?.find(s => s.routeName === category);
         if(categSub) {
