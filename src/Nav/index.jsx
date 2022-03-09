@@ -346,44 +346,47 @@ function Nav({children}) {
                     <div className="text">Mon compte</div>
                 </div>
             </div>
-            <div className="footer">
-                <div className="block">
-                    <div className="logo"> <img src={logo} alt="" srcset="" /> </div>
-                    <div className="text">
-                    Bweteta est une entreprise basée à Goma, spécialisée dans le commerce éléctronique, connectant les petits commerçants et particuliers habitant dans les zones rurales ou milieux urbano-ruraux éloignés des centres commerciaux avec les fournisseurs internationaux et locaux pour un approvisionnement a distance et une livraison rapide.
+            {
+                location.pathname !== '/mob/category' &&
+                <div className="footer">
+                    <div className="block">
+                        <div className="logo"> <img src={logo} alt="" srcset="" /> </div>
+                        <div className="text">
+                        Bweteta est une entreprise basée à Goma, spécialisée dans le commerce éléctronique, connectant les petits commerçants et particuliers habitant dans les zones rurales ou milieux urbano-ruraux éloignés des centres commerciaux avec les fournisseurs internationaux et locaux pour un approvisionnement a distance et une livraison rapide.
+                        </div>
+                    </div>
+                    <div className="block">
+                        <div className="title">A propos de nous</div>
+                        <div className="links">
+                            <div className="link">Carrières</div>
+                            <div className="link">Nos objectifs</div>
+                            <div className="link">Conditions générales</div>
+                            <div className="link">Politique de confidentialité</div>
+                        </div>
+                    </div>
+                    <div className="block">
+                        <div className="title">Suivi des clients</div>
+                        <div className="links">
+                            <div className="link">Centre d'aides</div>
+                            <div className="link">Comment achéter</div>
+                            <div className="link">Comment vendre</div>
+                            <div className="link">Retours et remboursements</div>
+                        </div>
+                    </div>
+                    <div className="block">
+                        <div className="title">Nous contacter</div>
+                        <div className="address">Ville de GOMA, 136 AV La Frontière au Quartier KATINDO (HUB Un Jour Nouveau)</div>
+                        <div className="email">Email: bweteta@info.com</div>
+                        <div className="phone">N° de téléphone: +243976349073</div>
+                        <div className="socials">
+                            <a className="social"> <GrFacebookOption className='icon' /> </a>
+                            <a className="social"> <GrInstagram className='icon' /> </a>
+                            <a className="social"> <GrLinkedinOption className='icon' /> </a>
+                            <a className="social"> <GrTwitter className='icon' /> </a>
+                        </div>
                     </div>
                 </div>
-                <div className="block">
-                    <div className="title">A propos de nous</div>
-                    <div className="links">
-                        <div className="link">Carrières</div>
-                        <div className="link">Nos objectifs</div>
-                        <div className="link">Conditions générales</div>
-                        <div className="link">Politique de confidentialité</div>
-                    </div>
-                </div>
-                <div className="block">
-                    <div className="title">Suivi des clients</div>
-                    <div className="links">
-                        <div className="link">Centre d'aides</div>
-                        <div className="link">Comment achéter</div>
-                        <div className="link">Comment vendre</div>
-                        <div className="link">Retours et remboursements</div>
-                    </div>
-                </div>
-                <div className="block">
-                    <div className="title">Nous contacter</div>
-                    <div className="address">Ville de GOMA, 136 AV La Frontière au Quartier KATINDO (HUB Un Jour Nouveau)</div>
-                    <div className="email">Email: bweteta@info.com</div>
-                    <div className="phone">N° de téléphone: +243976349073</div>
-                    <div className="socials">
-                        <a className="social"> <GrFacebookOption className='icon' /> </a>
-                        <a className="social"> <GrInstagram className='icon' /> </a>
-                        <a className="social"> <GrLinkedinOption className='icon' /> </a>
-                        <a className="social"> <GrTwitter className='icon' /> </a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     )
 }

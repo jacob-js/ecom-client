@@ -1,4 +1,4 @@
-import routes from "../Routes/routes";
+import {routes} from "../Routes/routes";
 import { categorys } from "./data";
 
 export const authRoutes = routes.filter(route => route.authRoute);

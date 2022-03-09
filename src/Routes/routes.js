@@ -13,8 +13,9 @@ import ProductsByKey from "../Components/ProductsByKey";
 import Profile from "../Components/Profile";
 import Search from "../Components/Search";
 import Signup from "../Components/Signup";
+import MobCateg from '../Nav/MobCateg';
 
-const routes = [
+export const routes = [
     {
         path: "/",
         component: Home,
@@ -121,7 +122,12 @@ const routes = [
         protected: true,
         nav: true,
         exact: true
+    },
+    {
+        path: '/mob/category',
+        component: MobCateg,
+        protected: false,
+        nav: true,
+        exact: true
     }
-]
-
-export default routes;
+];

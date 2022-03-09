@@ -149,3 +149,24 @@
         }
     }
 }
+
+.mob-categ{
+    padding: 20px;
+    padding-bottom: 80px;
+    .category{
+        width: 100%;
+        .title{
+            width: 100%;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: rgb(221, 221, 221);
+            // margin-bottom: 10px;
+            border-radius: 10px;
+            .icon{
+                font-size: 16px;
+                margin-right: 10px;
+            }
+        }
+    }
+}
