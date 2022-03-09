@@ -109,7 +109,47 @@ export const categorys = [
     {
         name: 'Electonique',
         routeName: 'electroniques',
-        icon: MdOutlineDevices
+        icon: MdOutlineDevices,
+        sub: [
+            {
+                name: 'Téléphones',
+                routeName: 'mobile',
+                subs: [
+                    { name: 'Androids', routeName: 'android' },
+                    { name: 'Iphones', routeName: 'iphone' },
+                    { name: 'Tablettes', routeName: 'tablette' },
+                    { name: 'Accessoires', routeName: 'accessoire-telephone' },
+                ]
+            },
+            {
+                name: 'Ordinateurs',
+                routeName: 'ordinateur',
+                subs: [
+                    { name: 'Ordinateurs portables', routeName: 'laptop' },
+                    { name: 'Ordinateurs de bureau', routeName: 'desktop' },
+                    { name: 'Accessoires', routeName: 'accessoire-ordinateur' },
+                ]
+            },
+            {
+                name: 'Accessoires',
+                routeName: 'accessoire-electronique',
+                subs: [
+                    { name: 'Disk durs', routeName: 'disk-durs' },
+                    { name: 'Carte-memoires', routeName: 'carte-memoire' },
+                    { name: 'Flash disks', routeName: 'flash-disk' },
+                    { name: 'Ecouteurs', routeName: 'ecouteurs' },
+                ]
+            },
+            {
+                name: 'Autres',
+                routeName: 'others-electronics',
+                subs: [
+                    { name: 'TVs', routeName: 'tvs' },
+                    { name: 'Lampes', routeName: 'lampes' },
+                    { name: 'Projecteurs', routeName: 'Projecteurs' },
+                ]
+            }
+        ]
     },
     {
         name: 'Velos',

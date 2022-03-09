@@ -7,9 +7,10 @@ import { useMutation } from 'react-query';
 import { signupApi } from '../apis/auth';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { getFieldError, provinces } from '../Utils/helpers';
+import { getFieldError } from '../Utils/helpers';
 import { Alert } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { provinces } from '../Utils/data';
 
 const schema = yup.object({
     fullname: yup.string().required("Le nom complet est requis"),

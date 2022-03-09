@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom'
 import { getProductsByCategoryApi } from '../apis/products';
-import { getSubCategorys } from '../Utils/helpers';
+import { getCategoryName, getSubCategorys } from '../Utils/helpers';
 
 function ProductsByCateg() {
     const { category } = useParams();
@@ -31,10 +31,11 @@ function ProductsByCateg() {
     }, [offset]);
 
     useEffect(() =>{
+        queryClient.invalidateQueries('products');
+        refetch();
         (() =>{
             setProducts(data?.rows || []);
             setOffset(0);
-            refetch()
         })()
     }, [category]);
 
@@ -47,7 +48,7 @@ function ProductsByCateg() {
     return (
         <div className='products-by-categ'>
             <div className="header">
-                <div className="title"> {category} </div>
+                <div className="title"> {getCategoryName(category)} </div>
             </div>
             <InfiniteScroll
                 loader={

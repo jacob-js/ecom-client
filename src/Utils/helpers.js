@@ -15,13 +15,17 @@ export function useQuery(location) {
 }
 export const getSubCategorys = (category) => {
     let subs = [];
-    const categ = categorys.find(c => c.routeName === category || c.sub.find(s => s.routeName === category));
+    const allCategs = categorys.map(cat => ([cat, cat.sub?.map(sub => ([sub, sub.subs?.map(subs => subs)].flat(2)))].flat(2))).flat();
+    const categ = allCategs.find(c => c.routeName === category);
+    console.log('finded', categ);
     if (categ) {
-        const categSub = categ.sub.find(s => s.routeName === category);
+        const categSub = categ.sub?.find(s => s.routeName === category);
         if(categSub) {
             subs.push(...categSub.subs)
+        }else if(categ.subs) {
+            subs.push(...categ.subs)
         }else{
-            categ.sub.forEach(sub => {
+            categ.sub?.forEach(sub => {
                 if(sub.subs) {
                     subs.push(...sub.subs);
                 } else {
@@ -30,8 +34,7 @@ export const getSubCategorys = (category) => {
             })
         }
     }
-    console.log('categ', category, categ);
-    console.log('subs', subs);
+
     if (subs.length > 0) {
         return subs.map(categ => categ.routeName);
     }else {
@@ -39,31 +42,10 @@ export const getSubCategorys = (category) => {
     }
 }
 
-export const provinces = [
-    "Bas-Uele",
-    "Equateur",
-    "Haut-Katanga",
-    "Haut-Lomami",
-    "Haut-Uele",
-    "Ituri",
-    "Kasaï",
-    "Kasai-Occidental",
-    "Kasai-Oriental",
-    "Kongo-central",
-    "Kinshasa",
-    "Kwango",
-    "Kwilu",
-    "Lomami",
-    "Lualaba",
-    "Mai-Ndombe",
-    "Maniema",
-    "Mongala",
-    "Nord-Kivu",
-    "Nord-Ubangi",
-    "Sankuru",
-    "Sud-Kivu",
-    "Sud-Ubangi",
-    "Tanganyika",
-    "Tshopo",
-    "Tshuapa"
-];
+export const getCategoryName = (category) => {
+    const allCategs = categorys.map(cat => ([cat, cat.sub?.map(sub => ([sub, sub.subs?.map(subs => subs)].flat(2)))].flat(2))).flat();
+    const categ = allCategs.find(c => c.routeName === category);
+    if (categ) {
+        return categ.name;
+    }
+}
