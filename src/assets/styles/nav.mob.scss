@@ -167,5 +167,25 @@
                 margin-right: 10px;
             }
         }
+        &.no-sub{
+            padding: 10px;
+            border-bottom: 1px solid rgb(221, 221, 221);
+        }
+    }
+    .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header{
+        padding-right: 10px;
+    }
+    .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header .ant-collapse-arrow{
+        right: 20px;
+    }
+    .sub{
+        .title{
+            font-weight: bold;
+            margin-bottom: 7px;
+            cursor: pointer;
+        }
+        &:not(:last-of-type){
+            margin-bottom: 15px;
+        }
     }
 }
