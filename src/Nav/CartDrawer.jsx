@@ -1,4 +1,4 @@
-import { Button, Drawer } from 'antd'
+import { Button, Drawer, Empty } from 'antd'
 import React, { useEffect } from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
@@ -37,15 +37,19 @@ function CartDrawer({visible, onClose}) {
             </div>
         } placement="right" visible={visible} onClose={onClose} closable={false} zIndex={99999} className='cart-drawer'
             footer={
+                items.length  > 0 &&
                 <div className="footer">
-                    <Button type="primary" className='btn checkout'>Passer à la caisse</Button>
+                    <Button type="primary" className='btn checkout' onClick={() =>{history.push('/checkout'); onClose()}}>Passer à la caisse</Button>
                     <Button type="primary" className='btn view-cart' onClick={() =>{history.push('/cart'); onClose()}}>Voir le panier</Button>
                 </div>
             }
         >
 
             <div className="cart">
-                { items.map(item => <div key={item.cartId} className='item'>
+                { 
+                items.length < 1 ?
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Votre panier est vide" />:
+                items.map(item => <div key={item.cartId} className='item'>
                     <div className="qty-manag">
                         <button className="plus" onClick={() =>onIncrement(item.cartId)}> <HiOutlinePlusSm className='icon' /> </button>
                         <div className="qty"> { item.quantity } </div>

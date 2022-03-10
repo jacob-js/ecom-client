@@ -88,6 +88,8 @@
     }
     .footer{
         flex-direction: column;
+        padding: 30px !important;
+        padding-bottom: 80px !important;
         .block{
             width: 100% !important;
             &:not(:first-of-type){

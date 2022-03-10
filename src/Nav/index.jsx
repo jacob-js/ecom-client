@@ -93,14 +93,12 @@ function Nav({children}) {
 
     const stickyMenu = (
         <Menu className='sticky-categ-menus'>
-            <Menu.Item key="1" onClick={() =>history.push('/products/category/mode')} icon={ <GiTravelDress /> }>Mode</Menu.Item>
-            <Menu.Item key="2" onClick={() =>history.push('/products/category/electroniques')} icon={<MdOutlineDevices />}>Electonique</Menu.Item>
-            <Menu.Item key="3" onClick={() =>history.push('/products/category/velos')} icon={<MdOutlineBikeScooter />}>Velos</Menu.Item>
-            <Menu.Item key="4" onClick={() =>history.push('/products/category/maison et jardin')} icon={<GiHomeGarage />}>Maison et jardin</Menu.Item>
-            <Menu.Item key="5" onClick={() =>history.push('/products/category/musique')} icon={<GiMusicSpell />}>Musique</Menu.Item>
-            <Menu.Item key="6" icon={<GiHealing />}>Santé et beauté</Menu.Item>
-            <Menu.Item key="7" icon={<FaBaby />}>Jouets pour bébé</Menu.Item>
-            <Menu.Item key="8" icon={<MdOutlinePets />}>Animaux domestiques</Menu.Item>
+            {
+                categorys.map((categ, index) => (
+                    <Menu.Item key={index} onClick={() =>history.push(`/products/category/${categ.routeName}`)}
+                    icon={ <categ.icon size={18} /> }>{categ.name}</Menu.Item>
+                ))
+            }
         </Menu>
     );
 
