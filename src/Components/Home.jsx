@@ -1,4 +1,4 @@
-import { Carousel, Menu, Rate, Skeleton } from 'antd';
+import { Button, Carousel, Menu, Rate, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { MdArrowRight, MdCategory, MdDesktopMac, MdDevicesOther, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLaptopChromebook, MdOutlineLocalOffer, MdPhoneIphone } from 'react-icons/md';
 import Slider from 'react-slick';
@@ -12,6 +12,8 @@ import newIcon from '../assets/images/icons/new-product.svg';
 import Aos from 'aos';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import SuggestProduct from './SuggestProduct';
 
 const bestProducts = [
     {
@@ -108,6 +110,7 @@ function Home() {
     const [electronicProducts, setelectronicProducts] = useState([]);
     const history = useHistory();
     const dispatch = useDispatch();
+    const [isOpen, setIsOpen] = useState(false);
     const { isLoading, data } = useQuery(['categorys', 'top'], getTopCategorysApi, {
         staleTime: 300000,
     });
@@ -145,6 +148,14 @@ function Home() {
         nextArrow: <NextArraow />,
         prevArrow: <PrevArraow />
     };
+
+    window.addEventListener('scroll', () =>{
+        if(window.scrollY > 2000){
+            document.querySelector('.miss-product').classList.add('show');
+        }else{
+            document.querySelector('.miss-product').classList.remove('show');
+        }
+    });
 
     const isLoadingElec = loadingLaptops || loadingPhones || loadingDesktops || loadingAccessorys || loadingElecProds;
   
@@ -412,6 +423,8 @@ function Home() {
                             }
                         </div>
                     </section>
+                    <Button type='primary' className='btn miss-product' onClick={setIsOpen}> <QuestionCircleOutlined className='icon' /> Avez-vous manqué un produit </Button>
+                    <SuggestProduct isOpen={isOpen} onClose={() =>setIsOpen(false)} />
                 </div>
             </div>
         </div>
