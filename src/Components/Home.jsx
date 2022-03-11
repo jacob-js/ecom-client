@@ -423,7 +423,7 @@ function Home() {
                             }
                         </div>
                     </section>
-                    <Button type='primary' className='btn miss-product' onClick={setIsOpen}> <QuestionCircleOutlined className='icon' /> Avez-vous manqué un produit </Button>
+                    <Button type='primary' className='btn miss-product' onClick={setIsOpen}> <QuestionCircleOutlined className='icon' /> <span className='text'>Avez-vous manqué un produit</span> </Button>
                     <SuggestProduct isOpen={isOpen} onClose={() =>setIsOpen(false)} />
                 </div>
             </div>
