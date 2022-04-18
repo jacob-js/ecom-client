@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../assets/images/min_logo.png'
 import { HiOutlineLogin, HiOutlineLogout, HiOutlineShoppingBag, HiOutlineUser } from 'react-icons/hi';
-import { MdCategory, MdOutlineBikeScooter, MdOutlineDevices, MdOutlineKeyboardArrowDown, MdOutlinePets } from 'react-icons/md';
+import { MdCategory, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { Icon, Input, Dropdown as AtDropDown } from 'atomize';
-import { Affix, Badge, Dropdown, Empty, Menu, Popover, Rate, Spin } from 'antd';
-import { GiHealing, GiHomeGarage, GiMusicSpell, GiTravelDress } from 'react-icons/gi';
+import { Affix, Avatar, Badge, Dropdown, Empty, Menu, Popover, Rate, Skeleton, Spin } from 'antd';
 import { BiHomeAlt } from 'react-icons/bi';
-import { FaBaby } from 'react-icons/fa';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -17,7 +15,7 @@ import CartDrawer from './CartDrawer';
 import { GrFacebookOption, GrInstagram, GrLinkedinOption, GrTwitter } from 'react-icons/gr';
 import { useMutation, useQuery } from 'react-query';
 import { getCategorysApi, searchProductsApi } from '../apis/products';
-import { categorys } from '../Utils/data';
+import { getParentsCategApi } from '../apis/categorys';
 
 const { SubMenu } = Menu;
 
@@ -38,6 +36,7 @@ function Nav({children}) {
     const { isLoading: loadingCategs, data: categs } = useQuery('categorys', getCategorysApi, {
         staleTime: 300000,
     });
+    const { isLoading: loadingParentsCategs, data: parentsCategs } = useQuery('parentsCategs', getParentsCategApi);
     const { data: searchData, isLoading, mutate: mutateSearch } = useMutation(data =>searchProductsApi(data, 5, 0, selectedCateg.key !== 'all' ? selectedCateg.key: null));
     const dispatch = useDispatch();
     window.addEventListener('scroll', () => {
@@ -53,28 +52,31 @@ function Nav({children}) {
     const menu = (
         <Menu className='categ-menus' mode='vertical'>
             {
-                categorys.map((categ, index) => (
-                    categ.sub ? (
-                        <SubMenu key={index} title={<span onClick={() =>history.push(`/products/category/${categ.routeName}`)}>{categ.name}</span>}
-                        icon={ <categ.icon size={18} /> } popupClassName='sub'>
-                            {
-                                categ.sub.map((subCateg, index) => (
-                                    <div className="categ-sub">
-                                        <Menu.Item key={index} onClick={() =>history.push(`/products/category/${subCateg.routeName}`)}>
-                                            {subCateg.name}
-                                        </Menu.Item>
-                                        {subCateg.subs && subCateg.subs.map((sub, index) => (
-                                            <div key={index} className="sub-item" onClick={() =>history.push(`/products/category/${sub.routeName}`)}>
-                                                {sub.name}
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))
-                            }
-                        </SubMenu>
-                    ):
-                    <Menu.Item key={index} onClick={() =>history.push(`/products/category/${categ.routeName}`)}
-                    icon={ <categ.icon size={18} /> }>{categ.name}</Menu.Item>
+                loadingParentsCategs ?
+                <>
+                    <Skeleton.Input active style={{ width: 280, height: 35, borderRadius: 10, marginBottom: 15 }} />
+                    <Skeleton.Input active style={{ width: 280, height: 35, borderRadius: 10, marginBottom: 15 }} />
+                    <Skeleton.Input active style={{ width: 280, height: 35, borderRadius: 10, marginBottom: 15 }} />
+                    <Skeleton.Input active style={{ width: 280, height: 35, borderRadius: 10, marginBottom: 15 }} />
+                </>:
+                parentsCategs.map((parent, index) => (
+                    <SubMenu key={index} title={<span onClick={() =>history.push(`/products/category/${parent.name}`)}>{parent.name}</span>}
+                    icon={ <Avatar size={20} src={parent.icon} /> } popupClassName='sub'>
+                        {
+                            parent.Categorys?.map((category, index) => (
+                                <div className="categ-sub">
+                                    <Menu.Item key={index} onClick={() =>history.push(`/products/category/${category.name}`)}>
+                                        {category.name}
+                                    </Menu.Item>
+                                    {category.SubCategorys && category.SubCategorys.map((sub, index) => (
+                                        <div key={index} className="sub-item" onClick={() =>history.push(`/products/category/${sub.name}`)}>
+                                            {sub.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))
+                        }
+                    </SubMenu>
                 ))
             }
         </Menu>
@@ -94,9 +96,9 @@ function Nav({children}) {
     const stickyMenu = (
         <Menu className='sticky-categ-menus'>
             {
-                categorys.map((categ, index) => (
-                    <Menu.Item key={index} onClick={() =>history.push(`/products/category/${categ.routeName}`)}
-                    icon={ <categ.icon size={18} /> }>{categ.name}</Menu.Item>
+                parentsCategs.map((parent, index) => (
+                    <Menu.Item key={index} onClick={() =>history.push(`/products/category/${parent.name}`)}
+                    icon={ <Avatar size={20} src={parent.icon} /> }>{parent.name}</Menu.Item>
                 ))
             }
         </Menu>
@@ -145,7 +147,7 @@ function Nav({children}) {
                                 placeholder="Rechercer... puis appuyer sur Entrée"
                                 p={{ x: "2.5rem" }}
                                 rounded="circle"
-                                w="40rem"
+                                w="50rem"
                                 h="3rem"
                                 borderColor="gray500"
                                 hoverBorderColor="#dd4900"

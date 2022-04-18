@@ -58,6 +58,10 @@
                     border-left: 1px solid rgb(224, 224, 224);
                     padding-left: 10px;
                     cursor: pointer;
+                    width: 14rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
         
                     .icon{
                         font-size: 25px;
@@ -277,6 +281,7 @@
     width: 300px !important;
     padding: 10px;
     position: absolute;
+    margin-top: 10px;
 
     li{
         padding: 15px;

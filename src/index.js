@@ -13,7 +13,7 @@ import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider } from 'react-redux';
 import store from './Redux/store';
 
-axios.defaults.baseURL = 'http://localhost:5000/api/v1';
+axios.defaults.baseURL = 'https://bweteta.herokuapp.com/api/v1';
 axios.defaults.headers.common['bweteta_token'] = localStorage.getItem('bweteta_token');
 const queryClient = new QueryClient({
   defaultOptions: {
