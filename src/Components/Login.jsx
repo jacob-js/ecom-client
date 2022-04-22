@@ -131,7 +131,7 @@ function Login() {
                             {form.errors.password && form.touched.password ? <FieldError>{form.errors.password}</FieldError> : 
                             getFieldError(error, 'password') ? <FieldError>{getFieldError(error, 'password')}</FieldError> : null}
                         </FieldContainer>
-                        <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> }></Button>
+                        <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> } block></Button>
                         <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>history.push('/signup')}>Inscrivez-vous</Link></div>
                     </div>
                 </FormContainer>

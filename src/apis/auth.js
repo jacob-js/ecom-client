@@ -9,7 +9,7 @@ export const signupApi = (data) =>{
 }
 
 export const verifyAccountApi = (data) =>{
-    return axios.post(`/users/verify`, data)
+    return axios.post(`/users/validate`, data)
 }
 
 export const getCurrUserApi = () =>{

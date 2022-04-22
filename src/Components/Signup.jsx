@@ -11,6 +11,7 @@ import { getFieldError } from '../Utils/helpers';
 import { Alert } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { provinces } from '../Utils/data';
+import PhoneInput from 'react-phone-number-input';
 
 const schema = yup.object({
     fullname: yup.string().required("Le nom complet est requis"),
@@ -18,14 +19,12 @@ const schema = yup.object({
     password: yup.string().min(6, "Le mot de passe doit contenir au moins 6 caractères")
                 .required("Le mot de passe est requis").matches(/[a-zA-Z]/, "Le mot de passe doit contenir au moins une lettre")
                 .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre"),
-    state: yup.string().required("La province est requise"),
     phone: yup.string().required("Le numéro de téléphone est requis")
                         .matches(/^[+243]/, "Le numéro de téléphone doit commencer avec +243"),
     confirmPassword: yup.string().when('password', {
         is: (password) => password && password.length >= 6 && password.match(/[a-zA-Z]/) && password.match(/[0-9]/),
         then: yup.string().required('Veuillez confirmer le mot de passe').oneOf([yup.ref('password')], 'Les mots de passe ne correspondent pas'),
-    }),
-    profession: yup.string().required('La profession est requise')
+    })
 })
 
 function Signup() {
@@ -38,8 +37,10 @@ function Signup() {
     const mutation = useMutation(signupApi, {
         onSuccess: (res) =>{
             setloading(false);
-            localStorage.setItem('user_phone', res.data.data.user.phone);
-            history.push('/confirm-account');
+            // console.log({ token: res.data.data.token });
+            // window.history.pushState({ token: res.data.data.token }, 'fgf', '#/confirm-account');
+            // history.push('/confirm-account', {token: "jfhg"});
+            history.push({ pathname: '/confirm-account', state: { token: res.data.data.token } });
         },
         onError: (error) =>{
             const res = error.response;
@@ -58,7 +59,7 @@ function Signup() {
         }
     })
     const form = useFormik({
-        initialValues: { fullname: '', password: '', email: '', phone: '', state: '', confirmPassword: '', country: 'DRC', profession: '' },
+        initialValues: { fullname: '', password: '', email: '', phone: '', confirmPassword: '' },
         onSubmit: values =>  mutation.mutate(values),
         validationSchema: schema
     });
@@ -68,12 +69,12 @@ function Signup() {
             <div data-aos='fade-left' className="card confirm-account">
                 
                 <FormContainer onSubmit={form.handleSubmit}>
-                    <Title>Inscription</Title>
+                    <Title className='title'>Inscription</Title>
+                    {
+                        typeof(error[0]) === 'string' ?
+                        <Alert severity='error' className='alert' > {error[0]} </Alert>:null
+                    }
                     <div className="fields">
-                        {
-                            typeof(error[0]) === 'string' ?
-                            <Alert severity='error' className='alert' > {error[0]} </Alert>:null
-                        }
                         <FieldContainer>
                             <Input type="text" placeholder="Nom complet" className={
                                 form.errors.fullname && form.touched.fullname || getFieldError(error, 'fullname') ? 'error' : ''
@@ -82,9 +83,15 @@ function Signup() {
                             getFieldError(error, 'fullname') ? <FieldError>{getFieldError(error, 'fullname')}</FieldError> : null}
                         </FieldContainer>
                         <FieldContainer>
-                            <Input type="text" placeholder="N° de téléphone" className={
-                                form.errors.phone && form.touched.phone || getFieldError(error, 'phone') ? 'error' : ''
-                            } onChange={form.handleChange('phone')} />
+                            <PhoneInput
+                                placeholder="N° de téléphone"
+                                value={form.values.phone}
+                                onChange={value => form.setFieldValue('phone', value)}
+                                className={
+                                    `phone-field ${form.errors.phone && form.touched.phone || getFieldError(error, 'phone') ? 'error' : ''}`
+                                }
+                                defaultCountry="CD"
+                            />
                             {form.errors.phone && form.touched.phone ? <FieldError>{form.errors.phone}</FieldError> : 
                             getFieldError(error, 'phone') ? <FieldError>{getFieldError(error, 'phone')}</FieldError> : null}
                         </FieldContainer>
@@ -94,27 +101,6 @@ function Signup() {
                             } onChange={form.handleChange('email')} />
                             {form.errors.email && form.touched.email ? <FieldError>{form.errors.email}</FieldError> : 
                             getFieldError(error, 'email') ? <FieldError>{getFieldError(error, 'email')}</FieldError> : null}
-                        </FieldContainer>
-                        <FieldContainer>
-                            <Select placeholder='Province' onChange={form.handleChange('state')} className={
-                                form.errors.state && form.touched.state || getFieldError(error, 'state') ? 'error' : ''
-                            } onChange={form.handleChange('state')}>
-                                <option value="" selected disabled>Selectionner la province</option>
-                                {
-                                    provinces.map((province, index) => {
-                                        return <option key={index} value={province}>{province}</option>
-                                    })
-                                }
-                                {form.errors.state && form.touched.state ? <FieldError>{form.errors.state}</FieldError> : 
-                                getFieldError(error, 'state') ? <FieldError>{getFieldError(error, 'state')}</FieldError> : null}
-                            </Select>
-                        </FieldContainer>
-                        <FieldContainer>
-                            <Input type="text" placeholder="Profession" className={
-                                form.errors.profession && form.touched.profession || getFieldError(error, 'profession') ? 'error' : ''
-                            } onChange={form.handleChange('profession')} />
-                            {form.errors.profession && form.touched.profession ? <FieldError>{form.errors.profession}</FieldError> : 
-                            getFieldError(error, 'profession') ? <FieldError>{getFieldError(error, 'profession')}</FieldError> : null}
                         </FieldContainer>
                         <FieldContainer>
                             <div className="input-pass">
@@ -140,7 +126,7 @@ function Signup() {
                             {form.errors.confirmPassword && form.touched.confirmPassword ? <FieldError>{form.errors.confirmPassword}</FieldError> : 
                             getFieldError(error, 'confirmPassword') ? <FieldError>{getFieldError(error, 'confirmPassword')}</FieldError> : null}
                         </FieldContainer>
-                        <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> }></Button>
+                        <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> } block></Button>
                         <div className="register-link">Avez-vous déjà un compte ? <Link onClick={() =>history.push('/login')}>Connectez-vous</Link></div>
                     </div>
                 </FormContainer>

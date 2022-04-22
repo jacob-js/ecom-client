@@ -68,7 +68,7 @@ function Nav({children}) {
                                     <Menu.Item key={index} onClick={() =>history.push(`/products/category/${category.name}`)}>
                                         {category.name}
                                     </Menu.Item>
-                                    {category.SubCategorys && category.SubCategorys.map((sub, index) => (
+                                    {category.SubCategorys && category.SubCategorys?.map((sub, index) => (
                                         <div key={index} className="sub-item" onClick={() =>history.push(`/products/category/${sub.name}`)}>
                                             {sub.name}
                                         </div>
@@ -96,7 +96,7 @@ function Nav({children}) {
     const stickyMenu = (
         <Menu className='sticky-categ-menus'>
             {
-                parentsCategs.map((parent, index) => (
+                parentsCategs?.map((parent, index) => (
                     <Menu.Item key={index} onClick={() =>history.push(`/products/category/${parent.name}`)}
                     icon={ <Avatar size={20} src={parent.icon} /> }>{parent.name}</Menu.Item>
                 ))
