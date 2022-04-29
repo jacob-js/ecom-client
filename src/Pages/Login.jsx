@@ -136,7 +136,7 @@ function Login() {
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> } block></Button>
                         <div className="links">
-                            <Link>Mot de passe oublié ?</Link>
+                            <Link onClick={() => history.push('/check-username')}>Mot de passe oublié ?</Link>
                             <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>history.push('/signup')}>Inscrivez-vous</Link></div>
                         </div>
                     </div>

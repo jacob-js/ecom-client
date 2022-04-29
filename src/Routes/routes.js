@@ -3,7 +3,6 @@ import Carts from "../Components/Cart";
 import Checkout from "../Components/Checkout";
 import ConfirmAccount from "../Components/ConfirmAccount";
 import Home from "../Components/Home";
-import Login from "../Components/Login";
 import OrderDetails from "../Components/OrderDetails";
 import OrdersList from "../Components/OrdersList";
 import OthersProducts from "../Components/OthersProds";
@@ -14,6 +13,7 @@ import Profile from "../Components/Profile";
 import Search from "../Components/Search";
 import Signup from "../Components/Signup";
 import MobCateg from '../Nav/MobCateg';
+import { ResetPwdUsernameForm, Login, ResetPwdOtpForm } from "../Pages";
 
 export const routes = [
     {
@@ -42,6 +42,20 @@ export const routes = [
     {
         path: '/confirm-account',
         component: ConfirmAccount,
+        authRoute: true,
+        protected: false,
+        nav: false
+    },
+    {
+        path: '/check-username',
+        component: ResetPwdUsernameForm,
+        authRoute: true,
+        protected: false,
+        nav: false
+    },
+    {
+        path: '/enter-otp',
+        component: ResetPwdOtpForm,
         authRoute: true,
         protected: false,
         nav: false
