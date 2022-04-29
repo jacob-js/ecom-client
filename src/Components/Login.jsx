@@ -107,6 +107,9 @@ function Login() {
                 </div>
                 <FormContainer onSubmit={form.handleSubmit}>
                     <Title>Connexion</Title>
+                    <p className="descript">
+                        Connectez-vous à votre compte pour continuer
+                    </p>
                     <div className="fields">
                         {
                             typeof(error[0]) === 'string' ?
@@ -132,18 +135,21 @@ function Login() {
                             getFieldError(error, 'password') ? <FieldError>{getFieldError(error, 'password')}</FieldError> : null}
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> } block></Button>
-                        <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>history.push('/signup')}>Inscrivez-vous</Link></div>
+                        <div className="links">
+                            <Link>Mot de passe oublié ?</Link>
+                            <div className="register-link">N'avez-vous pas un compte ? <Link onClick={() =>history.push('/signup')}>Inscrivez-vous</Link></div>
+                        </div>
                     </div>
                 </FormContainer>
             </div>
             <div className="socials-auth">
-                <Divider>Ou</Divider>
+                <Divider>Ou continuer avec</Divider>
                 <div className="socials">
                     <GoogleLogin
                         clientId={process.env.REACT_APP_G_CLIENT_ID}
                         onSuccess={(res) => mutate({ googleToken: res.tokenId })}
                         render={renderProps => (
-                            <Button className='btn google' loading={gLoading} onClick={renderProps.onClick} disabled={renderProps.disabled} icon={<FcGoogle size={20} style={{ marginRight: 5 }} />}>Connexion avec google</Button>
+                            <Button className='btn google' loading={gLoading} onClick={renderProps.onClick} disabled={renderProps.disabled} icon={<FcGoogle size={20} style={{ marginRight: 5 }} />}>Google</Button>
                         )}
                     />
                     <ReactFacebookLogin
@@ -152,7 +158,7 @@ function Login() {
                         fields="name,email,picture"
                         callback={(res) => {} }
                         render={renderProps => (
-                            <Button type='primary' className='btn facebook' onClick={renderProps.onClick} disabled={renderProps.isDisabled} loading={renderProps.isProcessing} icon={<FaFacebookF style={{ marginRight: 5 }}/> } > Connexion avec facebook </Button>
+                            <Button type='primary' className='btn facebook' onClick={renderProps.onClick} disabled={renderProps.isDisabled} loading={renderProps.isProcessing} icon={<FaFacebookF style={{ marginRight: 5 }}/> } > Facebook </Button>
                         )}
                     />
                 </div>

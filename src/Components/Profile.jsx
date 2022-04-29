@@ -11,6 +11,8 @@ import { HiOutlineUser } from 'react-icons/hi';
 import { RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { sendNotif } from '../Utils/notif';
 import { usersActionTypes } from '../Redux/actionsTypes/users';
+import { useQuery } from 'react-query';
+import { getOrdersApi } from '../apis/orders';
 
 function Profile() {
     const [ formVisible, setFormVisible ] = useState(false);
@@ -19,6 +21,10 @@ function Profile() {
     const acronym = data?.fullname?.split(' ').map(name => name[0].toUpperCase()).join('');
     const history = useHistory();
     const dispatch = useDispatch();
+    const { data: orders, isFetching, refetch } = useQuery('orders', () =>getOrdersApi(data.id, 2, 0) );
+    const { data: pendingOrders } = useQuery(['orders', 'pending'], () =>getOrdersApi(data.id, 2, 0, 'pending') );
+    const { data: delivered } = useQuery(['orders', 'delivered'], () =>getOrdersApi(data.id, 2, 0, 'delivered') );
+    const { data: cancelledOrders } = useQuery(['orders', 'cancelled'], () =>getOrdersApi(data.id, 2, 0, 'cancelled') );
 
     const handleLogout = () => {
         localStorage.removeItem('bweteta_token');
@@ -59,19 +65,19 @@ function Profile() {
             </div>
             <div className="stats">
                 <div className="card">
-                    <div className="stat">20</div>
+                    <div className="stat">{orders?.data.count || 0}</div>
                     <div className="stat-name">Toutes mes commandes</div>
                 </div>
                 <div className="card">
-                    <div className="stat">2</div>
+                    <div className="stat">{pendingOrders?.data.count || 0}</div>
                     <div className="stat-name">Commandes en attente</div>
                 </div>
                 <div className="card">
-                    <div className="stat">10</div>
+                    <div className="stat">{delivered?.data.count || 0}</div>
                     <div className="stat-name">Commandes livrées</div>
                 </div>
                 <div className="card">
-                    <div className="stat">8</div>
+                    <div className="stat">{cancelledOrders?.data.count || 0}</div>
                     <div className="stat-name">Commandes annulées</div>
                 </div>
             </div>

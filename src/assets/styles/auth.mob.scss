@@ -3,7 +3,7 @@
         // padding-top: 80px;
         .card{
             margin-top: 60px;
-            min-height: 300px;
+            min-height: 350px;
             width: 90%;
             position: relative;
             .intro{
@@ -21,7 +21,7 @@
             }
             form{
                 width: 100%;
-                padding: 30px;
+                padding: 60px 30px;
                 .btn.login{
                     width: 100%;
                 }
@@ -35,10 +35,7 @@
             width: 90%;
             margin-top: 0px;
             .socials{
-                flex-direction: column;
-                .btn.google{
-                    margin-bottom: 15px;
-                }
+                flex-direction: row;
             }
         }
     }
