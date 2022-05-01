@@ -9,7 +9,7 @@ export const getCategorysApi = async() => {
 }
 
 export const getProductsByCategoryApi = async (categoryName, limit, offset) => {
-    return (await axios.get(`/categorys/products/${categoryName}?limit=${limit}&offset=${offset}`))?.data?.data
+    return (await axios.get(`http://localhost:5000/api/v1/categorys/products/${categoryName}?limit=${limit}&offset=${offset}`))?.data?.data
 };
 
 export const getProducts = async (bigDiscount, isBest, isNew, limit, offset) =>{

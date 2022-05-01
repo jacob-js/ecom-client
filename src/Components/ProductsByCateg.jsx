@@ -12,7 +12,7 @@ function ProductsByCateg() {
     const history = useHistory();
     const limit = 12;
     const [ offset, setOffset ] = useState(0);
-    const { isLoading, data, refetch } = useQuery(['products', category], () => getProductsByCategoryApi(getSubCategorys(category), limit, offset), {
+    const { isLoading, data, refetch } = useQuery(['products', category], () => getProductsByCategoryApi(category, limit, offset), {
         enabled: false
     } );
     const [ products, setProducts ] = useState([]);

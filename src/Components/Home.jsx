@@ -114,19 +114,19 @@ function Home() {
     const { isLoading, data } = useQuery(['categorys', 'top'], getTopCategorysApi, {
         staleTime: 300000,
     });
-    const { isLoading: loadingLaptops, data: laptops } = useQuery(['products', 'laptops'], () =>getProductsByCategoryApi('laptop'), {
+    const { isLoading: loadingLaptops, data: laptops } = useQuery(['products', 'laptops'], () =>getProductsByCategoryApi('laptop,laptops'), {
         staleTime: 300000
     });
-    const { isLoading: loadingPhones, data: phones } = useQuery([ 'products', 'phones'], () => getProductsByCategoryApi('mobile phone', 6, 0), {
+    const { isLoading: loadingPhones, data: phones } = useQuery([ 'products', 'phones'], () => getProductsByCategoryApi('mobile phone,phone,phones', 6, 0), {
         staleTime: 300000,
     });
-    const { isLoading: loadingDesktops, data: desktops } = useQuery([ 'products', 'desktops'], () => getProductsByCategoryApi('desktop', 6, 0), { staleTime: 300000 });
+    const { isLoading: loadingDesktops, data: desktops } = useQuery([ 'products', 'desktops'], () => getProductsByCategoryApi('desktop,desktops', 6, 0), { staleTime: 300000 });
     const { isLoading: loadingAccessorys, data: accessorys } = useQuery([ 'products', 'accessorys'], () => getProductsByCategoryApi('accessoire electronique', 6, 0), { staleTime: 300000 });
     const { isLoading: loadingBigDiscount, data: bigDiscountProducts } = useQuery([ 'products', 'discountProducts'], () => getProducts(true), { staleTime: 300000 });
     const { isLoading: loadingBestProducts, data: bestProds } = useQuery([ 'products', 'bestProds'], () => getProducts(false, true), { staleTime: 300000 });
     const { isLoading: loadingOtherProducts, data: otherProds } = useQuery([ 'products', 'others'], () => getProducts(null, null, null, 12, 0));
     const { isLoading: loadingNewProducts, data: newProds } = useQuery([ 'products', 'newProds'], () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
-    const { isLoading: loadingElecProds, data: elecProds } = useQuery([ 'products', 'elecProds'], () => getProductsByCategoryApi([ 'laptop', 'desktop', 'mobile phone', 'accessoire electronique' ], 6, 0));
+    const { isLoading: loadingElecProds, data: elecProds } = useQuery([ 'products', 'elecProds'], () => getProductsByCategoryApi([ 'electroniques', 'electronique', 'Electroniques', 'Electronique' ], 6, 0));
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });
@@ -361,7 +361,7 @@ function Home() {
                         <section className="section-flash">
                             <div className="header">
                                 <div className="title">Elecroniques</div>
-                                <div className="view-all" onClick={() =>history.push('/products/category/electroniques')}> Voir tout <MdArrowRight className='icon' /> </div>
+                                <div className="view-all" onClick={() =>history.push('/products/category/electroniques,electronique,Electronique,Electroniques')}> Voir tout <MdArrowRight className='icon' /> </div>
                             </div>
                             <div className="data">
                                 {
