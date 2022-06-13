@@ -29,7 +29,7 @@ export const updateUser = async(id, data) =>{
 }
 
 export const sendResetPwdUsernameApi = async(username) =>{
-    return (await axios.get(`/users/reset-password?phone=${username}`))?.data
+    return (await axios.get(`/users/reset-password?email=${username}`))?.data
 }
 
 export const resetPwdCheckOtpApi = async(data) =>{

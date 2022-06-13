@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import PhoneInputWithCountrySelect from 'react-phone-number-input';
 
 const schema = yup.object({
-    phone: yup.string().required('Ce champ est obligatoire')
+    email: yup.string().email("L'email n'est pas valide").required('Ce champ est obligatoire')
 })
 
 export default function ResetPwdUsernameForm() {
@@ -48,8 +48,8 @@ export default function ResetPwdUsernameForm() {
     })
 
     const form = useFormik({
-        initialValues: { phone: '' },
-        onSubmit: values =>  { mutation.mutate(values.phone)},
+        initialValues: { email: '' },
+        onSubmit: values =>  { mutation.mutate(values.email)},
         validationSchema: schema
     });
 
@@ -59,7 +59,7 @@ export default function ResetPwdUsernameForm() {
                 <FormContainer onSubmit={form.handleSubmit}>
                     <Title>Vérifier mon identité</Title>
                     <p>
-                        Entrez votre numéro de téléphone pour obtenir un code de confirmation pour réinitialiser votre 
+                        Entrez votre email pour obtenir un code de confirmation pour réinitialiser votre 
                         mot de passe.
                     </p>
                     <div className="fields">
@@ -68,7 +68,7 @@ export default function ResetPwdUsernameForm() {
                             <Alert severity='error' className='alert' > {error[0]} </Alert>:null
                         }
                         <FieldContainer>
-                            <PhoneInputWithCountrySelect
+                            {/* <PhoneInputWithCountrySelect
                                 placeholder="N° de téléphone"
                                 value={form.values.phone}
                                 onChange={value => form.setFieldValue('phone', value)}
@@ -77,8 +77,11 @@ export default function ResetPwdUsernameForm() {
                                 }
                                 defaultCountry="CD"
                                 countryCallingCodeEditable
-                            />
-                            {form.errors.username && form.touched.username ? <FieldError>{form.errors.username}</FieldError>: null}
+                            /> */}
+                            <Input type="email" placeholder="Email" className={
+                                form.errors.email && form.touched.email || getFieldError(error, 'email') ? 'error' : ''
+                            } onChange={form.handleChange('email')} />
+                            {form.errors.email && form.touched.email ? <FieldError>{form.errors.email}</FieldError>: null}
                         </FieldContainer>
                         <Button loading={loading} className='btn login' htmlType='submit' icon={ <ArrowRightOutlined /> } block></Button>
                     </div>
