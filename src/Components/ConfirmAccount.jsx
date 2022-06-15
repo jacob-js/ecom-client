@@ -70,7 +70,7 @@ function ConfirmAccount() {
 
     const form = useFormik({
         initialValues: { token: history.location.state?.token, code: '' },
-        onSubmit: values =>  { console.log(window.history.state); mutation.mutate(values)},
+        onSubmit: values =>  { mutation.mutate(values)},
         validationSchema: schema
     });
 
@@ -79,7 +79,7 @@ function ConfirmAccount() {
             <div data-aos='fade-right' className="card confirm-account">
                 <FormContainer onSubmit={form.handleSubmit}>
                     <Title>Confirmer mon compte</Title>
-                    <p>Un code de confirmation vous été envoyé par sms et par email, veuillez le confirmer pour continuer</p>
+                    <p>Un code de confirmation vous été envoyé par email, veuillez le confirmer pour continuer</p>
                     <div className="fields">
                         {
                             typeof(error[0]) === 'string' ?

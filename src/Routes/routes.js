@@ -13,7 +13,7 @@ import Profile from "../Components/Profile";
 import Search from "../Components/Search";
 import Signup from "../Components/Signup";
 import MobCateg from '../Nav/MobCateg';
-import { ResetPwdUsernameForm, Login, ResetPwdOtpForm } from "../Pages";
+import { ResetPwdUsernameForm, Login, ResetPwdOtpForm, UpdatePasswordForm } from "../Pages";
 
 export const routes = [
     {
@@ -56,6 +56,13 @@ export const routes = [
     {
         path: '/enter-otp',
         component: ResetPwdOtpForm,
+        authRoute: true,
+        protected: false,
+        nav: false
+    },
+    {
+        path: '/reset-pwd',
+        component: UpdatePasswordForm,
         authRoute: true,
         protected: false,
         nav: false

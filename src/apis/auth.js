@@ -34,4 +34,12 @@ export const sendResetPwdUsernameApi = async(username) =>{
 
 export const resetPwdCheckOtpApi = async(data) =>{
     return (await axios.post(`/users/reset-password`, data))?.data
+};
+
+export const updatePwdApi = async({token, newPwd}) =>{
+    return (await axios.put(`/users/reset-password`, {newPwd}, {
+        headers: {
+            'update_pwd_token': token
+        }
+    }))?.data
 }

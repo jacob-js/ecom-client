@@ -24,8 +24,8 @@ export default function ResetPwdOtpForm() {
     const mutation = useMutation(resetPwdCheckOtpApi, {
         onSuccess: (res) =>{
             setloading(false);
-            const data = res.data
-            history.push({ pathname: '/reset-pwd', state: data });
+            const data = res.data;
+            history.push({ pathname: '/reset-pwd', state: { token: data.updatePwdToken } });
         },
         onError: (error) =>{
             const res = error.response;
@@ -55,7 +55,7 @@ export default function ResetPwdOtpForm() {
                 <div data-aos='fade-right' className="card confirm-account">
                     <FormContainer onSubmit={form.handleSubmit}>
                         <Title>Entrez le code réçu</Title>
-                        <p>Un code de confirmation vous été envoyé par sms, veuillez le confirmer pour continuer</p>
+                        <p>Un code de confirmation vous été envoyé par email, veuillez le confirmer pour continuer</p>
                         <div className="fields">
                             {
                                 typeof(error[0]) === 'string' ?
