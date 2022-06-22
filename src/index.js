@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 import store from './Redux/store';
 
 axios.defaults.baseURL = 'https://bwetetamarket.herokuapp.com/api/v1';
+// axios.defaults.baseURL = 'http://localhost:5000/api/v1'
 axios.defaults.headers.common['bweteta_token'] = localStorage.getItem('bweteta_token');
 const queryClient = new QueryClient({
   defaultOptions: {

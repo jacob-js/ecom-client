@@ -20,6 +20,7 @@ export default function ResetPwdOtpForm() {
     const [loading, setloading] = useState(false);
     const [error, seterror] = useState([]);
     const history = useHistory();
+    const token = history.location.state?.token
 
     const mutation = useMutation(resetPwdCheckOtpApi, {
         onSuccess: (res) =>{
@@ -46,7 +47,7 @@ export default function ResetPwdOtpForm() {
 
     const form = useFormik({
         initialValues: { username: '' },
-        onSubmit: values =>  { mutation.mutate(values)},
+        onSubmit: values =>  { mutation.mutate({...values, token: token})},
         validationSchema: schema
     });
 
