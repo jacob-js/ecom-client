@@ -123,6 +123,21 @@ function Nav({children}) {
         return;
     }, [location.pathname]);
 
+    const debounce = (cb) => {
+        let timer;
+        return function (...args){
+            if(timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                cb(...args);
+            }, 1000);
+        }
+    }
+
+    const handleSearchTermChange = debounce((e) =>{
+        setSearchTerm(e.target.value); 
+        mutateSearch(e.target.value)
+    });
+
     const onSearch = (e) =>{
         if(e.key === 'Enter') {
             if(searchTerm) {
@@ -155,7 +170,7 @@ function Nav({children}) {
                                 hoverBorderColor="#dd4900"
                                 focusBorderColor="#dd4900"
                                 textWeight="300"
-                                onChange={(e) => {setSearchTerm(e.target.value); e.target.value.length > 0 && mutateSearch(e.target.value)}}
+                                onChange={handleSearchTermChange}
                                 onKeyPress={onSearch}
                                 onFocus={() =>setResultVisible(true)}
                                 prefix={
