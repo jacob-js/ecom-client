@@ -5,7 +5,10 @@
         transition: all .3s ease-in-out;
         padding-bottom: 16px;
         padding-top: 16px;
-    
+        
+        .ant-affix{
+            background-color: white;
+        }
         .top{
             padding: 0.5rem 0;
             width: 80%;
@@ -278,10 +281,14 @@
 }
 
 .categ-menus{
-    width: 300px !important;
+    width: 270px !important;
     padding: 10px;
     position: absolute;
-    margin-top: 10px;
+    margin-top: 18px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     li{
         padding: 15px;

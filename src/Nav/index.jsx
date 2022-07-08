@@ -59,6 +59,8 @@ function Nav({children}) {
                     <Skeleton.Input active style={{ width: 280, height: 35, borderRadius: 10, marginBottom: 15 }} />
                     <Skeleton.Input active style={{ width: 280, height: 35, borderRadius: 10, marginBottom: 15 }} />
                 </>:
+                parentsCategs?.length <= 0 ?
+                <Empty description='Aucune catégorie trouvée' image={Empty.PRESENTED_IMAGE_SIMPLE} />:
                 parentsCategs.map((parent, index) => (
                     <SubMenu key={index} title={<span onClick={() =>history.push(`/products/category/${parent.name}`)}>{parent.name}</span>}
                     icon={ <Avatar size={20} src={parent.icon} /> } popupClassName='sub'>
