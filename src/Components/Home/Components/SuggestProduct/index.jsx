@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Icon, Modal, Text } from 'atomize';
-import { FieldContainer, FieldError, FormContainer, Input } from '../Utils/common';
+import { FieldContainer, FieldError, FormContainer, Input } from '../../../../Utils/common';
 import { CameraOutlined, EditOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { Button } from 'antd';

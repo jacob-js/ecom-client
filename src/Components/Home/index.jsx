@@ -2,89 +2,19 @@ import { Button, Carousel, Menu, Rate, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { MdArrowRight, MdCategory, MdDesktopMac, MdDevicesOther, MdFlashOn, MdOutlineAddShoppingCart, MdOutlineLaptopChromebook, MdOutlineLocalOffer, MdPhoneIphone } from 'react-icons/md';
 import Slider from 'react-slick';
-import c1 from '../assets/images/c1.jpg';
-import c2 from '../assets/images/c2.jpg';
-import c3 from '../assets/images/c3.jpg';
+import c1 from '../../assets/images/c1.jpg';
+import c2 from '../../assets/images/c2.jpg';
+import c3 from '../../assets/images/c3.jpg';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
 import { useQuery } from 'react-query';
-import { getProducts, getProductsByCategoryApi, getTopCategorysApi } from '../apis/products';
-import newIcon from '../assets/images/icons/new-product.svg';
+import { getProducts, getProductsByCategoryApi, getTopCategorysApi } from '../../apis/products';
+import newIcon from '../../assets/images/icons/new-product.svg';
 import Aos from 'aos';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import SuggestProduct from './SuggestProduct';
-
-const bestProducts = [
-    {
-        id: 1,
-        name: 'Chaussure Nike ',
-        price: '$15',
-        discount: '10%',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fflash-1.png&w=1920&q=75'
-    },
-    {
-        id: 2,
-        name: 'Smart watch',
-        price: '$110',
-        discount: '5%',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fflash-2.png&w=1920&q=75'
-    },
-    {
-        id: 3,
-        name: 'Smartphone Tecno',
-        price: '$90',
-        discount: '0%',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fflash-3.png&w=1920&q=75'
-    },
-    {
-        id: 4,
-        name: 'Smart watch',
-        price: '$110',
-        discount: '5%',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fflash-4.png&w=1920&q=75'
-    },
-    {
-        id: 4,
-        name: 'Smart watch',
-        price: '$110',
-        discount: '5%',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fflash-4.png&w=1920&q=75'
-    }
-];
-
-const newProducts = [
-    {
-        name: 'sunglass',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fimagegoggles.png&w=1920&q=75',
-        price: '$25',
-    },
-    {
-        name: 'Makeup',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(2).png&w=1920&q=75',
-        price: '$35',
-    },
-    {
-        name: 'smartwatch',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fbgwatch.png&w=1920&q=75',
-        price: '$120',
-    },
-    {
-        name: 'Lipstick',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(1).png&w=1920&q=75',
-        price: '$5',
-    },
-    {
-        name: 'Green plant',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(4).png&w=1920&q=75',
-        price: '$20',
-    },
-    {
-        name: 'Bonsai tree',
-        cover: 'https://bonik-react.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Flipstick%20(3).png&w=1920&q=75',
-        price: '$30',
-    }
-]
+import SuggestProduct from './Components/SuggestProduct';
+import TopCategories from './Components/TopCategories';
 
 const PrevArraow = (props) =>{
     const {style, onClick} = props;
@@ -226,41 +156,7 @@ function Home() {
                         </div>
                     </section>
 
-                    <section className="section-top-categ">
-                        <div className="header">
-                            <div className="title"> <MdCategory className='icon' />Top catégories</div>
-                        </div>
-                        <div className="data">
-                            <Slider {...settings} slidesToShow={3} className='carousels'>
-                                {
-                                    data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
-                                    .sort((a, b) => a.sort-b.sort).map((category, index) => (
-                                        <div data-aos='fade-right' className="category" key={index} onClick={() =>history.push(`/products/category/${category.name}`)}>
-                                            <div className="name">{ category.name }</div>
-                                            <div className="cover">
-                                                <img src={category.cover} alt="" srcset="" />
-                                                <div className="bg"></div>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </Slider>
-                            <Slider {...settings} slidesToShow={1} className='carousel-mob'>
-                                {
-                                    data?.map((categ, index) =>({ name: categ.name, cover: categ.cover, sort: Math.random() }))
-                                    .sort((a, b) => a.sort-b.sort).map((category, index) => (
-                                        <div data-aos='fade-right' className="category" key={index} onClick={() =>history.push(`/products/category/${category.name}`)}>
-                                            <div className="name">{ category.name }</div>
-                                            <div className="cover">
-                                                <img src={category.cover} alt="" srcset="" />
-                                                <div className="bg"></div>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
-                            </Slider>
-                        </div>
-                    </section>
+                    <TopCategories data={data} carouselSettings={settings} />
 
                     <section className="section-arrival">
                         <div className="header">
@@ -361,7 +257,7 @@ function Home() {
                         <section className="section-flash">
                             <div className="header">
                                 <div className="title">Elecroniques</div>
-                                <div className="view-all" onClick={() =>history.push('/products/category/electroniques,electronique,Electronique,Electroniques')}> Voir tout <MdArrowRight className='icon' /> </div>
+                                <div className="view-all" onClick={() =>history.push('/products/category/electroniques')}> Voir tout <MdArrowRight className='icon' /> </div>
                             </div>
                             <div className="data">
                                 {
