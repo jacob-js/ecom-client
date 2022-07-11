@@ -39,15 +39,14 @@ const NextArraow = (props) =>{
 function Home() {
     const [electronicProducts, setelectronicProducts] = useState([]);
     const history = useHistory();
-    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const { isLoading, data } = useQuery(['categorys', 'top'], getTopCategorysApi, {
         staleTime: 300000,
     });
-    const { isLoading: loadingLaptops, data: laptops } = useQuery(['products', 'laptops'], () =>getProductsByCategoryApi('laptop,laptops'), {
+    const { isLoading: loadingLaptops, data: laptops } = useQuery(['products', 'laptops'], () =>getProductsByCategoryApi('laptop,laptops,Laptops,Laptop'), {
         staleTime: 300000
     });
-    const { isLoading: loadingPhones, data: phones } = useQuery([ 'products', 'phones'], () => getProductsByCategoryApi('mobile phone,phone,phones', 6, 0), {
+    const { isLoading: loadingPhones, data: phones } = useQuery([ 'products', 'phones'], () => getProductsByCategoryApi(['mobile phone,phone,phones,Telephones mobiles,telephones mobiles'], 6, 0), {
         staleTime: 300000,
     });
     const { isLoading: loadingDesktops, data: desktops } = useQuery([ 'products', 'desktops'], () => getProductsByCategoryApi('desktop,desktops', 6, 0), { staleTime: 300000 });
@@ -56,7 +55,7 @@ function Home() {
     const { isLoading: loadingBestProducts, data: bestProds } = useQuery([ 'products', 'bestProds'], () => getProducts(false, true), { staleTime: 300000 });
     const { isLoading: loadingOtherProducts, data: otherProds } = useQuery([ 'products', 'others'], () => getProducts(null, null, null, 12, 0));
     const { isLoading: loadingNewProducts, data: newProds } = useQuery([ 'products', 'newProds'], () => getProducts(false, false, true, 5, 0), { staleTime: 300000 });
-    const { isLoading: loadingElecProds, data: elecProds } = useQuery([ 'products', 'elecProds'], () => getProductsByCategoryApi([ 'electroniques', 'electronique', 'Electroniques', 'Electronique' ], 6, 0));
+    const { isLoading: loadingElecProds, data: elecProds } = useQuery([ 'products', 'elecProds'], () => getProductsByCategoryApi([ 'electroniques,electronique,Electroniques,Electronique' ], 6, 0));
 
     useEffect(() =>{
         Aos.init({ duration: 1000 });

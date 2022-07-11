@@ -4,19 +4,20 @@ import { HiOutlineUser } from 'react-icons/hi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getProductById, getProductRatings, rateProducApi } from '../apis/products';
-import Cart from '../Utils/cart.utils';
-import { sendNotif } from '../Utils/notif';
+import { getProductById, getProductRatings, rateProducApi } from '../../apis/products';
+import Cart from '../../Utils/cart.utils';
+import { sendNotif } from '../../Utils/notif';
 import moment from 'moment';
-import { FieldContainer, Label, TextArea } from '../Utils/common';
+import { FieldContainer, Label, TextArea } from '../../Utils/common';
+import Reviews from './Reviews';
 
 function ProductDetail() {
     const params = useParams();
     const queryClient = useQueryClient();
     const { isLoading, data: res, error } = useQuery(['product', params.id], () => getProductById(params.id));
-    const { isLoading: loadingRates, data: ratings } = useQuery(['ratings', params.id], () => getProductRatings(params.id));
+    const { data: ratings } = useQuery(['ratings', params.id], () => getProductRatings(params.id));
     const product = res?.data?.data || {};
-    const images = product?.Colors?.length > 0 && product?.Colors?.map(color => ({url: color.image, id: color.id})) || [];
+    const images = (product?.Colors?.length > 0 && product?.Colors?.map(color => ({url: color.image, id: color.id}))) || [];
     images.unshift({ url: product?.cover });
     const [cover, setCover] = useState({ index: 0, image: product.cover, id: '' });
     const [selectedSize, setSelectedSize] = useState();
@@ -50,18 +51,6 @@ function ProductDetail() {
             Cart.addToCart({ ...product, cartId: Math.random()*10, quantity: 1, details: [ selectedSize &&{ key: 'size', value: selectedSize }, { key: 'color', value: getProductColor() || 'couleur principale' } ] }, dispatch);
         }
     }
-    const rateMutaion = useMutation(() => rateProducApi(params.id, {value: rate, comment}), {
-        onSuccess: (data) => {
-            setRating(0);
-            setComment('');
-            sendNotif(data.message, 'success');
-            queryClient.invalidateQueries();
-        },
-        onError: (err) => {
-            const { message } = err?.response?.data;
-            sendNotif(message || 'Quelque chose s\'est mal passée', 'error');
-        }
-    })
 
     const imgContainer = document.querySelector('.cover');
     const [img, setImg] = useState(document.querySelector('#image'));
@@ -220,42 +209,7 @@ function ProductDetail() {
                             </div>
                         </>:
                         <>
-                            <div className="reviews">
-                                {
-                                    ratings?.ratings?.map((rat, index) => (
-                                        <div className="review" key={index}>
-                                            <div className="user">
-                                                <div className="avatar">
-                                                    <Avatar size={50} >
-                                                    {rat?.User.cover ? 
-                                                        <img src={rat?.User.cover} alt="avatar" srcset="" />:
-                                                        <HiOutlineUser className='icon' />
-                                                    }
-                                                    </Avatar>
-                                                </div>
-                                                <div className="left">
-                                                    <div className="name">{ rat?.User.id === currUser.id ? 'Moi': rat.User?.fullname}</div>
-                                                    <Rate disabled value={rat.value} className='rate' /> <span className="value">{rat.value}</span>
-                                                    <span className="date"> {moment(rat.createdAt).fromNow()} </span>
-                                                </div>
-                                            </div>
-                                            <div className="comment"> {rat.comment} </div>
-                                        </div>
-                                    ))
-                                }
-                                <div className="title">Noter ce produit</div>
-                                <div className="form">
-                                    <FieldContainer>
-                                        <Label> Votre note </Label>
-                                        <Rate className='rate' value={rate} onChange={(value) => setRating(value)} />
-                                    </FieldContainer>
-                                    <FieldContainer>
-                                        <Label> Votre avis </Label>
-                                        <TextArea value={comment} onChange={(e) => setComment(e.target.value)} />
-                                    </FieldContainer>
-                                    <Button className='btn rate' loading={rateMutaion.isLoading} disabled={!comment || !rate} onClick={() =>rateMutaion.mutate()}>Soumettre</Button>
-                                </div>
-                            </div>
+                            <Reviews ratings={ratings} />
                         </>
                     }
                 </div>

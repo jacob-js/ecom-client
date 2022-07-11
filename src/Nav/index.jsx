@@ -16,6 +16,7 @@ import { GrFacebookOption, GrInstagram, GrLinkedinOption, GrTwitter } from 'reac
 import { useMutation, useQuery } from 'react-query';
 import { getCategorysApi, searchProductsApi } from '../apis/products';
 import { getParentsCategApi } from '../apis/categorys';
+import axios from 'axios';
 
 const { SubMenu } = Menu;
 
@@ -112,6 +113,7 @@ function Nav({children}) {
         dispatch({
             type: usersActionTypes.LOGOUT_SUCCESS
         });
+        axios.defaults.headers.common['bweteta_token'] = null;
     };
 
     useEffect(() => {
