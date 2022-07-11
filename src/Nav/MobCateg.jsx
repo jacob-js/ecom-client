@@ -1,32 +1,35 @@
-import { Collapse } from 'antd';
+import { Avatar, Collapse } from 'antd';
 import React from 'react'
+import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { categorys } from '../Utils/data'
+import { getParentsCategApi } from '../apis/categorys';
 
 const { Panel } = Collapse;
 
 function MobCateg() {
     const history = useHistory();
+    const { isLoading, data } = useQuery('parentsCategs', getParentsCategApi);
+
   return (
     <div className='mob-categ'>
         <Collapse expandIconPosition='right'>
             {
-                categorys.map((item, index) => (
-                    item.sub ? <Panel header={
+                data?.map((item, index) => (
+                    item.Categorys ? <Panel header={
                         <div className="category with-sub" key={index}>
                             <div className="title">
-                                <span onClick={() =>history.push(`/products/category/${item.routeName}`)}><item.icon className='icon' /> {item.name}</span>
+                                <span onClick={() =>history.push(`/products/category/${item.name}`)}><Avatar size={20} src={item.icon} className='icon' /> {item.name}</span>
                             </div>
                         </div>
                     } >
                         {
-                            item.sub.map((sub, index) => (
+                            item.Categorys?.map((sub, index) => (
                                 <div className="sub" key={index}>
-                                    <div className="title" onClick={() =>history.push(`/products/category/${sub.routeName}`)}>{sub.name}</div>
+                                    <div className="title" onClick={() =>history.push(`/products/category/${sub.name}`)}>{sub.name}</div>
                                     {
-                                        sub.subs &&
+                                        sub.SubCategorys &&
                                         <div className="subs">
-                                            {sub.subs.map((subs, index) => ( <div key={index} className="name" onClick={() =>history.push(`/products/category/${subs.routeName}`)}>{subs.name}</div> ))}    
+                                            {sub.SubCategorys.map((subs, index) => ( <div key={index} className="name" onClick={() =>history.push(`/products/category/${subs.name}`)}>{subs.name}</div> ))}    
                                         </div>
                                     }
                                 </div>
@@ -34,7 +37,7 @@ function MobCateg() {
                         }
                     </Panel>:
                     <div className="category no-sub" key={index}>
-                        <div className="title" onClick={() =>history.push(`/products/category/${item.routeName}`)}>
+                        <div className="title" onClick={() =>history.push(`/products/category/${item.name}`)}>
                             <item.icon className='icon' /> {item.name}
                         </div>
                     </div>
