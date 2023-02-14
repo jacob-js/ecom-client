@@ -48,7 +48,7 @@ I'm kind of a big application, I include a lot of features. The below features a
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Aos](https://michalsnik.github.io/aos/)
 
-## I was built by:
+## I'm being built by:
 
 - [Merci Jacob](https://github.com/jacob-js)
 
